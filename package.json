@@ -1,0 +1,33 @@
+{
+  "name": "mixeth",
+  "version": "1.0.0",
+  "description": "An efficient, trustless coin mixing service for Ethereum",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seresistvanandras/MixEth.git"
+  },
+  "keywords": [
+    "Ethereum",
+    "Cryptography",
+    "Coin",
+    "mixing",
+    "verifiable",
+    "shuffle"
+  ],
+  "author": "István András Seres, Dániel A. Nagy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seresistvanandras/MixEth/issues"
+  },
+  "homepage": "https://github.com/seresistvanandras/MixEth#readme",
+  "dependencies": {
+    "openzeppelin-solidity": "^1.12.0"
+  }
+}

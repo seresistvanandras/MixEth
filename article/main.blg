@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: main.aux
+The style file: plain.bst
+Database file #1: sample.bib
+Warning--empty journal in nakamoto2008bitcoin
+You've used 18 entries,
+            2118 wiz_defined-function locations,
+            599 strings with 7163 characters,
+and the built_in function-call counts, 6910 in all, are:
+= -- 710
+> -- 283
+< -- 9
++ -- 115
+- -- 94
+* -- 414
+:= -- 1065
+add.period$ -- 63
+call.type$ -- 18
+change.case$ -- 101
+chr.to.int$ -- 0
+cite$ -- 19
+duplicate$ -- 293
+empty$ -- 579
+format.name$ -- 94
+if$ -- 1538
+int.to.chr$ -- 0
+int.to.str$ -- 18
+missing$ -- 15
+newline$ -- 93
+num.names$ -- 36
+pop$ -- 144
+preamble$ -- 1
+purify$ -- 83
+quote$ -- 0
+skip$ -- 220
+stack$ -- 0
+substring$ -- 429
+swap$ -- 103
+text.length$ -- 9
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 72
+warning$ -- 1
+while$ -- 69
+width$ -- 20
+write$ -- 202
+(There was 1 warning)

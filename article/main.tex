@@ -1,0 +1,395 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{authblk}
+\usepackage{booktabs}
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+\usepackage[group-separator={,}]{siunitx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{breqn}
+\usepackage{algpseudocode}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\usepackage{wrapfig}
+\usepackage{eufrak}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\floatname{algorithm}{Procedure}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\lstdefinelanguage{JavaScript}{
+	keywords={typeof, contract, struct, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+\lstset{
+	language=JavaScript,
+	backgroundcolor=\color{lightgray},
+	extendedchars=true,
+	basicstyle=\footnotesize\ttfamily,
+	showstringspaces=false,
+	showspaces=false,
+	numbers=left,
+	numberstyle=\footnotesize,
+	numbersep=9pt,
+	tabsize=2,
+	breaklines=true,
+	showtabs=false,
+	captionpos=b
+}
+
+\usepackage{graphicx}
+\usepackage[
+n,
+operators,
+advantage,
+sets,
+adversary,
+landau,
+probability,
+notions,	
+logic,
+ff,
+mm,
+primitives,
+events,
+complexity,
+asymptotics,
+keys]{cryptocode}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\def\bitcoinA{%
+	\leavevmode
+	\vtop{\offinterlineskip %\bfseries
+		\setbox0=\hbox{B}%
+		\setbox2=\hbox to\wd0{\hfil\hskip-.03em
+			\vrule height .3ex width .15ex\hskip .08em
+			\vrule height .3ex width .15ex\hfil}
+		\vbox{\copy2\box0}\box2}}
+
+\DeclareMathOperator{\EX}{\mathbb{E}}% expected value
+\providecommand{\keywords}[1]{\textbf{\textit{Keywords:}} #1}
+
+\renewcommand{\lstlistingname}{Figure}% Listing -> Algorithm
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings -> List of Algorithms
+
+\title{MixEth: efficient trustless coin mixing service for Ethereum}
+\author[1]{István András Seres}
+\author[1]{Dániel A. Nagy}
+\author[1]{Péter Burcsi}
+\affil[1]{Department of Computer Algebra, Eötvös Loránd University}
+\begin{document}
+\maketitle
+
+
+\textbf{Note: this is an early-stage work-in-progress! Security proofs, implementation and many more are yet to come!} 
+\begin{abstract}
+Cryptocurrencies enable users to transact with each other without relying on trusted parties or intermediaries. These transactions are recorded in an immutable, publicly verifiable ledger. Due to this transparent nature of the ledger, privacy is notably reduced. If the link between users' public key and their physical identity is exposed  their pseudonymity is lost. One way to increase users' privacy is to deploy coin mixing services. In this paper, we present MixEth, which is a trustless coin mixing service. MixEth is more efficient than any proposed trustless coin tumbler. It requires only $3$ on-chain transactions at most per user and $1$ off-chain. It achieves strong notions of anonimity and is able to resist denial-of-service attacks.      
+\end{abstract}
+\keywords{Cryptography, Verifiable shuffle, Cryptocurrency, Ethereum, Coin mixer}
+
+\section{Introduction}
+Bitcoin \cite{nakamoto2008bitcoin} and other cryptocurrencies are pseudonymous. Users' public keys are used as pseudonyms in these systems. Transactions essentially record a flow of cryptocurrency from one (or more) public keys to another public key (or more). Flow of cryptocurrency can be easily tracked due to the open and transparent nature of cryptocurrencies' transaction ledger. Moreover, coherent public keys, which are used by the same user, can be clustered merely by analyzing the ledger. Recently several tools and algorithms were proposed to diminish users' privacy (\cite{meiklejohn2013fistful},\cite{moser2013inquiry}, \cite{moreno2016listening}). Such deanomyzation attacks are extremely harmful to user privacy, especially in the case when any of the users' pseudonyms, public keys, are linked to their real world identity. 
+
+One of the methods to increase users' privacy is coin mixing or tumbling. This technique provides \textit{k-anonymity} or \textit{plausible deniability}. The idea is that $k$ users deposit $1$ coin each and then in the course of a coin shuffling protocol either a centralized trusted third party or a smart contract mixes the coins and redistributes them to designated fresh public keys. This powerful technique gives users superior privacy and anonimity since their new received coins can not be linked to them.
+
+Several coin mixing protocols were proposed in the literature both centralized (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}, \cite{heilman2017tumblebit}) and decentralized (\cite{maxwell2013coinjoin}, \cite{ruffing2014coinshuffle}, \cite{miximus2018}, \cite{meiklejohn2018mobius}, \cite{bissias2014sybil}). A major drawback of centralized coin mixing is that the availability of the tumbler is entirely dependent on the trusted party and in most cases theft prevention can not be guaranteed (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}). On the other hand decentralized tumblers achieve availability, theft prevention and satisfy strong notions of anonymity although they are considerably heavier computationally. In the following we will solely focus on the problem of coin mixing on Ethereum \cite{wood2014ethereum}. 
+
+The two major techniques to provide mixing services for Ethereum are Möbius, a ring-signature-based solution \cite{meiklejohn2018mobius} and Miximus, a zkSNARK-based proposal \cite{miximus2018}. Both of them burn tremendous amounts of gas to withdraw funds, which could be prohibitive for many use cases. Möbius requires $\num[group-separator={,}]{335714}n$ gas ($n$ is the ring size) while Miximus consumes $\num[group-separator={,}]{1903305}$ gas to verify a zkSNARK proof \cite{miximus2018gascost}.   
+
+\textbf{Our contributions.} In this paper, we present MixEth, to overcome the above mentioned efficiency issues while retaining strong notions of anonymity already achieved by previous proposals. MixEth requires as few off-chain messages and on-chain transactions as Möbius and Miximus, meanwhile it burns significantly less gas. Game-theoretical analysis of incentives in MixEth is also enclosed.
+
+
+\section{Background}
+\subsection{Notations}
+In most cases if it is possible we will stick to the notations used in \cite{meiklejohn2018mobius} for sake of uniformity. 
+Let $[]$ denote the empty tuple. For a tuple $t=(x_1,\dots,x_n)$ we denote as $t[x_i]$ the value stored at $x_{i}$. The cardinality of a finite set $X$ is denoted as $|X|$. In the following let $\lambda \in \mathbb{N}$ the security parameter and its unary representation is $1^{\lambda}$. If $x$ is uniformly randomly sampled from a set $A$ we write $x\stackrel{\$}{\leftarrow}A$. The symmetric group of degree $n$ is written as ${S}_n$. In a cyclic group $\mathbb{G}$, the standardized generator is denoted as $G$ and we use the additive notation. Secret keys and public keys are denoted as $sk$ and $pk$ respectively (or often times $s$ and $sG$), while the user the corresponding key belongs to is indicated in subscript. Let $PK$ denote the set of public keys belonging to receivers.
+
+We use games in definitions and proofs of security. At the end of each game, the main procedure of game \textsf{G} outputs a single bit. $\Pr(\textsf{G})$ denotes the probability that the output is $1$.
+\subsection{Cryptographic keys in Ethereum}
+Ethereum uses Elliptic Curve Cryptography (ECC) to secure users' funds. More specifically, it uses the secp256k1 curve, the same one as used in Bitcoin. If a user wants to create an Ethereum address, first she needs to generate a secret key  $s\stackrel{\$}{\leftarrow}\mathbb{Z}_n$, where $n$ is the order of secp256k1 over a finite field $\mathbb{F}_{p}$. The corresponding public key will be $sG$. Note that any multiples of $G$ is also a generator of curve points since $n$, the order of the group is also a prime. Accounts in Ethereum are identified by their addresses which can be obtained by taking the right most 20 bytes of the Keccak hashed public key \cite{wood2014ethereum}. 
+    
+\subsection{Verifiable shuffle}
+
+Neff introduced the notion of verifiable shuffle \cite{neff2001verifiable}. It is a cryptographic protocol allowing a party to verifiably shuffle a sequence of $k$ modular integers. The output of the shuffle is another $k$ modular integers raised to the same secret exponent only known to the shuffler. The shuffler can generate a publicly verifiable zero-knowledge proof to convince the public that the shuffle was done correctly. 
+
+Neff's mathematical construct is extremely powerful, since it only relies on the intractability of the Decisional Diffie-Hellman (DDH) problem. Therefore, Neff's verifiable shuffle can also be applied in groups over elliptic curves.
+
+Verifiable shuffle can be used to shuffle a set of public keys, $PK=(s_{1}G,s_{2}G\dots,s_{k}G)$. Note that secret keys are not known to the shuffler.
+
+\begin{enumerate}
+	\item Shuffler commits to $C=cG$, publishes $$PK^*=(c(s_{\pi^{-1}(1)}G),c(s_{\pi^{-1}(2)}G),\dots,c({s_{\pi^{-1}(k)}}G))$$ where $\pi$ is a random permutation. Shuffler additionally computes and publishes a zero-knowledge proof about the correctness of the shuffle. This proof can be made non-interactive via the Fiat-Shamir heuristic. Let us call $C$ as the shuffling constant.
+	\item Assuming the proof verifies users gain new public keys with respect to another generator element, namely $cG$.
+\end{enumerate}
+
+For verifying the proof one needs to compute $8k+5$ exponentiations, however later this result was ameliorated to $3,5k$ exponentiations by Bayer and Groth \cite{bayer2012efficient}.
+
+So far verifiable shuffles were only applied in voting schemes, we argue that they are useful in trustless coin mixers as well.  
+
+\subsection{Chaum-Pedersen protocol}
+The language $\mathcal{L}_{DDH}$ is defined to be the set of all tuples $(G,aG,bG,abG)$ where $G\in \mathbb{G}$ is of order prime $q$. The Chaum-Pedersen protocol enables a prover $\mathcal{P}$ to prove to a verifier $\mathcal{V}$ that $(G,A,B,C)\in\mathcal{L}_{DDH}$ in zero-knowledge for groups of prime order \cite{chaum1992wallet}. The protocol is organized as follows:
+
+\begin{enumerate}
+	\item $\mathcal{V}$: $s\stackrel{\$}{\leftarrow}\mathbb{Z}_q$, then sends $commit(s)$ 
+	\item $\mathcal{P}$: $r\stackrel{\$}{\leftarrow}\mathbb{Z}_q$, then sends $y_1=rG$, $y_2=rB$.
+	\item $\mathcal{V}$ opens commitment by sending $s$
+	\item $\mathcal{P}$ sends $z=r+as \Mod{q}$
+	\item $\mathcal{V}$ checks $zG=y_{1}sA \Mod{q} \land zB=y_{2}sC \Mod{q}$
+\end{enumerate} 
+Note that in the following a non-interactive version of this protocol will only be considered that can be achieved by applying the Fiat-Shamir heuristic. 
+
+\subsection{Ethereum}
+
+\subsection{Ethereum account abstraction}
+Unfortunately, neither Möbius nor Miximus can be deployed on the present-day Ethereum. When users of the coin mixing contract, either Möbius or Miximus would like to withdraw their funds they can not do this from a fresh address, since it does not hold any ether. Since as of now only the sender of a transaction can pay for the gas fee, users can not withdraw their funds unless they ask someone to fund their fresh address.     
+
+Another solution for this problem is the Ethereum Improvement Proposal (EIP) 86 suggested by Nick Johnson and Vitalik Buterin \cite{buterin2017accounteip}. EIP86 permits receivers of a transaction paying the gas fee. This would certainly enable a functional Möbius and Miximus as well, since the tumbling contract could pay for the withdrawal transactions' gas fee, eliminating the previous workaround to unlinkably fund freshly mixed addresses. Additionally, EIP86 also allows contracts and accounts to define their own digital signature algorithms. This means that users are no longer required to sign transactions with Elliptic Curve Digital Signature Algorithm (ECDSA). Moreover if EIP86 or something similar is implemented, which is expected in 2019, MixEth is also made viable.  
+
+\section{Threat model}
+\subsection{Participants and interactions}
+In a decentralized tumbler, we have $3$ distinct entities: the tumbling smart contract, a set of senders and a set of receivers. A sender, whom we will call Alice, sends funds to the receiver, Bob, through the mixer contract in order to break direct links between their public keys. Interactions of these entities can be summarized as follows: 
+ 
+$tx\stackrel{\$}{\leftarrow}Deposit(sk_A,pk_B)$: The sender runs this algorithm to deposit some ether to the receiver's public key.
+
+After some period of time no more deposits are allowed to the tumbling contract. Let $PK_{0}$ denote the final set of public keys to be mixed. Every recipient of the mix is allowed to shuffle the public keys at most once: 
+
+$PK_{i+1},C_{i+1}^{*}, C_{i},CP_{i+1}\stackrel{\$}{\leftarrow}Shuffle(PK_{i},C^{*}_{i},c_{i},\pi_{i})$. The permutation $\pi$ and the secret multiplier $c_{i}$ from the shuffling constant $C_{i}=c_{i}G$ should be kept private after shuffling, otherwise it is trivial to track how public keys are shuffled. Let us call $C^{*}$ as the shuffling accumulated constant, which can be obtained by $C^{*}_{i+1}=c_{i}C^{*}_{i}$. The shuffling accumulated constant is needed for receivers to collect their funds at the end of the final shuffling period. $CP_{i+1}$ is a Chaum-Pedersen zero-knowledge proof for the statement $(G,C_{i},C^{*}_{i},C^{*}_{i+1})\in\mathcal{L}_{DDH}$. All the outputs of the $Shuffle$ algorithm are public and written into the tumbling contract.  
+
+$0\lor1\leftarrow 
+ChallengeShuffle(PK_{i},C^{*}_{i},C_{i},pk_{B})$: receiver $B$ with public key $pk_{B}=s_{B}G$ can challenge an incorrect shuffle done with $C_{i}=c_{i}G$ by giving a zero-knowledge proof that the following tuple is a DDH-tuple $(G,cG,sG,s(cG))$. If the proof verifies and $s(cG) \notin PK$, then the challenge is accepted, otherwise rejected. 
+
+$tx\stackrel{\$}{\leftarrow}Withdraw(sk_B)$: after the end of the shuffling period users are allowed to withdraw their funds. Note that here the transaction will be signed with a modified version of ECDSA, where not the original generator element $G$ is used as generator rather final shuffling accumulated constant.
+
+\subsection{Security goals} \label{securitygoals}
+We are aiming to achieve and prove the same notions of security as the ones defined in \cite{meiklejohn2018mobius}. We are going to assume that at most $k-2$ recipients are malicious ($k$ is the number of recipients). Otherwise, no meaningful notion of security can be achieved. Furthermore presume that participants are on-line during the entire course of mixing in order to be able to monitor and potentially challenge any incorrect shuffle. Finally we assume that honest recipients will always exercise their rights to shuffle and they do not disclose any private information used in their shuffles. 
+
+In this early version of the MixEth paper we only restrict ourselves to give informal security definitions.
+\subsubsection{Anonymity}
+\textit{Sender} anonymity is achieved if an adversary can not determine to whom honest miners are sending funds, assuming that honest senders' deposits are indistinguishable.
+
+\textit{Recipient} anonymity is achieved if honest recipients withdrawal transactions are indistinguishable.
+\subsubsection{Availability}
+It is essential for a coin mixer to provide availability, meaning that honest recipients can always withdraw their money from the mixer.
+\subsubsection{Theft prevention}
+We would like to ensure that neither coins can be withdrawn twice, nor withdrawn by anyone other but the intended recipient. 
+\section{MixEth}
+
+\subsection{Overview}
+MixEth is a coin mixing smart contract allowing parties to efficiently tumble coins in a trustless manner on Ethereum.
+\subsection{Initializing the tumbler}
+
+A MixEth contract living on the Ethereum blockchain at $id_{contract}$ address must be initialized with the following parameters:
+\begin{itemize}
+	\item $amt$: denomination of ether to be mixed;
+	\item $senders[]$: list of all the sender addresses;
+	\item $initPubKeys[]$: list of all the recipients' public keys;
+	\item $shuffles[][]$: list of all the shuffles with corresponding Chaum-Pedersen proofs and values.
+	\item $withdrawn[]$: list of all the shuffled public keys who had already withdrawn their coins.	
+\end{itemize}
+
+\subsection{Depositing period}
+Every sender must deposit exactly $amt$ ether to a specific public key. Deposits with incorrect ether value are rejected.  
+\subsection{Shuffling period}
+After the depositing round, shuffling and challenging roundss are coming after in turns. Each shuffling round is followed by a challenging round when the correctness of the preceding shuffle can be challenged by anyone. If a challenge is accepted, then shuffler's deposit is lost, her shuffle is discarded and shuffling continues from the set of public keys prior to the discarded shuffle. In the course of a shuffle an honest shuffler should raise all the public keys to a secret exponent $c$ and then permute all the transformed public keys. Honest shuffler commits to $c$ by sending back to MixEth $C=cG$ and the shuffled public keys. Moreover, the shuffling accumulated constant is updated as well.
+
+Shuffle is done off-chain, however the result and the Chaum-Pedersen proof is loaded into the MixEth contract enabling anyone to verify the shuffle's correctness and to continue public key shuffling after the corresponding challenging round.
+
+\begin{algorithm}
+\caption{Off-chain public key shuffling algorithm}\label{shufflingoffchain}
+\begin{algorithmic}[1]
+	\State $shuffledKeys \gets []$
+	\State $c\stackrel{\$}{\leftarrow}\mathbb{Z}_n$
+	\State $C^*\leftarrow read\ from\ MixEth\ contract$
+	\State $pubKeys\leftarrow read\ from\ MixEth\ contract\ the\ current\ sequence\ of\ shuffled\ public\ keys$
+	\State $\pi\stackrel{\$}{\leftarrow}S_{|pubKeys|}$ 
+	\For{$i=0;i<|pubKeys|;i++$}
+	\State $shuffledKeys[\pi(i)]=c*pubKeys[i]$ 
+	\EndFor
+	\State $C^{*}_{new}=cC^{*}$
+	\State $C=cG$
+	\State $proof_{DDH}\leftarrow zkChaumPedersen(G,C,C^*,C^{*}_{new})$
+	
+\hspace*{\algorithmicindent} \textbf{Output:} $(shuffledKeys,C,C^*_{new},proof_{DDH})$ 
+\end{algorithmic}   
+\end{algorithm}
+\subsection{Challenging period}
+Every participant should check the correctness of incoming shuffles, therefore sufficient time should be provided for each challenging round. Let us assume that prior the shuffle recipient had public key $sG$ and shuffler committed to $C=cG$. In this case recipient should check that $sC$ is included in the shuffled public keys. Moreover all participants should check that the Chaum-Pedersen proof for the correctness of calculating the shuffling accumulated constant verifies or not.   
+
+\begin{algorithm}
+	\caption{Off-chain verification algorithm for checking public key shuffling correctness}\label{verifyingshufflingoffchain}
+	\hspace*{\algorithmicindent} \textbf{Input}$(shuffledKeys, C, C^{*}, proof_{DDH},s)$ \\
+	\begin{algorithmic}[1]
+		\State $pk=sC^*$
+		\State $b\leftarrow verifyChaumPedersen(G,C,C^{*}_{previous},C^*,proof_{DDH})$  
+		\State $b^'\leftarrow0$
+		\If {$pk\in shuffledKeys$}
+		\State $b^'\gets 1$
+		\Else
+		\State $b^'\gets 0$
+		\EndIf
+		\hspace*{\algorithmicindent} \textbf{Output:} $b\land b'$ 
+	\end{algorithmic}   
+\end{algorithm}
+Note that every recipient should perform this check after each shuffling. Noone can check the inclusion and correctness of shuffled public keys for recipients other than themselves. This task is non-outsourcable unless one reveals her own private key, which would obviously lead to loss of funds at the end of the MixEth protocol, since anyone can claim the funds knowing the corresponding secret key.   
+
+\subsection{Withdrawing}
+Let $C^*$be the final shuffling accumulated constant. For a recipient whose public key $sG \in initPubKeys[]$, in the final shuffle there will be $sC^*$. The recipient can prove to MixEth that she knows $s$ by using a modified ECDSA, which uses $C^*$ as the generator element instead of the standardized $G$.
+\subsection{MixEth pseudocode}
+
+\medskip
+\begin{lstlisting}[caption=MixEth contract pseudocode]
+contract MixEth {
+  uint256 amt;
+  address[] senders;
+  CurvePoint[] initPubKeys;
+  Shuffle[] Shuffles;
+  
+  struct CurvePoint {
+    uint256 x; //x coordinate
+    uint256 y; //y coordinate
+  }
+  struct Shuffle { 
+    //describes a shuffle
+    // contains the shuffled pubKeys and Chaum-Pedersen zk proof
+  }
+  
+  constructor() public {
+   //sets amt
+  }
+  
+  function uploadShuffle(Shuffle newShuffle) public {
+    //needs to be ensured that recipient has not shuffled yet
+    Shuffles.append(newShuffle);  
+  }
+  
+  function challengeShuffle(CurvePoint[] challenge, uint256 i) public {
+    bool accepted;
+    //contract checks the correctness of the i-th shuffle which is stored at Shuffles[i]. If challenge accepted malicious shuffler's deposit is slashed.
+    return accepted;
+  }
+  
+  function withdraw() public {
+    //receivers can withdraw funds at most once
+  }   
+}
+\end{lstlisting}
+
+\section{Security}
+This section is going to demonstrate security proofs for the notions of security introduced in Section \ref{securitygoals}.
+
+In this early version of the MixEth paper, we only restrict ourselves to give intuition and informal proofs for certain security properties.
+
+\subsection{Recipient anonymity}
+The withdrawing transaction for recipient $i$ sends funds to the public key $s_{i}C^{*}$. This public key does not reveal any links to the original $s_{i}G$ in case if at least one honest sender shuffled and the DDH assumption holds. Adversary can only distinguish between honest recipients public keys with negligible probability.
+\subsection{Availability}
+If an adversary is able to destroy an honest recipient's funds' availability, it implies that adversary either breaks the soundness of the Chaum-Pedersen protocol or successfully launched an eclipse attack against the honest recipient, who can not send any transactions to the Ethereum transaction ledger. 
+\subsection{Theft prevention} 
+If an adversary is able to steal funds from other users than it would imply that they broke discrete logarithm problem on the secp256k1 curve.
+\begin{table}[H] 
+	\caption{Security properties achieved by each coin mixing protocol.}
+	\centering 
+	\begin{tabular}{@{\extracolsep{6pt}}lcccccc@{}} 
+		
+		\toprule
+		\hline
+		&\multicolumn{3}{c}{Anonimity against}& \multicolumn{2}{c}{Availability}&Theft prevention\\
+		\cline{2-4}\cline{5-6}&outsiders&senders&recipients&sender&tumbler\\
+		\hline
+		\midrule
+		\textbf{Centralized} & & \\
+		\midrule
+		Mixcoin \cite{bonneau2014mixcoin} & TTP       & \xmark  &\cmark&\cmark&\xmark&TTP      \\
+		Blindcoin \cite{valenta2015blindcoin} & \cmark &\xmark&\cmark&\cmark&\xmark&TTP        \\
+		TumbleBit \cite{heilman2017tumblebit} & \cmark &\cmark&\cmark&\cmark&\xmark&\cmark       \\
+		\midrule
+		\textbf{Decentralized}      &    &      \\
+		\midrule
+		Coinjoin \cite{maxwell2013coinjoin} & \cmark   &\xmark&\cmark&\xmark&n.a.&\cmark       \\
+		Coinshuffle \cite{ruffing2014coinshuffle} & \cmark&\xmark&\cmark&\xmark&n.a.&\cmark       \\
+		XIM \cite{bissias2014sybil} & \cmark      &\xmark&\cmark&\cmark&n.a.&\cmark       \\
+		Möbius \cite{meiklejohn2018mobius}     &\cmark&\cmark&\xmark&\cmark&\cmark&\cmark        \\
+		Miximus \cite{miximus2018}&\cmark&\cmark&\xmark&\cmark&\cmark&\cmark  \\
+		MixEth&\cmark&\cmark&\xmark&\cmark&\cmark&\cmark  \\
+		\bottomrule
+	\end{tabular}
+	\label{table:securityproperties}
+\end{table}
+
+\section{Implementation}
+\section{Related work}
+As Table \ref{table:communicationcomplexity} demonstrates, both Möbius and Miximus require $2$ on-chain transactions, while MixEth requires $3$. In spite of this seemingly added complexity, we are confident that these 3 (deposit, shuffle, withdraw) transactions consume significantly less gas than those (deposit, verify linkable ring signature/zkSNARK) of Möbius and Miximus. 
+\begin{table}[H] 
+\caption{Number of on-chain transactions and off-chain messages required to run a certain coin mixer protocol.}
+\centering 
+\begin{tabular}{lcc} 
+	
+	\toprule
+	&\#Off-chain messages& \#Transactions \\
+	\midrule
+	\textbf{Centralized} & & \\
+	\midrule
+	Mixcoin \cite{bonneau2014mixcoin} & 2      & 2       \\
+	Blindcoin \cite{valenta2015blindcoin} & 4      & 2       \\
+	TumbleBit \cite{heilman2017tumblebit} & 12      & 4      \\
+	\midrule
+	\textbf{Decentralized}      &    &      \\
+	\midrule
+	Coinjoin \cite{maxwell2013coinjoin} &  $\mathcal{O}(n^2)$     & 1       \\
+	Coinshuffle \cite{ruffing2014coinshuffle} &$\mathcal{O}(n)$       & 1       \\
+	XIM \cite{bissias2014sybil} & 0      & 7       \\
+	Möbius \cite{meiklejohn2018mobius} & 2    & 2       \\
+	Miximus \cite{miximus2018} & 1 & 2 \\
+	MixEth & 1 & 3 \\
+	\bottomrule
+\end{tabular}
+\label{table:communicationcomplexity}
+\end{table}
+
+\section{Extensions and improvements}
+MixEth is not fully compatible with the current EVM, however it could be deployed with a workaround. A recipient could ask another party or service to send a signed transaction including a signature which uses the modified version of ECDSA, where the generator element is the shuffling accumulated constant. MixEth could check this signature and send out funds to a fresh Ethereum address given in the withdraw transaction. 
+ 
+\section{Conclusion} \label{conclusion}
+ 
+\section{Future work}
+We are going to implement and deploy MixEth on Ethereum and evaluate its performance. We are also going to give formal security proofs for the claimed security properties.  
+An important and crucial research question is whether it is possible to design and implement an efficient and trustless Ethereum-based coin mixer with strong security guarantees which do not rely on any workaround and upcoming EIP implementation and is ready to be deployed on present-day Ethereum. 
+\bibliographystyle{plain}
+\bibliography{sample}
+
+\end{document}

@@ -1,0 +1,112 @@
+\begin{thebibliography}{10}
+
+\bibitem{miximus2018}
+barryWhiteHat.
+\newblock Miximus.
+\newblock \url{https://github.com/barryWhiteHat/miximus}, 2018.
+
+\bibitem{miximus2018gascost}
+barryWhiteHat.
+\newblock Miximus gas costs.
+\newblock
+  \url{https://www.reddit.com/r/ethereum/comments/8ss53z/miximus_zksnark_based_anonymous_transactions_is/},
+  2018.
+
+\bibitem{bayer2012efficient}
+Stephanie Bayer and Jens Groth.
+\newblock Efficient zero-knowledge argument for correctness of a shuffle.
+\newblock In {\em Annual International Conference on the Theory and
+  Applications of Cryptographic Techniques}, pages 263--280. Springer, 2012.
+
+\bibitem{bissias2014sybil}
+George Bissias, A~Pinar Ozisik, Brian~N Levine, and Marc Liberatore.
+\newblock Sybil-resistant mixing for bitcoin.
+\newblock In {\em Proceedings of the 13th Workshop on Privacy in the Electronic
+  Society}, pages 149--158. ACM, 2014.
+
+\bibitem{bonneau2014mixcoin}
+Joseph Bonneau, Arvind Narayanan, Andrew Miller, Jeremy Clark, Joshua~A Kroll,
+  and Edward~W Felten.
+\newblock Mixcoin: Anonymity for bitcoin with accountable mixes.
+\newblock In {\em International Conference on Financial Cryptography and Data
+  Security}, pages 486--504. Springer, 2014.
+
+\bibitem{buterin2017accounteip}
+Vitalik Buterin and Nick Johnson.
+\newblock Eip86: Account abstraction.
+\newblock \url{https://github.com/ethereum/EIPs/blob/master/EIPS/eip-86.md},
+  2017.
+
+\bibitem{chaum1992wallet}
+David Chaum and Torben~Pryds Pedersen.
+\newblock Wallet databases with observers.
+\newblock In {\em Annual International Cryptology Conference}, pages 89--105.
+  Springer, 1992.
+
+\bibitem{heilman2017tumblebit}
+Ethan Heilman, Leen Alshenibr, Foteini Baldimtsi, Alessandra Scafuro, and
+  Sharon Goldberg.
+\newblock Tumblebit: An untrusted bitcoin-compatible anonymous payment hub.
+\newblock In {\em Network and Distributed System Security Symposium}, 2017.
+
+\bibitem{maxwell2013coinjoin}
+Greg Maxwell.
+\newblock Coinjoin: Bitcoin privacy for the real world.
+\newblock In {\em Post on Bitcoin forum}, 2013.
+
+\bibitem{meiklejohn2018mobius}
+Sarah Meiklejohn and Rebekah Mercer.
+\newblock M{\"o}bius: Trustless tumbling for transaction privacy.
+\newblock {\em Proceedings on Privacy Enhancing Technologies},
+  2018(2):105--121, 2018.
+
+\bibitem{meiklejohn2013fistful}
+Sarah Meiklejohn, Marjori Pomarole, Grant Jordan, Kirill Levchenko, Damon
+  McCoy, Geoffrey~M Voelker, and Stefan Savage.
+\newblock A fistful of bitcoins: characterizing payments among men with no
+  names.
+\newblock In {\em Proceedings of the 2013 conference on Internet measurement
+  conference}, pages 127--140. ACM, 2013.
+
+\bibitem{moreno2016listening}
+Pedro Moreno-Sanchez, Muhammad~Bilal Zafar, and Aniket Kate.
+\newblock Listening to whispers of ripple: Linking wallets and deanonymizing
+  transactions in the ripple network.
+\newblock {\em Proceedings on Privacy Enhancing Technologies},
+  2016(4):436--453, 2016.
+
+\bibitem{moser2013inquiry}
+Malte Moser, Rainer Bohme, and Dominic Breuker.
+\newblock An inquiry into money laundering tools in the bitcoin ecosystem.
+\newblock In {\em eCrime Researchers Summit (eCRS), 2013}, pages 1--14. IEEE,
+  2013.
+
+\bibitem{nakamoto2008bitcoin}
+Satoshi Nakamoto.
+\newblock Bitcoin: A peer-to-peer electronic cash system.
+\newblock 2008.
+
+\bibitem{neff2001verifiable}
+C~Andrew Neff.
+\newblock A verifiable secret shuffle and its application to e-voting.
+\newblock In {\em Proceedings of the 8th ACM conference on Computer and
+  Communications Security}, pages 116--125. ACM, 2001.
+
+\bibitem{ruffing2014coinshuffle}
+Tim Ruffing, Pedro Moreno-Sanchez, and Aniket Kate.
+\newblock Coinshuffle: Practical decentralized coin mixing for bitcoin.
+\newblock In {\em European Symposium on Research in Computer Security}, pages
+  345--364. Springer, 2014.
+
+\bibitem{valenta2015blindcoin}
+Luke Valenta and Brendan Rowan.
+\newblock Blindcoin: Blinded, accountable mixes for bitcoin.
+\newblock In {\em International Conference on Financial Cryptography and Data
+  Security}, pages 112--126. Springer, 2015.
+
+\bibitem{wood2014ethereum}
+Gavin Wood.
+\newblock Ethereum: A secure decentralised generalised transaction ledger.
+\newblock {\em Ethereum project yellow paper}, 151:1--32, 2014.
+
+\end{thebibliography}
