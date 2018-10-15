@@ -120,7 +120,7 @@ keys]{cryptocode}
 
 \textbf{Note: this is an early-stage work-in-progress! Security proofs, implementation and many more are yet to come!} 
 \begin{abstract}
-Cryptocurrencies enable users to transact with each other without relying on trusted parties or intermediaries. These transactions are recorded in an immutable, publicly verifiable ledger. Due to this transparent nature of the ledger, privacy is notably reduced. If the link between users' public key and their physical identity is exposed  their pseudonymity is lost. One way to increase users' privacy is to deploy coin mixing services. In this paper, we present MixEth, which is a trustless coin mixing service. MixEth is more efficient than any proposed trustless coin tumbler. It requires only $3$ on-chain transactions at most per user and $1$ off-chain. It achieves strong notions of anonimity and is able to resist denial-of-service attacks.      
+Cryptocurrencies enable users to transact with each other without relying on trusted parties or intermediaries. These transactions are recorded in an immutable, publicly verifiable ledger. Due to this transparent nature of the ledger, privacy is notably reduced. If the link between users' public key and their physical identity is exposed  their pseudonymity is lost. One way to increase users' privacy is to deploy coin mixing services. In this paper, we present MixEth, which is a trustless coin mixing service. MixEth is more efficient than any proposed trustless coin tumbler. It requires only $3$ on-chain transactions at most per user and $1$ off-chain. It achieves strong notions of anonymity and is able to resist denial-of-service attacks.      
 \end{abstract}
 \keywords{Cryptography, Verifiable shuffle, Cryptocurrency, Ethereum, Coin mixer}
 
@@ -139,7 +139,7 @@ The two major techniques to provide mixing services for Ethereum are Möbius, a 
 \section{Background}
 \subsection{Notations}
 In most cases if it is possible we will stick to the notations used in \cite{meiklejohn2018mobius} for sake of uniformity. 
-Let $[]$ denote the empty tuple. For a tuple $t=(x_1,\dots,x_n)$ we denote as $t[x_i]$ the value stored at $x_{i}$. The cardinality of a finite set $X$ is denoted as $|X|$. In the following let $\lambda \in \mathbb{N}$ the security parameter and its unary representation is $1^{\lambda}$. If $x$ is uniformly randomly sampled from a set $A$ we write $x\stackrel{\$}{\leftarrow}A$. The symmetric group of degree $n$ is written as ${S}_n$. In a cyclic group $\mathbb{G}$, the standardized generator is denoted as $G$ and we use the additive notation. Secret keys and public keys are denoted as $sk$ and $pk$ respectively (or often times $s$ and $sG$), while the user the corresponding key belongs to is indicated in subscript. Let $PK$ denote the set of public keys belonging to receivers.
+Let $[]$ denote the empty tuple. For a tuple $t=(x_1,\dots,x_n)$ we denote as $t[x_i]$ the value stored at $x_{i}$. The cardinality of a finite set $X$ is denoted as $|X|$. In the following let $\lambda \in \mathbb{N}$ be the security parameter and its unary representation is $1^{\lambda}$. If $x$ is uniformly randomly sampled from a set $A$ we write $x\stackrel{\$}{\leftarrow}A$. The symmetric group of degree $n$ is written as ${S}_n$. In a cyclic group $\mathbb{G}$, the standardized generator is denoted as $G$ and we use the additive notation. Secret keys and public keys are denoted as $sk$ and $pk$ respectively (or often times $s$ and $sG$), while the user the corresponding key belongs to is indicated in subscript. Let $PK$ denote the set of public keys belonging to receivers.
 
 We use games in definitions and proofs of security. At the end of each game, the main procedure of game \textsf{G} outputs a single bit. $\Pr(\textsf{G})$ denotes the probability that the output is $1$.
 \subsection{Cryptographic keys in Ethereum}
@@ -194,7 +194,7 @@ $PK_{i+1},C_{i+1}^{*}, C_{i},CP_{i+1}\stackrel{\$}{\leftarrow}Shuffle(PK_{i},C^{
 $0\lor1\leftarrow 
 ChallengeShuffle(PK_{i},C^{*}_{i},C_{i},pk_{B})$: receiver $B$ with public key $pk_{B}=s_{B}G$ can challenge an incorrect shuffle done with $C_{i}=c_{i}G$ by giving a zero-knowledge proof that the following tuple is a DDH-tuple $(G,cG,sG,s(cG))$. If the proof verifies and $s(cG) \notin PK$, then the challenge is accepted, otherwise rejected. 
 
-$tx\stackrel{\$}{\leftarrow}Withdraw(sk_B)$: after the end of the shuffling period users are allowed to withdraw their funds. Note that here the transaction will be signed with a modified version of ECDSA, where not the original generator element $G$ is used as generator rather final shuffling accumulated constant.
+$tx\stackrel{\$}{\leftarrow}Withdraw(sk_B)$: after the end of the shuffling period users are allowed to withdraw their funds. Note that here the transaction will be signed with a modified version of ECDSA, where not the original generator element $G$ is used as generator rather the final shuffling accumulated constant.
 
 \subsection{Security goals} \label{securitygoals}
 We are aiming to achieve and prove the same notions of security as the ones defined in \cite{meiklejohn2018mobius}. We are going to assume that at most $k-2$ recipients are malicious ($k$ is the number of recipients). Otherwise, no meaningful notion of security can be achieved. Furthermore presume that participants are on-line during the entire course of mixing in order to be able to monitor and potentially challenge any incorrect shuffle. Finally we assume that honest recipients will always exercise their rights to shuffle and they do not disclose any private information used in their shuffles. 
@@ -269,7 +269,7 @@ Every participant should check the correctness of incoming shuffles, therefore s
 Note that every recipient should perform this check after each shuffling. Noone can check the inclusion and correctness of shuffled public keys for recipients other than themselves. This task is non-outsourcable unless one reveals her own private key, which would obviously lead to loss of funds at the end of the MixEth protocol, since anyone can claim the funds knowing the corresponding secret key.   
 
 \subsection{Withdrawing}
-Let $C^*$be the final shuffling accumulated constant. For a recipient whose public key $sG \in initPubKeys[]$, in the final shuffle there will be $sC^*$. The recipient can prove to MixEth that she knows $s$ by using a modified ECDSA, which uses $C^*$ as the generator element instead of the standardized $G$.
+Let $C^*$ be the final shuffling accumulated constant. For a recipient whose public key $sG \in initPubKeys[]$, in the final shuffle there will be $sC^*$. The recipient can prove to MixEth that she knows $s$ by using a modified ECDSA, which uses $C^*$ as the generator element instead of the standardized $G$.
 \subsection{MixEth pseudocode}
 
 \medskip
