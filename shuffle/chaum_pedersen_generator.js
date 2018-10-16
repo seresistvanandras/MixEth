@@ -6,27 +6,25 @@ var ec = new EC('secp256k1');
 let G = '0479BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8'; //Generator point
 let n = bigInt('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141',16); //order of the secp256k1 group
 
-function proofVerifier(_A, _B, _C, _s, _y1, _y2, z) {
+function proofGenerator(_A, _B, _C, shufflingConstant, _s) {
   let A = ec.keyFromPublic(_A,'hex').getPublic();
   let B = ec.keyFromPublic(_B,'hex').getPublic();
   let C = ec.keyFromPublic(_C,'hex').getPublic();
-  let y1 = ec.keyFromPublic(_y1,'hex').getPublic();
-  let y2 = ec.keyFromPublic(_y2,'hex').getPublic();
 
+  let r = randomBytes(32);
+  let rBigInt = bigInt(r.toString('hex'),16).mod(n);
+  let shufflingC = bigInt(shufflingConstant,16);
   let s =  bigInt(_s.toString(16),16);
 
-  let zG = ec.keyFromPublic(G,'hex').getPublic().mul(z);
-  let sAy1 = A.mul(s.toString(16)).add(y1);
-  let ax = zG.getX().eq(sAy1.getX());
-  let ay = zG.getY().eq(sAy1.getY());
+  console.log("s in natur: ", s);
 
-  let zB = B.mul(z);
-  let sCy2 = C.mul(s.toString(16)).add(y2);
-  let bx = zB.getX().eq(sCy2.getX());
-  let by = zB.getY().eq(sCy2.getY());
-  
-  return ax && ay && bx && by;
+  let y1 = ec.keyFromPublic(G,'hex').getPublic().mul(r);
+  let y2 = B.mul(r);
+
+  let z = rBigInt.add(shufflingC.multiply(s));
+
+  return {"y1":y1, "y2":y2, "z":z.mod(n).toString(16)};
 }
 
-module.exports = proofVerifier;
+module.exports = proofGenerator;
 require('make-runnable');

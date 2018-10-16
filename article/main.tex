@@ -170,7 +170,7 @@ The language $\mathcal{L}_{DDH}$ is defined to be the set of all tuples $(G,aG,b
 	\item $\mathcal{P}$: $r\stackrel{\$}{\leftarrow}\mathbb{Z}_q$, then sends $y_1=rG$, $y_2=rB$.
 	\item $\mathcal{V}$ opens commitment by sending $s$
 	\item $\mathcal{P}$ sends $z=r+as \Mod{q}$
-	\item $\mathcal{V}$ checks $zG=y_{1}sA \Mod{q} \land zB=y_{2}sC \Mod{q}$
+	\item $\mathcal{V}$ checks $zG=y_{1}+sA \Mod{q} \land zB=y_{2}+sC \Mod{q}$
 \end{enumerate} 
 Note that in the following a non-interactive version of this protocol will only be considered that can be achieved by applying the Fiat-Shamir heuristic. 
 
