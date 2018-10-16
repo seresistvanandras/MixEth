@@ -35,7 +35,7 @@ function shuffle(array) {
   while (0 !== currentIndex) {
 
     // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
+    randomIndex = Math.floor(Math.random() * currentIndex); //needs to be replaced by cryptographically secure PRNG
     currentIndex -= 1;
 
     // And swap it with the current element.
@@ -50,7 +50,9 @@ function shuffle(array) {
 function generatePubKeys(i) {
   let publicKeys = [];
   for(var j=0;j<i;j++) {
-    let pubPoint = ec.genKeyPair().getPublic();
+    let keyPair = ec.genKeyPair();
+    let pubPoint = keyPair.getPublic();
+    console.log("Privkey: ",keyPair.getPrivate());
     pubKeyX=pubPoint.getX().toString('hex');
     pubKeyY=pubPoint.getY().toString('hex');
     let pub = ec.keyFromPublic('04'+pubKeyX+pubKeyY,'hex');
