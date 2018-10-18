@@ -133,4 +133,19 @@ contract('ECLibraryTest', function(accounts) {
            assert.equal(('85E89BC037945D93B343083B5A1C86131A01F60C50269763B570C854E5C09B7A').toLowerCase(),resulty,"Y coordinate is incorrect");
         });
     });
+
+    it("Scalar Multiplication: whatever", function() {
+        return ECLibraryTest.deployed().then(function(instance) {
+            ContractInstance = instance;
+            ContractInstance.mul('0xd043398fa1f2791bb88af1f439844bedebb2c20b13e0fa4a72081e5280a9a4fe');
+            return ContractInstance.hx.call();
+        }).then(function(xcoordinate) {
+            resultx = new BigNumber(xcoordinate).toString(16);
+            console.log("X result",resultx);
+            return ContractInstance.hy.call();
+        }).then(function(ycoordinate){
+          resulty = new BigNumber(ycoordinate).toString(16)
+           console.log("Y result",resulty);
+        });
+    });
 });
