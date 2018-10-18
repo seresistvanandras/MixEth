@@ -17,6 +17,7 @@ contract ChaumPedersenVerifier {
     uint256 x; //x coordinate
     uint256 y; //y coordinate
   }
+
   //uint256 Ax, uint256 Ay, uint256 Bx, uint256 By, uint256 Cx, uint256 Cy, uint256 s, uint256 y1x, uint256 y1y, uint256 y2x, uint256 y2y, uint256 z
   function verifyChaumPedersen(uint256[12] params) public returns (bool) {
     bool b1 = verifyChaumPedersenPart1(params[0], params[1], params[7], params[8], params[6], params[11]);
@@ -28,7 +29,7 @@ contract ChaumPedersenVerifier {
     return b1 && b2;
   }
 
-  function verifyChaumPedersenPart1(uint256 Ax, uint256 Ay, uint256 y1x, uint256 y1y, uint256 s, uint256 z) internal pure returns (bool) {
+  function verifyChaumPedersenPart1(uint256 Ax, uint256 Ay, uint256 y1x, uint256 y1y, uint256 s, uint256 z) public returns (bool) {
     (uint256 zGx, uint256 zGy) = EC.ecmul(Gx, Gy, z);
 
     (uint256 sAx, uint256 sAy) = EC.ecmul(Ax, Ay, s);
