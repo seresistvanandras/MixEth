@@ -29,10 +29,15 @@
   "homepage": "https://github.com/seresistvanandras/MixEth#readme",
   "dependencies": {
     "big-integer": "^1.6.36",
+    "bignumber.js": "^7.2.1",
     "eccrypto": "^1.0.3",
     "elliptic": "^6.4.1",
+    "jquery": "^3.3.1",
     "make-runnable": "^1.3.6",
     "openzeppelin-solidity": "^1.12.0",
-    "sjcl": "^1.0.7"
+    "sjcl": "^1.0.7",
+    "truffle-contract": "^3.0.6",
+    "web3": "^1.0.0-beta.36",
+    "xmlhttprequest": "^1.8.0"
   }
 }

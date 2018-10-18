@@ -26,6 +26,9 @@ function proofVerifier(_A, _B, _C, _s, _y1, _y2, z) {
   let bx = zB.getX().eq(sCy2.getX());
   let by = zB.getY().eq(sCy2.getY());
 
+  console.log("zGx", zG.getX());
+  console.log("zGy", zG.getY());
+
   return ax && ay && bx && by;
 }
 
