@@ -15,4 +15,4 @@ The protocol in a nutshell: senders need to deposit certain amount of ether to E
 
     * [Miximus withraw tx](https://www.reddit.com/r/ethereum/comments/8ss53z/miximus_zksnark_based_anonymous_transactions_is/): 1903305
 
-    * MixEth shuffle tx (approx.):  198429 + (2\*SSTORE\*n), where the first term is the gas cost of verifying on-chain the Chaum-Pedersen proof, while the second term is the cost of storing on-chain the shuffled public keys. $$Note:$$ the cost of SSTORE is 20,000 gas.   
+    * MixEth shuffle tx (approx.):  198429 + (2\*SSTORE\*n), where the first term is the gas cost of verifying on-chain the Chaum-Pedersen proof, while the second term is the cost of storing on-chain the shuffled public keys. **Note:** the cost of SSTORE is 20,000 gas.   
