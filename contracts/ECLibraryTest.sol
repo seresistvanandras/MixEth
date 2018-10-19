@@ -8,6 +8,8 @@ contract ECLibraryTest {
     uint256 constant public gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8;
     uint256 public hx;
     uint256 public hy;
+    bool public equality;
+    address public mult;
 
     function mul(uint256 scalar) public {
       uint256 h1x;
@@ -23,5 +25,11 @@ contract ECLibraryTest {
       (h1x,h1y) = EC.ecadd(x, y, z, u);
       hx = h1x;
       hy = h1y;
+    }
+
+    function ecMulV(uint256 x, uint256 y, uint256 scalar, uint256 xk, uint256 yk) public {
+      bool eq;
+      eq = EC.ecmulVerify(x, y, scalar, xk, yk);
+      equality = eq;
     }
 }

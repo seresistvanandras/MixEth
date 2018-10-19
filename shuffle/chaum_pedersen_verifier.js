@@ -17,17 +17,28 @@ function proofVerifier(_A, _B, _C, _s, _y1, _y2, z) {
   let s =  bigInt(_s.toString(16),16);
 
   let zG = ec.keyFromPublic(G,'hex').getPublic().mul(z);
+  console.log("zGx", zG.getX());
+  console.log("zGy", zG.getY());
+
   let sAy1 = A.mul(s.toString(16)).add(y1);
+  console.log("sAx",A.mul(s.toString(16)).getX());
+  console.log("sAy",A.mul(s.toString(16)).getY());
+
   let ax = zG.getX().eq(sAy1.getX());
   let ay = zG.getY().eq(sAy1.getY());
 
   let zB = B.mul(z);
+  console.log("zBx", zB.getX());
+  console.log("zBy", zB.getY());
+
   let sCy2 = C.mul(s.toString(16)).add(y2);
+  console.log("sCx",C.mul(s.toString(16)).getX());
+  console.log("sCy",C.mul(s.toString(16)).getY());
+
   let bx = zB.getX().eq(sCy2.getX());
   let by = zB.getY().eq(sCy2.getY());
 
-  console.log("zGx", zG.getX());
-  console.log("zGy", zG.getY());
+
 
   return ax && ay && bx && by;
 }

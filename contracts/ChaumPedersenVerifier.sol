@@ -18,10 +18,18 @@ contract ChaumPedersenVerifier {
     uint256 y; //y coordinate
   }
 
-  //uint256 Ax, uint256 Ay, uint256 Bx, uint256 By, uint256 Cx, uint256 Cy, uint256 s, uint256 y1x, uint256 y1y, uint256 y2x, uint256 y2y, uint256 z
-  function verifyChaumPedersen(uint256[12] params) public returns (bool) {
-    bool b1 = verifyChaumPedersenPart1(params[0], params[1], params[7], params[8], params[6], params[11]);
-    uint256[8] memory params2=[params[2], params[3], params[4], params[5], params[9], params[10], params[6], params[11]];
+  /*
+  uint256 Ax, uint256 Ay, uint256 Bx, uint256 By, uint256 Cx, uint256 Cy, uint256 s, uint256 y1x, uint256 y1y,
+  uint256 y2x, uint256 y2y, uint256 z,
+  uint256 zGx, uint256 zGy, uint256 sAx, uint256 sAy,
+  uint256 zBx, uint256 zBy, uint256 sCx, uint256 sCy
+  Contract needs to verify the correctness of scalar multiplication of elliptic curve points,
+  for that end we use ecrecover, a trick suggested by Vitalik:
+  https://ethresear.ch/t/you-can-kinda-abuse-ecrecover-to-do-ecmul-in-secp256k1-today/2384
+  */
+  function verifyChaumPedersen(uint256[20] params) public returns (bool) {
+    bool b1 = verifyChaumPedersenPart1(params[0], params[1], params[7], params[8], params[6], params[11], params[12], params[13], params[14], params[15]);
+    uint256[12] memory params2=[params[2], params[3], params[4], params[5], params[9], params[10], params[6], params[11], params[16], params[17], params[18], params[19]];
     bool b2 = verifyChaumPedersenPart2(params2);
 
     testIng = b1 && b2;
@@ -29,23 +37,26 @@ contract ChaumPedersenVerifier {
     return b1 && b2;
   }
 
-  function verifyChaumPedersenPart1(uint256 Ax, uint256 Ay, uint256 y1x, uint256 y1y, uint256 s, uint256 z) public returns (bool) {
-    (uint256 zGx, uint256 zGy) = EC.ecmul(Gx, Gy, z);
+  function verifyChaumPedersenPart1(uint256 Ax, uint256 Ay, uint256 y1x, uint256 y1y, uint256 s, uint256 z, uint256 zGx, uint256 zGy, uint256 sAx, uint256 sAy) public returns (bool) {
+    require(EC.ecmulVerify(Gx, Gy, z, zGx, zGy));
+    require(EC.ecmulVerify(Ax, Ay, s, sAx, sAy));
 
-    (uint256 sAx, uint256 sAy) = EC.ecmul(Ax, Ay, s);
     (uint256 sAy1x, uint256 sAy1y)= EC.ecadd(sAx, sAy, y1x, y1y);
 
     return (zGx == sAy1x) && (zGy == sAy1y);
   }
 
-  //uint256 Bx, uint256 By, uint256 Cx, uint256 Cy, uint256 y2x, uint256 y2y, uint256 s, uint256 z
-  function verifyChaumPedersenPart2(uint256[8] params) internal pure returns (bool) {
-    (uint256 zBx, uint256 zBy) = EC.ecmul(params[0], params[1], params[7]);
+  /*
+  uint256 Bx, uint256 By, uint256 Cx, uint256 Cy, uint256 y2x, uint256 y2y, uint256 s, uint256 z
+  uint256 zBx, uint256 zBy, uint256 sCx, uint256 sCy
+  */
+  function verifyChaumPedersenPart2(uint256[12] params) internal pure returns (bool) {
+    require(EC.ecmulVerify(params[0], params[1], params[7], params[8], params[9]));
+    require(EC.ecmulVerify(params[2], params[3], params[6], params[10], params[11]));
 
-    (uint256 sCx, uint256 sCy) = EC.ecmul(params[2], params[3], params[6]);
-    (uint256 sCy2x, uint256 sCy2y)= EC.ecadd(sCx, sCy, params[4], params[5]);
+    (uint256 sCy2x, uint256 sCy2y)= EC.ecadd(params[10], params[11], params[4], params[5]);
 
-    return (zBx == sCy2x) && (zBy == sCy2y);
+    return (params[8] == sCy2x) && (params[9] == sCy2y);
   }
 
 
