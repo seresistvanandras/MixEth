@@ -15,7 +15,7 @@ The protocol in a nutshell: senders need to deposit certain amount of ether to E
         * **Deposit tx:** 76,123 gas
         * **Withdraw tx:** 335,714\*n gas
 
-    * [Miximus](https://www.reddit.com/r/ethereum/comments/8ss53z/miximus_zksnark_based_anonymous_transactions_is/): 
+    * [Miximus](https://www.reddit.com/r/ethereum/comments/8ss53z/miximus_zksnark_based_anonymous_transactions_is/): Note that in case of Miximus gas costs are independent of n!
         * **Deposit tx:** 732,815 gas
         * **Withdraw tx:** 1,903,305 gas
     * MixEth
