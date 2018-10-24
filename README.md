@@ -11,8 +11,17 @@ The protocol in a nutshell: senders need to deposit certain amount of ether to E
 
 * On-chain costs measured in gas
     
-    * Möbius withdraw tx: 335,714\*n 
+    * Möbius: 
+        * **Deposit tx:** 76,123 gas
+        * **Withdraw tx:** 335,714\*n gas
 
-    * [Miximus withraw tx](https://www.reddit.com/r/ethereum/comments/8ss53z/miximus_zksnark_based_anonymous_transactions_is/): 1903305
-
-    * MixEth shuffle tx (approx.):  198429 + (2\*SSTORE\*n), where the first term is the gas cost of verifying on-chain the Chaum-Pedersen proof, while the second term is the cost of storing on-chain the shuffled public keys. **Note:** the cost of SSTORE is 20,000 gas.   
+    * [Miximus](https://www.reddit.com/r/ethereum/comments/8ss53z/miximus_zksnark_based_anonymous_transactions_is/): Note that in case of Miximus gas costs are independent of n!
+        * **Deposit tx:** 732,815 gas
+        * **Withdraw tx:** 1,903,305 gas
+    * MixEth
+        * **Deposit tx:** sending one secp256k1 public key to the MixEth contract: cca. 65,000 gas. 
+        * **Shuffle tx:** (2\*(n+1)\*SSTORE\)=44,000\*n. Shufflers need to send n shuffled public keys and the shuffling accumulated constant to MixEth.  
+        * **Challenging a shuffle:** it requires 2 Chaum-Pedersen proof: cca. 400,000~2*198,429 gas
+        * **Withdraw tx:** Sending a tx to MixEth signed using a modified ECDSA: cca. 21,000 gas.  
+        
+**Note:** the cost of SSTORE is 20,000 gas.
