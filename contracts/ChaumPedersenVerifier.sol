@@ -1,14 +1,11 @@
 pragma solidity ^0.4.24;
 pragma experimental ABIEncoderV2;
 
-
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import {EC} from './utils/EC.sol';
 
-contract ChaumPedersenVerifier {
+library ChaumPedersenVerifier {
   using SafeMath for uint;
-
-  bool public testIng;
 
   uint256 constant public Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798;
   uint256 constant public Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8;
@@ -31,8 +28,6 @@ contract ChaumPedersenVerifier {
     bool b1 = verifyChaumPedersenPart1(params[0], params[1], params[7], params[8], params[6], params[11], params[12], params[13], params[14], params[15]);
     uint256[12] memory params2=[params[2], params[3], params[4], params[5], params[9], params[10], params[6], params[11], params[16], params[17], params[18], params[19]];
     bool b2 = verifyChaumPedersenPart2(params2);
-
-    testIng = b1 && b2;
 
     return b1 && b2;
   }
@@ -58,6 +53,4 @@ contract ChaumPedersenVerifier {
 
     return (params[8] == sCy2x) && (params[9] == sCy2y);
   }
-
-
 }

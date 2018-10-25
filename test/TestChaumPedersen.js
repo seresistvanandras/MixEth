@@ -5,9 +5,6 @@ let Web3latest = require('web3');
 let web3latest = new Web3latest();
 
 
-//zGx <BN: 3e23b6642a729ec623b0154685ae6f1de3c72ae3eb3ee7713725bc93c5d281f0>
-//zGy <BN: 7ad3d864b091d260e78139b3fcebc71e0ffbeaf6e0bc3d6c6be3d4920cb6a9f5>
-
 contract('ChaumPedersenVerifier', function(accounts) {
     let ContractInstance;
     it("Chaum Pedersen Proof Verification",  async () => {

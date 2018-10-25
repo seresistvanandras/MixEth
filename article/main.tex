@@ -192,7 +192,7 @@ After some period of time no more deposits are allowed to the tumbling contract.
 $PK_{i+1},C_{i+1}^{*}\stackrel{\$}{\leftarrow}Shuffle(PK_{i},C^{*}_{i},c_{i},\pi_{i})$. Let us call $C^{*}$ as the shuffling accumulated constant, which can be obtained by $C^{*}_{i+1}=c_{i}C^{*}_{i}$. The shuffling accumulated constant is needed for receivers to audit shuffling and to collect their funds at the end of the final shuffling period. The permutation $\pi$ and the secret multiplier $c_{i}$ from the new shuffling accumulated constant should be kept private after shuffling, otherwise it is trivial to track how public keys are shuffled. All the outputs of the $Shuffle$ algorithm are public and written into the tumbling contract.  
 
 $0\lor1\leftarrow 
-ChallengeShuffle(PK_{i},C^{*}_{i},PK_{i-1},C^{*}_{i-1},pk_{B})$: receiver $B$ with public key $pk_{B}=s_{B}G$ can challenge an incorrect shuffle at the $i$th round by giving two Chaum-Pedersen zero-knowledge proofs that the following two tuples are DDH-tuples: $(G, s_{B}G, C^{*}_{i-1}, s_{B}C^{*}_{i-1})$ and $(G, s_{B}G, C^{*}_{i-1}, s_{B}C^{*}_{i})$. If both of the proofs are verified and $s_{B}C^{*}_{i} \notin PK_{i}$, while $s_{B}C^{*}_{i-1} \in PK_{i-1}$, then the challenge is accepted, otherwise rejected. These proofs and checks allow one to check that indeed the $i$th round is the first round in which the corresponding public key to $s_{B}$ is shuffled incorrectly.  
+ChallengeShuffle(PK_{i},C^{*}_{i},PK_{i-1},C^{*}_{i-1},pk_{B})$: receiver $B$ with public key $pk_{B}=s_{B}G$ can challenge an incorrect shuffle at the $i$th round by giving a Chaum-Pedersen zero-knowledge proof that the following tuple is DDH-tuples: $(C^{*}_{i-1}, s_{B}C^{*}_{i-1}, C^{*}_{i}, s_{B}C^{*}_{i})$. If the proof verifies and $s_{B}C^{*}_{i} \notin PK_{i}$, while $s_{B}C^{*}_{i-1} \in PK_{i-1}$, then the challenge is accepted, otherwise rejected. This proof and checks allow one to be certain that indeed the $i$th round is the first round in which the corresponding public key to $s_{B}$ is shuffled incorrectly.  
 
 $tx\stackrel{\$}{\leftarrow}Withdraw(sk_B)$: after the end of the shuffling period users are allowed to withdraw their funds. Note that here withdraw transactions will be signed with a modified version of ECDSA, where not the original generator element $G$ is used as generator rather the final shuffling accumulated constant.
 
@@ -247,16 +247,15 @@ Shuffle is done off-chain, however the result and the updated shuffling accumula
 \end{algorithmic}   
 \end{algorithm}
 \subsection{Challenging period}
-Every participant should check the correctness of incoming shuffles, therefore sufficient time should be provided for each challenging round. These are the actions Bob as a receiver needs to perform to check the correctness of the shuffle at $i$th round if Bob has secret key $s_{B}$. In this case Bob should check whether $s_{B}C^{*}_{i} \in PK_{i}$ or not. If not, Bob should prove to MixEth that the $i$th round is indeed the first round, where the shuffled public key corresponding to $s_{B}$ is compromised. The first Chaum-Pedersen ensures that the integrity of the shuffled public key in round $i-1$st is intact, while the second proves that it is compromised in round $i$th.   
+Every participant should check the correctness of incoming shuffles, therefore sufficient time should be provided for each challenging round. These are the actions Bob as a receiver needs to perform to check the correctness of the shuffle at $i$th round if Bob has secret key $s_{B}$. In this case Bob should check whether $s_{B}C^{*}_{i} \in PK_{i}$ or not. If not, Bob should prove to MixEth that the $i$th round is indeed the first round, where the shuffled public key corresponding to $s_{B}$ is compromised. The Chaum-Pedersen proof in the challenge transaction ensures that the integrity of the shuffled public key in round $i-1$st is intact, while shuffled public key is compromised in the $i$th round.   
 
 \begin{algorithm}
 	\caption{On-chain verification algorithm of incoming shuffle challenges}\label{verifyingshufflingoffchain}
-	\hspace*{\algorithmicindent} \textbf{Input}$(PK_{i}, PK_{i-1}, proof_{DDH}(G,s_{B}G,C^{*}_{i-1},s_{B}C^{*}_{i-1}), proof_{DDH}(G,s_{B}G,C^{*}_{i},s_{B}C^{*}_{i})$ \\
+	\hspace*{\algorithmicindent} \textbf{Input}$(PK_{i}, PK_{i-1}, proof_{DDH}(C^{*}_{i-1},s_{B}C^{*}_{i-1},C^{*}_{i},s_{B}C^{*}_{i})$ \\
 	\begin{algorithmic}[1]
-		\State $b\leftarrow verifyChaumPedersen(proof_{DDH}(G,s_{B}G,C^{*}_{i-1},s_{B}C^{*}_{i-1})$ 
-		\State $b^{'}\leftarrow verifyChaumPedersen(proof_{DDH}(G,s_{B}G,C^{*}_{i},s_{B}C^{*}_{i})$ 
+		\State $b\leftarrow verifyChaumPedersen(proof_{DDH}(C^{*}_{i-1},s_{B}C^{*}_{i-1}, C^{*}_{i},s_{B}C^{*}_{i})$ 
 		\State $b^*\leftarrow0$
-		\If {$b \land b^{'} \land s_{B}C^{*}_{i-1}\in PK_{i-1}\land s_{B}C^{*}_{i} \notin PK_{i}$}
+		\If {$b \land s_{B}C^{*}_{i-1}\in PK_{i-1}\land s_{B}C^{*}_{i} \notin PK_{i}$}
 		\State $b^*\gets 1$
 		\Else
 		\State $b^*\gets 0$
@@ -264,9 +263,7 @@ Every participant should check the correctness of incoming shuffles, therefore s
 		\hspace*{\algorithmicindent} \textbf{Output:} $b^{*}$ 
 	\end{algorithmic}   
 \end{algorithm}
-Note that every recipient should perform this check after each shuffling. Noone can check the inclusion and correctness of shuffled public keys for recipients other than themselves. This task is non-outsourcable unless one reveals her own private key, which would obviously lead to loss of funds at the end of the MixEth protocol, since anyone can claim the funds knowing the corresponding secret key.
-
-We also highlight the necessity of two Chaum-Pedersen proofs for challenging a shuffle. If only one Chaum-Pedersen proof is enclosed in the challenging transaction, MixEth can not be sure that the integrity of the problematic public key indeed in the $i$th shuffling round was compromised. This could be abused by a malicious shuffler who deliberately corrupts their own public key in their shuffling round and afterwards they could blame any other shuffler for the compromise. This could have been led to losses of honest recipients' deposit.    
+Note that every recipient should perform this check after each shuffling. Noone can check the inclusion and correctness of shuffled public keys for recipients other than themselves. This task is non-outsourcable unless one reveals her own private key, which would obviously lead to loss of funds at the end of the MixEth protocol, since anyone can claim the funds knowing the corresponding secret key.  
 
 \subsection{Withdrawing}
 Let $C^*$ be the final shuffling accumulated constant. For a recipient $B$, whose public key $s_{B}G \in initPubKeys[]$, in the final shuffle there will be $s_{B}C^*$. The recipient can prove to MixEth that she knows secret key $s_{B}$ by using a modified ECDSA, which uses $C^*$ as the generator element instead of the standardized $G$.
@@ -389,6 +386,9 @@ MixEth is not fully compatible with the current EVM, however it could be deploye
 \section{Future work}
 We are going to implement and deploy MixEth on Ethereum and evaluate its performance. We are also going to give formal security proofs for the claimed security properties.  
 An important and crucial research question is whether it is possible to design and implement an efficient and trustless Ethereum-based coin mixer with strong security guarantees which do not rely on any workaround and upcoming EIP implementation and is ready to be deployed on present-day Ethereum. 
+
+\section{Acknowledgements}
+We would like to thank barryWhiteHat and Dmitry Khovratovich for the insightful comments and discussions. 
 \bibliographystyle{plain}
 \bibliography{sample}
 

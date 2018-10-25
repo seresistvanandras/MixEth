@@ -4,6 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import {EC} from './utils/EC.sol';
+import {ChaumPedersenVerifier} from './ChaumPedersenVerifier.sol';
 
 contract MixEth {
   using SafeMath for uint;
@@ -15,7 +16,7 @@ contract MixEth {
   uint256 public shuffleRound = 0;
   mapping(address => Status) public shufflers;
   Point[] public initPubKeys;
-  Shuffle[] Shuffles;
+  Shuffle[] public Shuffles;
 
   struct Point {
     uint256 x; //x coordinate
@@ -26,13 +27,8 @@ contract MixEth {
   describes a shuffle: contains the shuffled pubKeys and shuffling accumulated constant
   */
   struct Shuffle {
-    uint256[] publicKeys;
-    uint256[2] C;
+    uint256[12] shuffle;
     address shuffler;
-  }
-
-  struct CHProof {
-    uint256[20] transcript;
   }
 
   struct Status {
@@ -46,10 +42,10 @@ contract MixEth {
     shufflers[address(sha3(initPubKeyX, initPubKeyY))] = Status(true, false);
   }
 
-  function uploadShuffle(Shuffle newShuffle) public payable onlyShuffler {
+  function uploadShuffle(uint256[12] _shuffle) public payable onlyShuffler {
     require(msg.value == shufflingDeposit);
-    Shuffles[shuffleRound] = newShuffle;
-    shuffleRound=shuffleRound.add(1);
+    Shuffles.push(Shuffle(_shuffle, msg.sender));
+    shuffleRound = shuffleRound.add(1);
     shufflers[msg.sender].canShuffle = false; // a receiver can only shuffle once
   }
 
@@ -58,14 +54,11 @@ contract MixEth {
     which is stored at Shuffles[round].
     If challenge accepted malicious shuffler's deposit is slashed.
   */
-  function challengeShuffle(CHProof challenge, uint256 round) public returns (bool) {
-    bool accepted;
-
-    if(accepted) {
+  function challengeShuffle(uint256[20] proofTranscript, uint256 round) public {
+    if(ChaumPedersenVerifier.verifyChaumPedersen(proofTranscript)) {
       shufflers[Shuffles[round].shuffler].slashed = true;
+      shuffleRound=shuffleRound.sub(1);
     }
-
-    return accepted;
   }
 
   //receivers can withdraw funds at most once

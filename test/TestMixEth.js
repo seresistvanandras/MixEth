@@ -4,10 +4,8 @@ let abi = require('ethereumjs-abi');
 
 let Web3latest = require('web3');
 let web3latest = new Web3latest();
+web3latest.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
 
-
-//zGx <BN: 3e23b6642a729ec623b0154685ae6f1de3c72ae3eb3ee7713725bc93c5d281f0>
-//zGy <BN: 7ad3d864b091d260e78139b3fcebc71e0ffbeaf6e0bc3d6c6be3d4920cb6a9f5>
 
 contract('MixEth', function(accounts) {
     let ContractInstance;
@@ -29,7 +27,20 @@ contract('MixEth', function(accounts) {
             assert.equal(ycoordinate, 'fd94ed48e1f63312dce58f4d778ff45a2e5abb08a39c1bc0241139f5e54de7df', "Y coordinate is not correct");
             return ContractInstance.shufflers.call(shuffler);
         }).then(function(shufflerAddressIsSet) {
-            assert.equal(true, shufflerAddressIsSet, "Shuffler address is not correct");
+            assert.equal(true, shufflerAddressIsSet[0], "Shuffler address is not correct");
+        });
+    });
+
+    it("Uploading a shuffle to MixEth", function() {
+        return MixEth.deployed().then(async function(instance) {
+            ContractInstance = instance;
+            let txReceipt = await ContractInstance.uploadShuffle(
+            [pubKeyX, pubKeyX, pubKeyX, pubKeyX, pubKeyX, pubKeyX, pubKeyX, pubKeyX, pubKeyX, pubKeyX,
+            pubKeyY, pubKeyY],
+            {value:1000000000000000000});
+            return ContractInstance.shufflers.call(accounts[0]);
+        }).then(function(shuffled) {
+            assert.equal(false, shuffled, "Shuffling transaction failed");
         });
     });
   });
