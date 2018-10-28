@@ -14,7 +14,9 @@
 \pgfplotsset{compat=1.12}
 \usepackage[group-separator={,}]{siunitx}
 \usepackage{amsmath}
+\usepackage{wrapfig}
 \usepackage{amsthm}
+\usepackage{graphicx}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{breqn}
@@ -24,7 +26,6 @@
 \usepackage{pifont}% http://ctan.org/pkg/pifont
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
-\usepackage{wrapfig}
 \usepackage{eufrak}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -349,6 +350,20 @@ If an adversary is able to steal funds from other users than it would imply that
 \end{table}
 
 \section{Implementation}
+
+\begin{wrapfigure}{r}{0.7\textwidth}
+	\centering
+	\includegraphics[scale=0.7]{./withdrawalComplexity.jpg}
+\end{wrapfigure}
+
+We envision two approaches for implementing MixEth. The first implementation of MixEth does not apply state channels, all the transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain. 
+
+On of the main bottlenecks of coin mixing protocols is the withdrawal transactions' gas costs. A Miximus withdrawal transaction burns $1\,903\,305$ gas, regardless of the number of participating parties. Since the block gas limit is $8\,000\,266$ as of 2018, October 24 only 4 Miximus withdrawal transactions could fit in one Ethereum block. This is even worse for Möbius, since the gas cost for withdrawing coins from a Möbius mixer linearly increases with the numbers of participants.    
+
+\subsection{Fully on-chain implementation}
+
+\subsection{State channel implementation}
+
 \section{Related work}
 As Table \ref{table:communicationcomplexity} demonstrates, both Möbius and Miximus require $2$ on-chain transactions, while MixEth requires $3$. In spite of this seemingly added complexity, we are confident that these 3 (deposit, shuffle, withdraw) transactions consume significantly less gas than those (deposit, verify linkable ring signature/zkSNARK) of Möbius and Miximus. 
 \begin{table}[H] 

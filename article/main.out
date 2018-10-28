@@ -25,8 +25,10 @@
 \BOOKMARK [2][-]{subsection.5.2}{Availability}{section.5}% 25
 \BOOKMARK [2][-]{subsection.5.3}{Theft prevention}{section.5}% 26
 \BOOKMARK [1][-]{section.6}{Implementation}{}% 27
-\BOOKMARK [1][-]{section.7}{Related work}{}% 28
-\BOOKMARK [1][-]{section.8}{Extensions and improvements}{}% 29
-\BOOKMARK [1][-]{section.9}{Conclusion}{}% 30
-\BOOKMARK [1][-]{section.10}{Future work}{}% 31
-\BOOKMARK [1][-]{section.11}{Acknowledgements}{}% 32
+\BOOKMARK [2][-]{subsection.6.1}{Fully on-chain implementation}{section.6}% 28
+\BOOKMARK [2][-]{subsection.6.2}{State channel implementation}{section.6}% 29
+\BOOKMARK [1][-]{section.7}{Related work}{}% 30
+\BOOKMARK [1][-]{section.8}{Extensions and improvements}{}% 31
+\BOOKMARK [1][-]{section.9}{Conclusion}{}% 32
+\BOOKMARK [1][-]{section.10}{Future work}{}% 33
+\BOOKMARK [1][-]{section.11}{Acknowledgements}{}% 34
