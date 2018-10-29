@@ -16,7 +16,7 @@ contract MixEth {
   uint256 public shuffleRound = 0;
   mapping(address => Status) public shufflers;
   Point[] public initPubKeys;
-  Shuffle[] public Shuffles;
+  mapping(uint256 => Shuffle) Shuffles;
 
   struct Point {
     uint256 x; //x coordinate
@@ -32,21 +32,21 @@ contract MixEth {
   }
 
   struct Status {
-    bool canShuffle;
+    bool alreadyShuffled;
     bool slashed;
   }
 
-  function deposit(uint256 initPubKeyX, uint256 initPubKeyY) public payable {
+  function deposit(uint256 initPubKeyX, uint256 initPubKeyY, address shuffler) public payable {
     require(msg.value == amt);
     initPubKeys.push(Point(initPubKeyX, initPubKeyY));
-    shufflers[address(sha3(initPubKeyX, initPubKeyY))] = Status(true, false);
+    shufflers[shuffler] = Status(false, false);
   }
 
   function uploadShuffle(uint256[12] _shuffle) public payable onlyShuffler {
     require(msg.value == shufflingDeposit);
-    Shuffles.push(Shuffle(_shuffle, msg.sender));
+    Shuffles[shuffleRound] = Shuffle(_shuffle, msg.sender);
     shuffleRound = shuffleRound.add(1);
-    shufflers[msg.sender].canShuffle = false; // a receiver can only shuffle once
+    shufflers[msg.sender].alreadyShuffled = true; // a receiver can only shuffle once
   }
 
   /*
@@ -54,11 +54,20 @@ contract MixEth {
     which is stored at Shuffles[round].
     If challenge accepted malicious shuffler's deposit is slashed.
   */
-  function challengeShuffle(uint256[20] proofTranscript, uint256 round) public {
-    if(ChaumPedersenVerifier.verifyChaumPedersen(proofTranscript)) {
-      shufflers[Shuffles[round].shuffler].slashed = true;
-      shuffleRound=shuffleRound.sub(1);
+  function challengeShuffle(uint256[22] proofTranscript, uint256 round, uint256 indexinPrevShuffleA, uint256 indexinPrevShuffleA2) public {
+    require(proofTranscript[0] == Shuffles[round-1].shuffle[10] && proofTranscript[1] == Shuffles[round-1].shuffle[11]); //checking correctness of C*_{i-1}
+    require(proofTranscript[2] == Shuffles[round-1].shuffle[indexinPrevShuffleA] && proofTranscript[3] == Shuffles[round-1].shuffle[indexinPrevShuffleA2]); //checking that shuffled key is indeed included in previous shuffle
+    require(proofTranscript[4] == Shuffles[round].shuffle[10] && proofTranscript[5] == Shuffles[round].shuffle[11]); //checking correctness of C*_{i}
+    bool includedInShuffle;
+    for(uint256 i=0; i < 5; i++) {
+      if(proofTranscript[6] == Shuffles[round].shuffle[2*i] && proofTranscript[7] == Shuffles[round].shuffle[2*i+1]) {
+        includedInShuffle = true;
+        break;
+      }
     }
+    require(!includedInShuffle && ChaumPedersenVerifier.verifyChaumPedersen(proofTranscript));
+    shufflers[Shuffles[round].shuffler].slashed = true;
+    shuffleRound = shuffleRound.sub(1);
   }
 
   //receivers can withdraw funds at most once
@@ -75,8 +84,13 @@ contract MixEth {
     }
   }
 
+  // Shuffled pubKeys in shuffleRound
+    function getShuffle(uint256 round) public view returns (uint256[12] pubKeys) {
+        return Shuffles[round].shuffle;
+    }
+
   modifier onlyShuffler() {
-        if (shufflers[msg.sender].canShuffle) {
+        if (!shufflers[msg.sender].alreadyShuffled) {
             _;
         }
     }

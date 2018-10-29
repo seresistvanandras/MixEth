@@ -1,17 +1,18 @@
-let ChaumPedersenVerifier = artifacts.require("ChaumPedersenVerifier");
+let CHPLibraryTest = artifacts.require("CHPLibraryTest");
 let BigNumber = require('bignumber.js');
 
 let Web3latest = require('web3');
 let web3latest = new Web3latest();
 
 
-contract('ChaumPedersenVerifier', function(accounts) {
+contract('CHPLibraryTest', function(accounts) {
     let ContractInstance;
     it("Chaum Pedersen Proof Verification",  async () => {
-       return ChaumPedersenVerifier.deployed().then( async function(instance) {
+       return CHPLibraryTest.deployed().then( async function(instance) {
         ContractInstance = instance;
          let txReceipt= await ContractInstance.verifyChaumPedersen(
-             ['0xa25126710efb86866b63ffab6539e791c76e08f332618bd3fff7d0b1fcd68fd8','0xac55f34cd8a4e188f9629d8546ed7025036a61c5407b129cc8376e3570c7d296',
+             ['0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798','0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8',
+              '0xa25126710efb86866b63ffab6539e791c76e08f332618bd3fff7d0b1fcd68fd8','0xac55f34cd8a4e188f9629d8546ed7025036a61c5407b129cc8376e3570c7d296',
              '0x612e8ba3c5a6adc4f69c1c8aa304c3f1fdbc053a5feaa949189b80ec439ffa40','0x259ff66f1678eae6b9e23f30f59d1349d027a04eb3a8f4e452709deb40f32b17',
              '0x1b5839e49e2d6ef32e38aa60cca86e5534cb5bc7978ad3b99dae5197d95512b4','0x583b4d5d798a872bfa7dd9a665b6acf54a250fb47f3aa86053e3c546bf77597f',
               '43543543',
@@ -22,7 +23,7 @@ contract('ChaumPedersenVerifier', function(accounts) {
               '0xd5c6218926cd52ba55e5e519373c0e54678b41c5d4d899719cca5a286746711c','0x83f75b325fe00b405fbdaf151ae82d97b8902fd4e77177d2e0659e777c901f11',
               '0x6f2350cbf26b171c055043821287deb385f59819827a328a8b796ec9215c1439','0x832a6712f8e01cdd646a84e63881ae21b24efda5420346ab1de304cc2b3f82af',
               '0x43ed682defe766786837b12a40eb9ed7df9de0c5fadbe4269622d8b6d6ab326b','0xe00170553eb23123ab959838fc75b64eca2c79feeaaa05860a3869fac2d3d40a']);
-             console.log(txReceipt);
+             console.log("The gas cost of verifying a Chaum-Pedersen proof on-chain:", txReceipt.receipt.gasUsed);
             return ContractInstance.testIng.call();
         }).then(function(verified) {
             console.log(verified);

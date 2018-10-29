@@ -1,6 +1,11 @@
 let ECLibraryTest = artifacts.require("ECLibraryTest");
 let BigNumber = require('bignumber.js');
+let abi = require('ethereumjs-abi');
+let bigInt = require("big-integer")
 
+let Web3latest = require('web3');
+let web3latest = new Web3latest();
+web3latest.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
 
 let Gx = '0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798';
 let Gy = '0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8';
@@ -115,14 +120,18 @@ contract('ECLibraryTest', function(accounts) {
     });
 
     it("Scalar Multiplication: whatever", function() {
+
         return ECLibraryTest.deployed().then(function(instance) {
-            ContractInstance.mul('0xd043398fa1f2791bb88af1f439844bedebb2c20b13e0fa4a72081e5280a9a4fe');
+            ContractInstance.mul('0xcf646c195cc0d8667e62a98c753eb27bc78c1b8193beef81b7dc48b9bc6dfe49');
             return ContractInstance.hx.call();
         }).then(function(xcoordinate) {
             resultx = new BigNumber(xcoordinate).toString(16);
+            console.log("x coordinate of ganache", resultx);
             return ContractInstance.hy.call();
         }).then(function(ycoordinate){
-          resulty = new BigNumber(ycoordinate).toString(16)
+          resulty = new BigNumber(ycoordinate).toString(16);
+          console.log("y coordinate of ganache", resulty);
+          console.log("hash of pubkey", web3latest.utils.sha3(resultx,resulty));
         });
     });
 

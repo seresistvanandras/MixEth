@@ -7,7 +7,7 @@ let G = '0479BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798483AD
 let n = bigInt('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141',16); //order of the secp256k1 group
 
 
-function proofVerifier(_A, _B, _C, _s, _y1, _y2, z) {
+function proofVerifier(_G, _A, _B, _C, _s, _y1, _y2, z) {
   let A = ec.keyFromPublic(_A,'hex').getPublic();
   let B = ec.keyFromPublic(_B,'hex').getPublic();
   let C = ec.keyFromPublic(_C,'hex').getPublic();
@@ -16,7 +16,7 @@ function proofVerifier(_A, _B, _C, _s, _y1, _y2, z) {
 
   let s =  bigInt(_s.toString(16),16);
 
-  let zG = ec.keyFromPublic(G,'hex').getPublic().mul(z);
+  let zG = ec.keyFromPublic(_G,'hex').getPublic().mul(z);
   console.log("zGx", zG.getX());
   console.log("zGy", zG.getY());
 
