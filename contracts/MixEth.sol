@@ -5,6 +5,7 @@ pragma experimental ABIEncoderV2;
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import {EC} from './utils/EC.sol';
 import {ChaumPedersenVerifier} from './ChaumPedersenVerifier.sol';
+import {ECDSAGeneralized} from './utils/ECDSAGeneralized.sol';
 
 contract MixEth {
   using SafeMath for uint;
@@ -71,10 +72,14 @@ contract MixEth {
   }
 
   //receivers can withdraw funds at most once
-  function withdrawAmt() public {
-    bool sigVerified;
+  function withdrawAmt(uint256[12] sig, uint256 indexInShuffle) public {
+    require(Shuffles[shuffleRound-1].shuffle[indexInShuffle] == sig[2] && Shuffles[shuffleRound-1].shuffle[indexInShuffle+1] == sig[3]); //public key is included in Shuffled
+    require(Shuffles[shuffleRound-1].shuffle[10] == sig[0] && Shuffles[shuffleRound-1].shuffle[11] == sig[1]); //shuffling accumulated constant is correct
+    bool sigVerified = ECDSAGeneralized.verify(sig);
     if(sigVerified) {
       msg.sender.transfer(amt);
+      Shuffles[shuffleRound-1].shuffle[indexInShuffle] = 0;
+      Shuffles[shuffleRound-1].shuffle[indexInShuffle+1] = 0;
     }
   }
 

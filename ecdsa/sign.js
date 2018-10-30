@@ -4,7 +4,6 @@ let BN = require('bn.js');
 let secureRandom = require('secure-random')
 
 let n = 'fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141';
-let power256 = new BN('10000000000000000000000000000000000000000000000000000000000000000',16);
 
 //FIXME: checks has to be added for sign and verify as well
 
@@ -53,8 +52,15 @@ function verify(generator, _pubKey, msgHash, _r, _s) {
   let u1 = (mHash.mul(w)).mod(ec.curve.n);
   let u2 = (r.mul(w)).mod(ec.curve.n);
 
+  console.log("w", w);
+  console.log("u1", u1);
+  console.log("u2", u2);
   //Calculate the curve point (x,y)=u1*G+u2*pubKey.
   let Q = (G.mul(u1)).add(pubKey.mul(u2));
+  console.log("u1Gx",(G.mul(u1)).getX());
+  console.log("u1Gy",(G.mul(u1)).getY());
+  console.log("u2pKx",(pubKey.mul(u2)).getX());
+  console.log("u2pKy",(pubKey.mul(u2)).getY());
   //The signature is valid if r=x mod n, invalid otherwisee
   return((Q.getX().mod(ec.curve.n)).eq(r));
 }
