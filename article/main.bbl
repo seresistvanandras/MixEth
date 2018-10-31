@@ -24,6 +24,12 @@ George Bissias, A~Pinar Ozisik, Brian~N Levine, and Marc Liberatore.
 \newblock In {\em Proceedings of the 13th Workshop on Privacy in the Electronic
   Society}, pages 149--158. ACM, 2014.
 
+\bibitem{boneh1998decision}
+Dan Boneh.
+\newblock The decision diffie-hellman problem.
+\newblock In {\em International Algorithmic Number Theory Symposium}, pages
+  48--63. Springer, 1998.
+
 \bibitem{bonneau2014mixcoin}
 Joseph Bonneau, Arvind Narayanan, Andrew Miller, Jeremy Clark, Joshua~A Kroll,
   and Edward~W Felten.
@@ -42,6 +48,12 @@ David Chaum and Torben~Pryds Pedersen.
 \newblock Wallet databases with observers.
 \newblock In {\em Annual International Cryptology Conference}, pages 89--105.
   Springer, 1992.
+
+\bibitem{fersch2016provable}
+Manuel Fersch, Eike Kiltz, and Bertram Poettering.
+\newblock On the provable security of (ec) dsa signatures.
+\newblock In {\em Proceedings of the 2016 ACM SIGSAC Conference on Computer and
+  Communications Security}, pages 1651--1662. ACM, 2016.
 
 \bibitem{heilman2017tumblebit}
 Ethan Heilman, Leen Alshenibr, Foteini Baldimtsi, Alessandra Scafuro, and

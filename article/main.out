@@ -3,32 +3,35 @@
 \BOOKMARK [2][-]{subsection.2.1}{Notations}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Cryptographic keys in Ethereum}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{Verifiable shuffle}{section.2}% 5
-\BOOKMARK [2][-]{subsection.2.4}{Chaum-Pedersen protocol}{section.2}% 6
-\BOOKMARK [2][-]{subsection.2.5}{Ethereum}{section.2}% 7
-\BOOKMARK [2][-]{subsection.2.6}{Ethereum account abstraction}{section.2}% 8
-\BOOKMARK [1][-]{section.3}{Threat model}{}% 9
-\BOOKMARK [2][-]{subsection.3.1}{Participants and interactions}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.2}{Security goals}{section.3}% 11
-\BOOKMARK [3][-]{subsubsection.3.2.1}{Anonymity}{subsection.3.2}% 12
-\BOOKMARK [3][-]{subsubsection.3.2.2}{Availability}{subsection.3.2}% 13
-\BOOKMARK [3][-]{subsubsection.3.2.3}{Theft prevention}{subsection.3.2}% 14
-\BOOKMARK [1][-]{section.4}{MixEth}{}% 15
-\BOOKMARK [2][-]{subsection.4.1}{Overview}{section.4}% 16
-\BOOKMARK [2][-]{subsection.4.2}{Initializing the tumbler}{section.4}% 17
-\BOOKMARK [2][-]{subsection.4.3}{Depositing period}{section.4}% 18
-\BOOKMARK [2][-]{subsection.4.4}{Shuffling period}{section.4}% 19
-\BOOKMARK [2][-]{subsection.4.5}{Challenging period}{section.4}% 20
-\BOOKMARK [2][-]{subsection.4.6}{Withdrawing}{section.4}% 21
-\BOOKMARK [2][-]{subsection.4.7}{MixEth pseudocode}{section.4}% 22
-\BOOKMARK [1][-]{section.5}{Security}{}% 23
-\BOOKMARK [2][-]{subsection.5.1}{Recipient anonymity}{section.5}% 24
-\BOOKMARK [2][-]{subsection.5.2}{Availability}{section.5}% 25
-\BOOKMARK [2][-]{subsection.5.3}{Theft prevention}{section.5}% 26
-\BOOKMARK [1][-]{section.6}{Implementation}{}% 27
-\BOOKMARK [2][-]{subsection.6.1}{Fully on-chain implementation}{section.6}% 28
-\BOOKMARK [2][-]{subsection.6.2}{State channel implementation}{section.6}% 29
-\BOOKMARK [1][-]{section.7}{Related work}{}% 30
-\BOOKMARK [1][-]{section.8}{Extensions and improvements}{}% 31
-\BOOKMARK [1][-]{section.9}{Conclusion}{}% 32
-\BOOKMARK [1][-]{section.10}{Future work}{}% 33
-\BOOKMARK [1][-]{section.11}{Acknowledgements}{}% 34
+\BOOKMARK [2][-]{subsection.2.4}{Decision Diffie-Hellman Problem and Chaum-Pedersen Protocol}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{ECDSA with arbitrary generator element}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.6}{Ethereum}{section.2}% 8
+\BOOKMARK [2][-]{subsection.2.7}{Ethereum account abstraction}{section.2}% 9
+\BOOKMARK [1][-]{section.3}{Threat model}{}% 10
+\BOOKMARK [2][-]{subsection.3.1}{Participants and interactions}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.2}{Security goals}{section.3}% 12
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Anonymity}{subsection.3.2}% 13
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Availability}{subsection.3.2}% 14
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Theft prevention}{subsection.3.2}% 15
+\BOOKMARK [1][-]{section.4}{MixEth}{}% 16
+\BOOKMARK [2][-]{subsection.4.1}{Overview}{section.4}% 17
+\BOOKMARK [2][-]{subsection.4.2}{Initializing the tumbler}{section.4}% 18
+\BOOKMARK [2][-]{subsection.4.3}{Depositing period}{section.4}% 19
+\BOOKMARK [2][-]{subsection.4.4}{Shuffling period}{section.4}% 20
+\BOOKMARK [2][-]{subsection.4.5}{Challenging period}{section.4}% 21
+\BOOKMARK [2][-]{subsection.4.6}{Withdrawing}{section.4}% 22
+\BOOKMARK [2][-]{subsection.4.7}{MixEth pseudocode}{section.4}% 23
+\BOOKMARK [1][-]{section.5}{Security}{}% 24
+\BOOKMARK [2][-]{subsection.5.1}{Recipient anonymity}{section.5}% 25
+\BOOKMARK [2][-]{subsection.5.2}{Availability}{section.5}% 26
+\BOOKMARK [2][-]{subsection.5.3}{Theft prevention}{section.5}% 27
+\BOOKMARK [1][-]{section.6}{Implementation}{}% 28
+\BOOKMARK [2][-]{subsection.6.1}{Fully on-chain implementation}{section.6}% 29
+\BOOKMARK [2][-]{subsection.6.2}{State channel implementation}{section.6}% 30
+\BOOKMARK [1][-]{section.7}{Related work}{}% 31
+\BOOKMARK [1][-]{section.8}{Extensions and improvements}{}% 32
+\BOOKMARK [1][-]{section.9}{Conclusion}{}% 33
+\BOOKMARK [1][-]{section.10}{Future work}{}% 34
+\BOOKMARK [1][-]{section.11}{Acknowledgements}{}% 35
+\BOOKMARK [1][-]{section*.6}{Appendices}{}% 36
+\BOOKMARK [1][-]{Appendix.a.A}{Proof of Anonymity}{}% 37

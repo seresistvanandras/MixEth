@@ -30,6 +30,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{listings}
+\usepackage[toc,page]{appendix}
 \usepackage{color}
 \definecolor{lightgray}{rgb}{.9,.9,.9}
 \definecolor{darkgray}{rgb}{.4,.4,.4}
@@ -163,7 +164,12 @@ For verifying the proof one needs to compute $8k+5$ exponentiations, however lat
 
 So far verifiable shuffles were only applied in voting schemes, we argue that they are useful in trustless coin mixers as well.  
 
-\subsection{Chaum-Pedersen protocol}
+\subsection{Decision Diffie-Hellman Problem and Chaum-Pedersen Protocol}
+
+The Decision Diffie-Hellman assumption (DDH) is a standard cryptographic hardness assumption which underlies the security of many cryptographic protocols. Roughly speaking DDH states that no efficient algorithm can distinguish between the two distributions $(aG, bG, abG)$ and $(aG, bG, cG)$, where $a,b,c\stackrel{\$}{\leftarrow}\mathbb{Z}_{|\mathbb{G}|}$. It is believed that the DDH assumption holds for elliptic curves with prime order over a prime field with large embedding factor \cite{boneh1998decision}, specifically DDH holds for the secp256k1 curve, which is used to generate accounts and sign transactions in Bitcoin and Ethereum among other cryptocurrencies. 
+
+ Although it is hard to decide whether a triplet is a DDH-triplet without knowing the multipliers, one could convince anyone in zero-knowledge that a tuple is indeed a DDH-tuple if possesses the multipliers    
+
 The language $\mathcal{L}_{DDH}$ is defined to be the set of all tuples $(G,aG,bG,abG)$ where $G\in \mathbb{G}$ is of order prime $q$. The Chaum-Pedersen protocol enables a prover $\mathcal{P}$ to prove to a verifier $\mathcal{V}$ that $(G,A,B,C)\in\mathcal{L}_{DDH}$ in zero-knowledge for groups of prime order \cite{chaum1992wallet}. The protocol is organized as follows:
 
 \begin{enumerate}
@@ -174,6 +180,14 @@ The language $\mathcal{L}_{DDH}$ is defined to be the set of all tuples $(G,aG,b
 	\item $\mathcal{V}$ checks $zG=y_{1}+sA \Mod{q} \land zB=y_{2}+sC \Mod{q}$
 \end{enumerate} 
 Note that in the following a non-interactive version of this protocol will only be considered that can be achieved by applying the Fiat-Shamir heuristic. 
+
+\subsection{ECDSA with arbitrary generator element}
+Elliptic Curve Digital Signature Algorithm (ECDSA) is a key component of MixEth. ECDSA is widely deployed in practice, where in most cases signatures are generated and verified with respect to a fixed generator element of the underlying group \cite{fersch2016provable}. Since all generators are equal from a security point of view, a single generator element is usually fixed in order to promote standardization and assists usability.
+
+However, in MixEth, we deploy a somewhat loosened version of ECDSA, where we allow arbitrary generator elements to be used. Such an extension is indeed needed for withdrawing funds from the mixer, because shuffled public keys remain public keys with respect to non-standardized generator elements. Therefore the usial $\sig$ and $\verify$ algorithms for signing and verifying a messages gets an additional parameter $G^{'}$, which is not necessarily the standardized generator element. Key generation algorithm works as usual $(pk,sk)\stackrel{\$}{\leftarrow}\kgen(1^{\lambda})$, on the other hand $\sigma\stackrel{\$}{\leftarrow}\sig(G^{'},sk,m)$ and  $0/1\leftarrow \verify(G^{'},pk,\sigma, m)$ accept new generators.
+
+In our security proofs we will be relying on the fact that ECDSA is \textit{existentially unforgeable} \cite{{fersch2016provable}}, i.e. no efficient adversary could forge a signature on any given message with non-negligible probability. 
+
 
 \subsection{Ethereum}
 
@@ -349,6 +363,7 @@ If an adversary is able to steal funds from other users than it would imply that
 	\label{table:securityproperties}
 \end{table}
 
+\newpage
 \section{Implementation}
 
 \begin{wrapfigure}{r}{0.7\textwidth}
@@ -358,11 +373,31 @@ If an adversary is able to steal funds from other users than it would imply that
 
 We envision two approaches for implementing MixEth. The first implementation of MixEth does not apply state channels, all the transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain. 
 
-On of the main bottlenecks of coin mixing protocols is the withdrawal transactions' gas costs. A Miximus withdrawal transaction burns $1\,903\,305$ gas, regardless of the number of participating parties. Since the block gas limit is $8\,000\,266$ as of 2018, October 24 only 4 Miximus withdrawal transactions could fit in one Ethereum block. This is even worse for Möbius, since the gas cost for withdrawing coins from a Möbius mixer linearly increases with the numbers of participants.    
+On of the main bottlenecks of coin mixing protocols is the withdrawal transactions' gas costs. A Miximus withdrawal transaction burns $\num[group-separator={,}]{1903305}$ gas, regardless of the number of participating parties. Since the block gas limit is $\num[group-separator={,}]{8000266}$ as of 2018, October 24 only 4 Miximus withdrawal transactions could fit in one Ethereum block. This is even worse for Möbius, since the gas cost for withdrawing coins from a Möbius mixer linearly increases with the numbers of participants.    
 
 \subsection{Fully on-chain implementation}
 
 \subsection{State channel implementation}
+
+\begin{table}[H] 
+	\caption{Preliminary implementation gas cost results. Expect further improvements. MixEth++ refers to the implementation which leverages state channels for shuffling and challenging periods}
+	\centering 
+	\begin{tabular}{@{\extracolsep{6pt}}lcccc@{}} 
+		
+		\toprule
+		\hline
+		&Deposit&\multicolumn{2}{c}{Shuffle}& Withdraw\\
+		\cline{3-4}&&Shuffle upload&Challenge\\
+		\hline
+		\midrule
+		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{76123}$&0&0&$\num[group-separator={,}]{335714}$n   \\
+		Miximus \cite{miximus2018}&$\num[group-separator={,}]{732815}$&0&0 &$\num[group-separator={,}]{1903305}$  \\
+		MixEth&\num[group-separator={,}]{99254}&\num[group-separator={,}]{253268}+\num[group-separator={,}]{40000}n&\num[group-separator={,}]{210220}&\num[group-separator={,}]{143268}  \\
+		MixEth++&TBD&0&0&TBD\\
+		\bottomrule
+	\end{tabular}
+	\label{table:securityproperties}
+\end{table}
 
 \section{Related work}
 As Table \ref{table:communicationcomplexity} demonstrates, both Möbius and Miximus require $2$ on-chain transactions, while MixEth requires $3$. In spite of this seemingly added complexity, we are confident that these 3 (deposit, shuffle, withdraw) transactions consume significantly less gas than those (deposit, verify linkable ring signature/zkSNARK) of Möbius and Miximus. 
@@ -404,7 +439,13 @@ An important and crucial research question is whether it is possible to design a
 
 \section{Acknowledgements}
 We would like to thank barryWhiteHat and Dmitry Khovratovich for the insightful comments and discussions. 
+
 \bibliographystyle{plain}
 \bibliography{sample}
+
+\begin{appendices}
+	\section{Proof of Anonymity}
+	Reduction to DDH has to be added here
+\end{appendices}
 
 \end{document}

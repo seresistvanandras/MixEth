@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  28 OCT 2018 18:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  31 OCT 2018 22:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1433,6 +1433,12 @@ File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
+(/usr/share/texlive/texmf-dist/tex/latex/appendix/appendix.sty
+Package: appendix 2009/09/02 v1.2b extra appendix facilities
+\c@@pps=\count288
+\c@@ppsavesec=\count289
+\c@@ppsaveapp=\count290
+)
 (/home/istvan/texmf/tex/latex/cryptocode/cryptocode.sty
 Package: cryptocode 2015/04/22 v0.1 Cryptocode LaTeX package for writing pseudo
 code in cryptographic settings
@@ -1447,7 +1453,7 @@ LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
-\g_MT_multlinerow_int=\count288
+\g_MT_multlinerow_int=\count291
 \l_MT_multwidth_dim=\dimen336
 \origjot=\skip77
 \l_MT_shortvdotswithinadjustabove_dim=\dimen337
@@ -1479,10 +1485,10 @@ Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 \XKV@toks=\toks54
 \XKV@tempa@toks=\toks55
 )
-\XKV@depth=\count289
+\XKV@depth=\count292
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
-\xargs@max=\count290
+\xargs@max=\count293
 \xargs@toksa=\toks56
 \xargs@toksb=\toks57
 )
@@ -1494,61 +1500,61 @@ Package: l3regex 2016/01/19 v6377 L3 Experimental regular expressions
 
 (/usr/share/texlive/texmf-dist/tex/latex/l3experimental/l3str/l3tl-build.sty
 Package: l3tl-build 2016/01/19 v6377 L3 Experimental token list construction
-\l__tl_build_start_index_int=\count291
-\l__tl_build_index_int=\count292
+\l__tl_build_start_index_int=\count294
+\l__tl_build_index_int=\count295
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3experimental/l3str/l3tl-analysis.sty
 Package: l3tl-analysis 2015/11/09 v6244 L3 Experimental token lists analysis
-\l__tl_analysis_normal_int=\count293
-\l__tl_analysis_index_int=\count294
-\l__tl_analysis_nesting_int=\count295
-\l__tl_analysis_type_int=\count296
+\l__tl_analysis_normal_int=\count296
+\l__tl_analysis_index_int=\count297
+\l__tl_analysis_nesting_int=\count298
+\l__tl_analysis_type_int=\count299
 ) (/usr/share/texlive/texmf-dist/tex/latex/l3experimental/l3str/l3flag.sty
 Package: l3flag 2016/01/19 v6377 L3 Experimental flags
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3experimental/l3str/l3str-convert.sty
 Package: l3str-convert 2015/09/26 v6106 L3 Experimental string encoding convers
 ions
-\l__str_internal_int=\count297
-\c__str_replacement_char_int=\count298
+\l__str_internal_int=\count300
+\c__str_replacement_char_int=\count301
 )
-\l__regex_internal_a_int=\count299
-\l__regex_internal_b_int=\count300
-\l__regex_internal_c_int=\count301
-\l__regex_balance_int=\count302
-\l__regex_group_level_int=\count303
-\l__regex_mode_int=\count304
-\l__regex_catcodes_int=\count305
-\l__regex_default_catcodes_int=\count306
-\c__regex_catcode_D_int=\count307
-\c__regex_catcode_S_int=\count308
-\c__regex_catcode_L_int=\count309
-\c__regex_catcode_O_int=\count310
-\c__regex_catcode_A_int=\count311
-\c__regex_all_catcodes_int=\count312
-\l__regex_show_lines_int=\count313
-\l__regex_min_state_int=\count314
-\l__regex_max_state_int=\count315
-\l__regex_left_state_int=\count316
-\l__regex_right_state_int=\count317
-\l__regex_capturing_group_int=\count318
-\l__regex_min_pos_int=\count319
-\l__regex_max_pos_int=\count320
-\l__regex_current_pos_int=\count321
-\l__regex_start_pos_int=\count322
-\l__regex_success_pos_int=\count323
-\l__regex_current_char_int=\count324
-\l__regex_current_catcode_int=\count325
-\l__regex_last_char_int=\count326
-\l__regex_case_changed_char_int=\count327
-\l__regex_current_state_int=\count328
-\l__regex_step_int=\count329
-\l__regex_min_active_int=\count330
-\l__regex_max_active_int=\count331
-\l__regex_replacement_csnames_int=\count332
-\l__regex_match_count_int=\count333
-\l__regex_submatch_int=\count334
-\l__regex_zeroth_submatch_int=\count335
+\l__regex_internal_a_int=\count302
+\l__regex_internal_b_int=\count303
+\l__regex_internal_c_int=\count304
+\l__regex_balance_int=\count305
+\l__regex_group_level_int=\count306
+\l__regex_mode_int=\count307
+\l__regex_catcodes_int=\count308
+\l__regex_default_catcodes_int=\count309
+\c__regex_catcode_D_int=\count310
+\c__regex_catcode_S_int=\count311
+\c__regex_catcode_L_int=\count312
+\c__regex_catcode_O_int=\count313
+\c__regex_catcode_A_int=\count314
+\c__regex_all_catcodes_int=\count315
+\l__regex_show_lines_int=\count316
+\l__regex_min_state_int=\count317
+\l__regex_max_state_int=\count318
+\l__regex_left_state_int=\count319
+\l__regex_right_state_int=\count320
+\l__regex_capturing_group_int=\count321
+\l__regex_min_pos_int=\count322
+\l__regex_max_pos_int=\count323
+\l__regex_current_pos_int=\count324
+\l__regex_start_pos_int=\count325
+\l__regex_success_pos_int=\count326
+\l__regex_current_char_int=\count327
+\l__regex_current_catcode_int=\count328
+\l__regex_last_char_int=\count329
+\l__regex_case_changed_char_int=\count330
+\l__regex_current_state_int=\count331
+\l__regex_step_int=\count332
+\l__regex_min_active_int=\count333
+\l__regex_max_active_int=\count334
+\l__regex_replacement_csnames_int=\count335
+\l__regex_match_count_int=\count336
+\l__regex_submatch_int=\count337
+\l__regex_zeroth_submatch_int=\count338
 ) (/usr/share/texlive/texmf-dist/tex/latex/pbox/pbox.sty
 Package: pbox 2011/12/07 v1.2 Dynamic parboxes
 \pb@xlen=\skip78
@@ -1556,7 +1562,7 @@ Package: pbox 2011/12/07 v1.2 Dynamic parboxes
 (/usr/share/texlive/texmf-dist/tex/latex/varwidth/varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \@vwid@box=\box73
-\sift@deathcycles=\count336
+\sift@deathcycles=\count339
 \@vwid@loff=\dimen343
 \@vwid@roff=\dimen344
 )
@@ -1565,7 +1571,7 @@ Package: suffix 2006/07/15 1.5a Variant command support
 )
 (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count337
+\etb@tempcnta=\count340
 
 
 Package etoolbox Warning: Patching '\end' failed!
@@ -1587,9 +1593,9 @@ Package: environ 2014/05/04 v0.3 A new way to define environments
 (/usr/share/texlive/texmf-dist/tex/latex/trimspaces/trimspaces.sty
 Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 ))
-\c@@pc@global@pc@cnt=\count338
-\c@@pc@global@pc@nestcnt=\count339
-\c@@spacecounter=\count340
+\c@@pc@global@pc@cnt=\count341
+\c@@pc@global@pc@nestcnt=\count342
+\c@@spacecounter=\count343
 .................................................
 . LaTeX info: "xparse/define-command"
 . 
@@ -1600,53 +1606,53 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 . 
 . Defining command \@pc@spacesubstitution with sig. 'mmm' on line 461.
 .................................................
-\c@pclinenumber=\count341
-\c@Hpclinenumber=\count342
-\c@@pclinenumber=\count343
-\c@H@pclinenumber=\count344
-\c@@pclinenumbertmp=\count345
-\c@pcgamecounter=\count346
-\c@Hpcgamecounter=\count347
-\c@pcrlinenumber=\count348
-\c@Hpcrlinenumber=\count349
-\c@@pcrlinenumbertmp=\count350
+\c@pclinenumber=\count344
+\c@Hpclinenumber=\count345
+\c@@pclinenumber=\count346
+\c@H@pclinenumber=\count347
+\c@@pclinenumbertmp=\count348
+\c@pcgamecounter=\count349
+\c@Hpcgamecounter=\count350
+\c@pcrlinenumber=\count351
+\c@Hpcrlinenumber=\count352
+\c@@pcrlinenumbertmp=\count353
 \@pcindentwidth=\skip79
 \@pc@minipage@length=\skip80
 \@pc@alt@minipage@length=\skip81
 \@pc@length@tmp@width@vstack=\skip82
-\c@@pc@indentationlevel=\count351
-\c@@pc@remember=\count352
+\c@@pc@indentationlevel=\count354
+\c@@pc@remember=\count355
 \@bb@message@hoffset=\skip83
 \@bb@query@hoffset=\skip84
 \@bb@oraclequery@hoffset=\skip85
 \@bb@challengerquery@hoffset=\skip86
-\c@@bb@oracle@cnt=\count353
-\c@@bb@oracle@nestcnt=\count354
-\c@@bb@challenger@cnt=\count355
-\c@@bb@challenger@nestcnt=\count356
-\c@@bb@env@nestcnt=\count357
+\c@@bb@oracle@cnt=\count356
+\c@@bb@oracle@nestcnt=\count357
+\c@@bb@challenger@cnt=\count358
+\c@@bb@challenger@nestcnt=\count359
+\c@@bb@env@nestcnt=\count360
 \@bb@com@tmpoffset=\skip87
 \@bb@tmplength@b=\skip88
 \pcbeforehstackskip=\skip89
-\c@@pcsubprogcnt1=\count358
-\c@@pcrsubprogcnt1=\count359
-\c@@pcsubprogcnt2=\count360
-\c@@pcrsubprogcnt2=\count361
-\c@@pcsubprogcnt3=\count362
-\c@@pcrsubprogcnt3=\count363
-\c@@pcsubprogcnt4=\count364
-\c@@pcrsubprogcnt4=\count365
-\c@@pcsubprogcnt5=\count366
-\c@@pcrsubprogcnt5=\count367
-\c@@pcsubprogcnt6=\count368
-\c@@pcrsubprogcnt6=\count369
-\c@@pcsubprogcnt7=\count370
-\c@@pcrsubprogcnt7=\count371
-\c@@pcsubprogcnt8=\count372
-\c@@pcrsubprogcnt8=\count373
-\c@@pcsubprogcnt9=\count374
-\c@@pcrsubprogcnt9=\count375
-\c@@pcsubprogstep=\count376
+\c@@pcsubprogcnt1=\count361
+\c@@pcrsubprogcnt1=\count362
+\c@@pcsubprogcnt2=\count363
+\c@@pcrsubprogcnt2=\count364
+\c@@pcsubprogcnt3=\count365
+\c@@pcrsubprogcnt3=\count366
+\c@@pcsubprogcnt4=\count367
+\c@@pcrsubprogcnt4=\count368
+\c@@pcsubprogcnt5=\count369
+\c@@pcrsubprogcnt5=\count370
+\c@@pcsubprogcnt6=\count371
+\c@@pcrsubprogcnt6=\count372
+\c@@pcsubprogcnt7=\count373
+\c@@pcrsubprogcnt7=\count374
+\c@@pcsubprogcnt8=\count375
+\c@@pcrsubprogcnt8=\count376
+\c@@pcsubprogcnt9=\count377
+\c@@pcrsubprogcnt9=\count378
+\c@@pcsubprogstep=\count379
 \pcmessagearrow=\skip90
 .................................................
 . LaTeX info: "xparse/define-command"
@@ -1665,12 +1671,12 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 . 
 . Defining command \pcintertext with sig. 'O{}m' on line 1639.
 .................................................
-\c@pcstartgamecounter=\count377
+\c@pcstartgamecounter=\count380
 )
 (/usr/share/texlive/texmf-dist/tex/latex/todonotes/todonotes.sty
 Package: todonotes 2015/07/09 .dtx Todonotes source and documentation.
 Package: todonotes 2012/07/25
-\c@@todonotes@numberoftodonotes=\count378
+\c@@todonotes@numberoftodonotes=\count381
 )
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
@@ -1724,15 +1730,15 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
 \@linkdim=\dimen345
-\Hy@linkcounter=\count379
-\Hy@pagecounter=\count380
+\Hy@linkcounter=\count382
+\Hy@pagecounter=\count383
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count381
+\Hy@SavedSpaceFactor=\count384
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -1745,7 +1751,7 @@ Package hyperref Info: Plain pages OFF on input line 4458.
 Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
-\c@Hy@tempcnt=\count382
+\c@Hy@tempcnt=\count385
 
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip22
@@ -1753,7 +1759,7 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
 \XeTeXLinkMargin=\dimen346
-\Fld@menulength=\count383
+\Fld@menulength=\count386
 \Field@Width=\dimen347
 \Fld@charsize=\dimen348
 Package hyperref Info: Hyper figures OFF on input line 6295.
@@ -1765,17 +1771,17 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count384
-\c@Item=\count385
-\c@Hfootnote=\count386
+\Hy@abspage=\count387
+\c@Item=\count388
+\c@Hfootnote=\count389
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count387
-\c@bookmark@seq@number=\count388
+\Fld@listcount=\count390
+\c@bookmark@seq@number=\count391
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
@@ -1784,25 +1790,29 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip91
 )
-\c@definition=\count389
+\c@definition=\count392
 
-(./main.aux)
+(./main.aux
+
+LaTeX Warning: Label `table:securityproperties' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 118.
-LaTeX Font Info:    ... okay on input line 118.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 118.
-LaTeX Font Info:    ... okay on input line 118.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 118.
-LaTeX Font Info:    ... okay on input line 118.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 118.
-LaTeX Font Info:    ... okay on input line 118.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 118.
-LaTeX Font Info:    ... okay on input line 118.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 118.
-LaTeX Font Info:    ... okay on input line 118.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 118.
-LaTeX Font Info:    ... okay on input line 118.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1841,16 +1851,16 @@ LaTeX Font Info:    ... okay on input line 118.
 ABD: EveryShipout initializing macros
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count390
+\scratchcounter=\count393
 \scratchdimen=\dimen349
 \scratchbox=\box74
-\nofMPsegments=\count391
-\nofMParguments=\count392
+\nofMPsegments=\count394
+\nofMParguments=\count395
 \everyMPshowfont=\toks58
-\MPscratchCnt=\count393
+\MPscratchCnt=\count396
 \MPscratchDim=\dimen350
-\MPnumerator=\count394
-\makeMPintoPDFobject=\count395
+\MPnumerator=\count397
+\makeMPintoPDFobject=\count398
 \everyMPtoPDFconversion=\toks59
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -1955,9 +1965,9 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count396
+\c@lstlisting=\count399
 \AtBeginShipoutBox=\box75
-Package hyperref Info: Link coloring ON on input line 118.
+Package hyperref Info: Link coloring ON on input line 119.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1965,30 +1975,30 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count397
+\c@section@level=\count400
 )
-LaTeX Info: Redefining \ref on input line 118.
-LaTeX Info: Redefining \pageref on input line 118.
-LaTeX Info: Redefining \nameref on input line 118.
+LaTeX Info: Redefining \ref on input line 119.
+LaTeX Info: Redefining \pageref on input line 119.
+LaTeX Info: Redefining \nameref on input line 119.
 
 (./main.out) (./main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
-\c__siunitx_mathsf_int=\count398
-LaTeX Font Info:    Try loading font information for U+msa on input line 118.
+\c__siunitx_mathsf_int=\count401
+LaTeX Font Info:    Try loading font information for U+msa on input line 119.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 118.
+LaTeX Font Info:    Try loading font information for U+msb on input line 119.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-\c__siunitx_mathtt_int=\count399
+\c__siunitx_mathtt_int=\count402
 
-Overfull \hbox (7.78772pt too wide) in paragraph at lines 129--130
+Overfull \hbox (7.78772pt too wide) in paragraph at lines 130--131
 \T1/cmr/m/n/10 Bitcoin [[]] and other cryp-tocur-ren-cies are pseudony-mous. Us
 ers' pub-lic keys are used as pseudonyms
  []
@@ -1996,128 +2006,132 @@ ers' pub-lic keys are used as pseudonyms
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+cmss on input line 145.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 146.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [2] [3]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 220.
+) [2] [3] [4]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 234.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 220.
- [4]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 234.
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 235.
-
-Underfull \hbox (badness 10000) in paragraph at lines 255--256
+put line 249.
+ [5]
+Underfull \hbox (badness 10000) in paragraph at lines 269--270
 
  []
 
-[5]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 274.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 288.
 
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 275.
- [6]
-<./withdrawalComplexity.jpg, id=289, 552.0625pt x 391.4625pt>
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 289.
+ [6] [7]
+<./withdrawalComplexity.jpg, id=316, 552.0625pt x 391.4625pt>
 File: ./withdrawalComplexity.jpg Graphic file (type jpg)
 
 <use ./withdrawalComplexity.jpg>
-Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 356.
+Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 371.
 (pdftex.def)             Requested size: 386.4411pt x 274.02187pt.
 
-Overfull \hbox (87.68846pt too wide) in paragraph at lines 356--357
+Overfull \hbox (87.68846pt too wide) in paragraph at lines 371--372
  [][] 
  []
 
 
-Overfull \hbox (1.23772pt too wide) in paragraph at lines 359--360
+Overfull \hbox (1.23772pt too wide) in paragraph at lines 374--375
 []\T1/cmr/m/n/10 We en-vi-sion two ap-proaches
  []
 
 
-Underfull \hbox (badness 1845) in paragraph at lines 359--360
+Underfull \hbox (badness 1845) in paragraph at lines 374--375
 \T1/cmr/m/n/10 The first im-ple-men-ta-tion
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 359--360
+Underfull \hbox (badness 1292) in paragraph at lines 374--375
 \T1/cmr/m/n/10 of Mix-Eth does not ap-
  []
 
 
-Underfull \hbox (badness 4048) in paragraph at lines 359--360
+Underfull \hbox (badness 4048) in paragraph at lines 374--375
 \T1/cmr/m/n/10 and chal-leng-ing a shuf-
  []
 
 
-Underfull \hbox (badness 4024) in paragraph at lines 359--360
+Underfull \hbox (badness 4024) in paragraph at lines 374--375
 \T1/cmr/m/n/10 fle oc-curs off-chain and
  []
 
 
-Underfull \hbox (badness 5578) in paragraph at lines 359--360
+Underfull \hbox (badness 5578) in paragraph at lines 374--375
 \T1/cmr/m/n/10 only de-posit and with-
  []
 
 
-Underfull \hbox (badness 2790) in paragraph at lines 359--360
+Underfull \hbox (badness 2790) in paragraph at lines 374--375
 \T1/cmr/m/n/10 drawal trans-ac-tions hap-
  []
 
-[7 <./withdrawalComplexity.jpg>] (./main.bbl [8]) [9]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 410.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 410.
+[8 <./withdrawalComplexity.jpg>] (./main.bbl [9]) [10]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 451.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 451.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 410.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 410.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 451.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 451.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 4490D5547DA07C52862770B198CF6601;2118.
+(rerunfilecheck)             Checksum: 37169926E37C51FC1EC7FB3DF0E47A36;2346.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 43548 strings out of 494953
- 963149 string characters out of 6180976
- 1148417 words of memory out of 5000000
- 46038 multiletter control sequences out of 15000+600000
- 25982 words of font info for 77 fonts, out of 8000000 for 9000
+ 43656 strings out of 494953
+ 964719 string characters out of 6180976
+ 1142081 words of memory out of 5000000
+ 46134 multiletter control sequences out of 15000+600000
+ 27532 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,11n,83p,10375b,1271s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/
-istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0800.600pk> </home/istvan/.te
-xmf-var/fonts/pk/ljfour/jknappen/ec/ecss1000.600pk> </home/istvan/.texmf-var/fo
-nts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/istvan/.texmf-var/fonts/pk/ljf
-our/jknappen/ec/ecti1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknapp
-en/ec/ecbx1440.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm
-1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbi1000.600pk
-> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/i
-stvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/istvan/.tex
-mf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/istvan/.texmf-var/fon
-ts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/istvan/.texmf-var/fonts/pk/ljfo
-ur/jknappen/ec/ecrm1200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappe
-n/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
-i5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfd
-ing/uzdr.pfb>
-Output written on main.pdf (9 pages, 297824 bytes).
+ 62i,14n,83p,10375b,2391s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </home/
+istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/istvan/.te
+xmf-var/fonts/pk/ljfour/jknappen/ec/ectt0800.600pk> </home/istvan/.texmf-var/fo
+nts/pk/ljfour/jknappen/ec/ecss1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljf
+our/jknappen/ec/ecbx1200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknapp
+en/ec/ecti1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx
+1440.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk
+> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbi1000.600pk> </home/i
+stvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/istvan/.tex
+mf-var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/istvan/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfo
+ur/jknappen/ec/ecrm0800.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappe
+n/ec/ecrm1200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1
+728.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/
+msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
+sbm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on main.pdf (10 pages, 319562 bytes).
 PDF statistics:
- 899 PDF objects out of 1000 (max. 8388607)
- 404 compressed objects within 5 object streams
- 110 named destinations out of 1000 (max. 500000)
- 290 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 952 PDF objects out of 1000 (max. 8388607)
+ 438 compressed objects within 5 object streams
+ 117 named destinations out of 1000 (max. 500000)
+ 314 words of extra memory for PDF output out of 10000 (max. 10000000)
 
