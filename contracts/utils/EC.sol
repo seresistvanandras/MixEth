@@ -211,11 +211,11 @@ library EC {
         return ecmul(gx, gy, privKey);
     }
 
-    /*function publicKeyVerify(uint256 privKey, uint256 x, uint256 y) public pure
+    function publicKeyVerify(uint256 privKey, uint256 x, uint256 y) public pure
         returns(bool)
     {
         return ecmulVerify(gx, gy, privKey, x, y);
-    }*/
+    }
 
     function deriveKey(uint256 privKey, uint256 pubX, uint256 pubY) public pure
         returns(uint256 qx, uint256 qy)
@@ -225,5 +225,19 @@ library EC {
         z = _inverse(z);
         qx = mulmod(qx, z, n);
         qy = mulmod(qy, z, n);
+    }
+
+    function onCurve(uint[2] P) public constant returns (bool) {
+        uint p = n;
+        if (0 == P[0] || P[0] == p || 0 == P[1] || P[1] == p)
+            return false;
+        uint LHS = mulmod(P[1], P[1], p);
+        uint RHS = addmod(mulmod(mulmod(P[0], P[0], p), P[0], p), 7, p);
+        return LHS == RHS;
+    }
+
+
+    function isPubKey(uint[2] memory P) public constant returns (bool isPK) {
+        isPK = onCurve(P);
     }
 }

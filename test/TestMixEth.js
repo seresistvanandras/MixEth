@@ -28,8 +28,8 @@ contract('MixEth', function(accounts) {
             assert.equal(xcoordinate, '1ec64fdd678f8528c981fbdd742e8c79fa91c6f7bfdfbebf2f99f74df6f09589', "X coordinate is not correct");
             assert.equal(ycoordinate, '118caf99d37bd0f75cd9efa455261f8806c14bae4ddee43690aff3bc1b6eef48', "Y coordinate is not correct");
             return ContractInstance.shufflers.call(shuffler);
-        }).then(function(shufflerAddressIsSet) {
-            assert.equal(false, shufflerAddressIsSet[0], "Shuffler address is not correct");
+        }).then(function(shufflerStateIsSet) {
+            assert.equal(true, shufflerStateIsSet[2], "Shuffler's address and/or state is not correct");
         });
     });
 
@@ -79,7 +79,7 @@ contract('MixEth', function(accounts) {
       it("Withdrawing from the mixer", function() {
           return MixEth.deployed().then(async function(instance) {
               ContractInstance = instance;
-              let a = await ContractInstance.deposit(pubKeyX, pubKeyY, accounts[0],
+              let a = await ContractInstance.deposit(pubKeyX, pubKeyY, accounts[2],
               {value:1000000000000000000, from:accounts[0]});
               let tx = await ContractInstance.uploadShuffle(['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
               '0xf924738fbaebf80ca5a0d1d6cc33856be448c0e60670c64f73aeac0000925808','0xe392c39c052599470fea0142bea6add7cceb5a2f99423bb45320d35f083d4f60',
@@ -87,14 +87,14 @@ contract('MixEth', function(accounts) {
               '0x23c239f04c5ac9c411379b1a3570b68526dd5d47888cdcb7caf874ff3aeab499','0x3dd81fbd6a7907275b0ce68b9261ec8a5520b6587bb7cbd33d26d72a0d917f47',
               '0xd0cc696065a9bd1f4fc83259d13ebd05a19ef97ac3440b78012405627623d672','0xf5b9894c4032a9b607c4f10ce706cf73803416d14e8c14f222d7ad0c62e544d4',
               '0xa25126710efb86866b63ffab6539e791c76e08f332618bd3fff7d0b1fcd68fd8','0xac55f34cd8a4e188f9629d8546ed7025036a61c5407b129cc8376e3570c7d296'],
-              {value:1000000000000000000, from:accounts[0]});
+              {value:1000000000000000000, from:accounts[2]});
               let tx2 = await ContractInstance.withdrawAmt(['0xa25126710efb86866b63ffab6539e791c76e08f332618bd3fff7d0b1fcd68fd8','0xac55f34cd8a4e188f9629d8546ed7025036a61c5407b129cc8376e3570c7d296',
               '0xd0cc696065a9bd1f4fc83259d13ebd05a19ef97ac3440b78012405627623d672','0xf5b9894c4032a9b607c4f10ce706cf73803416d14e8c14f222d7ad0c62e544d4',
               '0xf5654645fcdea',
               '0xeae131d615529859cb9973db036d004e7c6e0d5de48fdc7d5659c037ecc75a47','0x825c437c9b48f46e44ffbb2093ac54b9d66db4a32a0d0d36565616cc2a7cf780',
               '0x6554c05280fe320f3e9b598e9b3260d7ec7f2a203a0df98e58773031913f9f34','0x30782f93940ebadba87a336466722774970f3f7352edf50211054c1c18e810a1',
               '0x605f27fa8fac4c2b77de3352179a6f1dc019cab29483e14dd8c36ea985fb1960','0xb268882cc5856c6dbf4443c0b0b60876076a95d46f50789e1fa0ee63ca1a6ea',
-              '0x8cc70839ed233fafe105c7ac9d00870b99b35d227ae6b53a5be6c597ffd0a5'],8);
+              '0x8cc70839ed233fafe105c7ac9d00870b99b35d227ae6b53a5be6c597ffd0a5'],8, {from:accounts[2]});
               console.log("Gas cost of witdhrawing from the mixer", tx.receipt.gasUsed);
               return ContractInstance.getShuffle(1);
             }).then(function(a){

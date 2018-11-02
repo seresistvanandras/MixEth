@@ -16,9 +16,9 @@
 \usepackage{amsmath}
 \usepackage{wrapfig}
 \usepackage{amsthm}
+\usepackage{algpseudocode}
 \usepackage{graphicx}
 \usepackage{algorithm}
-\usepackage[noend]{algpseudocode}
 \usepackage{breqn}
 \usepackage{algpseudocode}
 \usepackage{float}
@@ -120,7 +120,7 @@ keys]{cryptocode}
 \maketitle
 
 
-\textbf{Note: this is an early-stage work-in-progress! Security proofs, implementation and many more are yet to come!} 
+\textbf{Note: this is an early-stage work-in-progress! Security proofs, (state channel) implementation and many more are yet to come!} 
 \begin{abstract}
 Cryptocurrencies enable users to transact with each other without relying on trusted parties or intermediaries. These transactions are recorded in an immutable, publicly verifiable ledger. Due to this transparent nature of the ledger, privacy is notably reduced. If the link between users' public key and their physical identity is exposed  their pseudonymity is lost. One way to increase users' privacy is to deploy coin mixing services. In this paper, we present MixEth, which is a trustless coin mixing service. MixEth is more efficient than any proposed trustless coin tumbler. It requires only $3$ on-chain transactions at most per user and $1$ off-chain. It achieves strong notions of anonymity and is able to resist denial-of-service attacks.      
 \end{abstract}
@@ -198,9 +198,13 @@ Another solution for this problem is the Ethereum Improvement Proposal (EIP) 86 
 
 \section{Threat model}
 \subsection{Participants and interactions}
-In a decentralized tumbler, we have $3$ distinct entities: the tumbling smart contract, a set of senders and a set of receivers. A sender, whom we will call Alice, sends funds to the receiver, Bob, through the mixer contract in order to break direct links between their public keys. Interactions of these entities can be summarized as follows: 
+In a decentralized tumbler, we have $3$ distinct entities: the tumbling smart contract, a set of senders and a set of receivers. A sender, whom we will call Alice, sends funds to the receiver, Bob, through the mixer contract in order to break direct links between their public keys. In all the following interactions and algorithms we assume that the public state of the tumbler is implicitly given as input. Interactions of these entities can be summarized as follows: 
  
-$tx\stackrel{\$}{\leftarrow}Deposit(sk_A,pk_B)$: The sender runs this algorithm to deposit some ether to the receiver's public key.
+$tx\stackrel{\$}{\leftarrow}Deposit(sk_A,pk_B)$: The sender runs this algorithm to deposit a predefined amount of ether to the receiver's public key.
+
+$0/1\leftarrow VerifyDeposit(tx)$: The tumbler contract checks the validity of senders' deposits.
+
+$ProcessDeposit(tx)$: upon receiving a valid deposit transaction, the mixing contract updates its internal state accordingly.
 
 After some period of time no more deposits are allowed to the tumbling contract. Let $PK_{0}$ denote the set of public keys after the depositing period to be mixed. Every recipient of the mix is allowed to shuffle the public keys at most once: 
 
@@ -209,16 +213,110 @@ $PK_{i+1},C_{i+1}^{*}\stackrel{\$}{\leftarrow}Shuffle(PK_{i},C^{*}_{i},c_{i},\pi
 $0\lor1\leftarrow 
 ChallengeShuffle(PK_{i},C^{*}_{i},PK_{i-1},C^{*}_{i-1},pk_{B})$: receiver $B$ with public key $pk_{B}=s_{B}G$ can challenge an incorrect shuffle at the $i$th round by giving a Chaum-Pedersen zero-knowledge proof that the following tuple is DDH-tuples: $(C^{*}_{i-1}, s_{B}C^{*}_{i-1}, C^{*}_{i}, s_{B}C^{*}_{i})$. If the proof verifies and $s_{B}C^{*}_{i} \notin PK_{i}$, while $s_{B}C^{*}_{i-1} \in PK_{i-1}$, then the challenge is accepted, otherwise rejected. This proof and checks allow one to be certain that indeed the $i$th round is the first round in which the corresponding public key to $s_{B}$ is shuffled incorrectly.  
 
-$tx\stackrel{\$}{\leftarrow}Withdraw(sk_B)$: after the end of the shuffling period users are allowed to withdraw their funds. Note that here withdraw transactions will be signed with a modified version of ECDSA, where not the original generator element $G$ is used as generator rather the final shuffling accumulated constant.
+$tx\stackrel{\$}{\leftarrow}Withdraw(sk_B, C^{*})$: after the end of the shuffling period users are allowed to withdraw their funds. Note that here withdraw transactions will be signed with a modified version of ECDSA, where not the original generator element $G$ is used as generator rather $C^{*}$, the final shuffling accumulated constant.
+
+$0/1\leftarrow VerifyWithdraw(tx)$: tumbler checks the validity of a recipient's withdrawal transaction.
+
+$ProcessWithdraw(tx)$: upon receiving a valid withdrawal transaction, mixing contract updates its internal state accordingly.
 
 \subsection{Security goals} \label{securitygoals}
-We are aiming to achieve and prove the same notions of security as the ones defined in \cite{meiklejohn2018mobius}. We are going to assume that at most $k-2$ recipients are malicious ($k$ is the number of recipients). Otherwise, no meaningful notion of security can be achieved. Furthermore presume that participants are on-line during the entire course of mixing in order to be able to monitor and potentially challenge any incorrect shuffle. Finally we assume that honest recipients will always exercise their rights to shuffle and they do not disclose any private information used in their shuffles. 
+We are aiming to achieve and prove the same notions of security as the ones defined in \cite{meiklejohn2018mobius}, namely anonymity, availability and theft prevention. We are going to assume that at most $k-2$ recipients are malicious ($k$ is the number of recipients). Otherwise, no meaningful notion of security can be achieved. Furthermore we presume that participants are on-line during the entire course of mixing in order to be able to monitor and potentially challenge any incorrect shuffle. Finally we assume that honest recipients will always exercise their rights to shuffle and they do not disclose any private information used in their shuffles.
 
-In this early version of the MixEth paper we only restrict ourselves to give informal security definitions.
+In the security definitions and games introduced by \cite{meiklejohn2018mobius} adversary $\adv$ might have access to the following oracles. CORR enables $\adv$ to corrupt a sencer or receiver by learning the secret key of any party $l$ of their choice. Oracle access to AD or AW allow $\adv$ to deposit or withdraw respectively from tumbler session $j$. Furthermore $\adv$ might instruct honest senders or receivers to deposit or withdraw from tumbler session $j$ by using oracles HD and HW. In the following $C$ denotes the set of corrupted parties, while the list of honest deposits and withdrawals are denotes as $H_{d}$ and $H_{w}$ respectively The list of contract identifiers associated with distinct sessions is denoted as $tumblers$.     
+
+These oracles are formally defined as follows: 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccc}    
+		\begin{minipage}{6cm}
+			\procedure{AD(tx,$j$)}{%
+				b \leftarrow VerifyDeposit(tumblers[j],tx) \\
+				if\ (b) \ ProcessDeposit(tumblers[j],tx) \\
+				\pcreturn b  }
+		\end{minipage}
+		&
+		\begin{minipage}{6cm}
+			\procedure{AW(tx,$j$)}{%
+				b \leftarrow VerifyWithdraw(tumblers[j],tx) \\
+				if\ (b) \  ProcessWithdraw(tumblers[j],tx) \\
+				\pcreturn b  }
+		\end{minipage}
+		&
+		\begin{minipage}{4cm}
+			\procedure{CORR($l$)}{%
+				C=C.push(pk_{B_{l}}) \\
+				\pcreturn sk_{B_l}}
+		\end{minipage}
+	\end{tabular}
+\end{table}	
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cc}   
+\begin{minipage}{5cm}
+	\procedure{HD($i$,$j$,$l$)}{%
+		tx\stackrel{\$}{\leftarrow}Deposit(sk_{A_{i}},pk_{B_{l}})\\
+		H_{d}=H_{d}.push(tx) \\
+		ProcessDeposit(tumblers[j],tx)\\
+		\pcreturn tx }
+\end{minipage}
+&
+\begin{minipage}{5cm}
+	\procedure{HW($j$,$l$)}{%
+		if\ (pk_{B_{l}} \notin tumblers[j].keys_{B})\ return \ \bot \\
+		tx\stackrel{\$}{\leftarrow}Deposit(sk_{A_{i}},pk_{B_{l}}) \\
+		H_{w}=H_{w}.push(j,l,tx) \\
+		ProcessWithdraw(tumblers[j],tx)\\
+		\pcreturn tx }
+\end{minipage}
+\end{tabular}
+\end{table}
+
+From now on, we will denote the number of senders and receivers in the mixer as $n$, while a specific key in a given session is denoted as $tumbler.keys_{B}$.
+
 \subsubsection{Anonymity}
-\textit{Sender} anonymity is achieved if an adversary can not determine to whom honest miners are sending funds, assuming that honest senders' deposits are indistinguishable.
+\textit{Sender} anonymity is achieved if an adversary can not determine to whom honest senders are sending funds, assuming that honest senders' deposits are indistinguishable.
 
-\textit{Recipient} anonymity is achieved if honest recipients withdrawal transactions are indistinguishable.
+\textit{Recipient} anonymity is achieved if honest recipients withdrawal transactions are indistinguishable. These notions of anonymity were introduced in \cite{meiklejohn2018mobius}, which are included here for sake of self-containedness.
+
+\begin{definition}
+	Define $\textbf{Adv}^{d-anon}_{mix,\adv}(\lambda) = 2\Pr[\textsf{G}^{d-anon}_{mix,\adv}(\lambda)]-1\ for\ d \in \{dep, with\}$, where these games are defined as follows:
+
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{cc}    
+			\begin{minipage}{7cm}
+					\procedure{MAIN $\textsf{G}^{dep-anon}_{mix,\adv}(\lambda)$}{%
+						(pk_{i},sk_{i})\stackrel{\$}{\leftarrow}\kgen(1^{\lambda}) \ \forall i \in [n]\\
+						\textsf{PK}_A\leftarrow\{pk_i\}^{n}_{i=1};C,H_{d}, tumblers \leftarrow \emptyset\\
+						b \stackrel{\$}{\leftarrow} \bin \\
+						(state,j,pk, i_{0},i_{1}) \stackrel{\$}{\leftarrow} \adv^{CORR,AD,HD,AW} (1^\lambda, \textsf{PK}_{A}) \\
+						tx \stackrel{\$}{\leftarrow} Deposit(tumblers[j], sk_{A_{{l}_{b}}}, pk) \\
+						b^{’}\stackrel{\$}{\leftarrow} \adv^{CORR,AD,HD,AW}(state, tx) \\
+						\pcreturn b = b^{’} }
+			\end{minipage}
+			&
+			\begin{minipage}{7cm}
+				\procedure{MAIN $\textsf{G}^{with-anon}_{mix,\adv}(\lambda)$}{%
+					(pk_{i},sk_{i})\stackrel{\$}{\leftarrow}\kgen(1^{\lambda}) \ \forall i \in [n]\\
+					\textsf{PK}_B\leftarrow\{pk_i\}^{n}_{i=1};C,H_{d}, tumblers \leftarrow \emptyset\\
+					b \stackrel{\$}{\leftarrow} \bin \\
+					(state,j,pk, l_{0},l_{1}) \stackrel{\$}{\leftarrow} \adv^{CORR,AD,HD,AW} (1^\lambda, \textsf{PK}_{B}) \\
+					\textsf{PK}\leftarrow tumblers[j].keys_{B}\\
+					if(pk_{B_{l_{0}}}\notin \textsf{PK})\lor(pk_{B_{l_{1}}}\notin \textsf{PK})\ return\ 0\\
+					tx \stackrel{\$}{\leftarrow} Withdraw(tumblers[j], sk_{B_{{l}_{b}}}) \\
+					b^{’}\stackrel{\$}{\leftarrow} \adv^{CORR,AD,HD,AW}(state, tx) \\
+					if(pk_{l_{b}}\in C \ for\ b \in \bin)\ return\ 0 \\
+					if((j,l_{b},\cdot))\in H_{w} \ for\ b \in \bin)\ return\ 0\\
+					\pcreturn b = b^{’} }		
+			\end{minipage}
+		\end{tabular}
+	\end{table}	
+Then the tumbler satisfies sender or recipient anonymity if for all PT adversaries $\adv$ there exists a negligible function $\nu(\cdot)$ such that $\textbf{Adv}^{dep-anon}_{mix,\adv}(\lambda) < \nu(\lambda)$ or $\textbf{Adv}^{with-anon}_{mix,\adv}(\lambda) < \nu(\lambda)$ respectively.	
+\end{definition}
+
 \subsubsection{Availability}
 It is essential for a coin mixer to provide availability, meaning that honest recipients can always withdraw their money from the mixer.
 \subsubsection{Theft prevention}
@@ -392,7 +490,7 @@ On of the main bottlenecks of coin mixing protocols is the withdrawal transactio
 		\midrule
 		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{76123}$&0&0&$\num[group-separator={,}]{335714}$n   \\
 		Miximus \cite{miximus2018}&$\num[group-separator={,}]{732815}$&0&0 &$\num[group-separator={,}]{1903305}$  \\
-		MixEth&\num[group-separator={,}]{99254}&\num[group-separator={,}]{253268}+\num[group-separator={,}]{40000}n&\num[group-separator={,}]{210220}&\num[group-separator={,}]{143268}  \\
+		MixEth&\num[group-separator={,}]{99254}&\num[group-separator={,}]{153268}+\num[group-separator={,}]{40000}n&\num[group-separator={,}]{210220}&\num[group-separator={,}]{113265}  \\
 		MixEth++&TBD&0&0&TBD\\
 		\bottomrule
 	\end{tabular}
@@ -444,8 +542,37 @@ We would like to thank barryWhiteHat and Dmitry Khovratovich for the insightful 
 \bibliography{sample}
 
 \begin{appendices}
-	\section{Proof of Anonymity}
-	Reduction to DDH has to be added here
+
+\section{Proof of Anonymity}
+Reduction to DDH has to be added here
+
+\begin{bbrenv}{A}
+ \begin{bbrbox} [name=BoxName]
+ \pseudocode {
+	 \text{ s t e p 1} \\
+	 \text{ s t e p 2} \\
+	 \pcfor\text{some c o n d i t i o n } \pcdo \\
+	 \pcind\text{step3}
+	 }
+
+ \begin{bbrenv}{B}
+ \begin{bbrbox}[name=InnerBox]
+ \pseudocode{
+	 \text{ i n n e r s t e p 1} \\
+	 \text{ i n n e r s t e p 2} \\
+	 }
+ \end{bbrbox}
+ \end{bbrenv}
+
+ \pseudocode{
+	 \text{ s t e p 4} \\
+	 \text{ s t e p 5} \\
+	 }
+ \end{bbrbox}
+ \bbrinput{input}
+ \bbroutput{output}
+ \end{bbrenv}
+	
 \end{appendices}
 
 \end{document}

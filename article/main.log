@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  31 OCT 2018 22:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  2 NOV 2018 10:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1214,44 +1214,44 @@ Package: amsthm 2015/03/04 v2.20.2
 \thm@headsep=\skip62
 \dth@everypar=\toks46
 )
-(/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
+(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count184
+\c@ALG@rem=\count185
+\c@ALG@nested=\count186
+\ALG@tlm=\skip63
+\ALG@thistlm=\skip64
+\c@ALG@Lnr=\count187
+\c@ALG@blocknr=\count188
+\c@ALG@storecount=\count189
+\c@ALG@tmpcounter=\count190
+\ALG@tmplength=\skip65
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 
 (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count184
+\c@float@type=\count191
 \float@exts=\toks47
 \float@box=\box63
 \@float@everytoks=\toks48
 \@floatcapt=\box64
 )
-(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-)
 \@float@every@algorithm=\toks49
-\c@algorithm=\count185
+\c@algorithm=\count192
 )
-(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
-Package: algpseudocode 
-
-(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
-Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
-
-Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count186
-\c@ALG@rem=\count187
-\c@ALG@nested=\count188
-\ALG@tlm=\skip63
-\ALG@thistlm=\skip64
-\c@ALG@Lnr=\count189
-\c@ALG@blocknr=\count190
-\c@ALG@storecount=\count191
-\c@ALG@tmpcounter=\count192
-\ALG@tmplength=\skip65
-)
-Document Style - pseudocode environments for use with the `algorithmicx' style
-) (/usr/share/texlive/texmf-dist/tex/latex/breqn/breqn.sty
+(/usr/share/texlive/texmf-dist/tex/latex/breqn/breqn.sty
 Package: breqn 2015/08/11 v0.98d Breaking equations
 
 (/usr/share/texlive/texmf-dist/tex/latex/breqn/flexisym.sty
@@ -2012,126 +2012,230 @@ LaTeX Font Info:    Try loading font information for T1+cmss on input line 146.
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ) [2] [3] [4]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 234.
+Overfull \hbox (64.45271pt too wide) in paragraph at lines 231--252
+ [][] 
+ []
 
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 234.
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 249.
- [5]
-Underfull \hbox (badness 10000) in paragraph at lines 269--270
+Overfull \hbox (20.78218pt too wide) in paragraph at lines 271--271
+[] 
+ []
+
+
+Overfull \hbox (22.78218pt too wide) in paragraph at lines 271--272
+[] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 271--272
 
  []
 
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 288.
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+
+
+Overfull \hbox (1.59502pt too wide) in paragraph at lines 298--298
+[] 
+ []
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+
+
+Overfull \hbox (3.59502pt too wide) in paragraph at lines 298--299
+[] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 298--299
+
+ []
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+
+
+Overfull \hbox (1.08752pt too wide) in paragraph at lines 313--313
+[] 
+ []
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+
+
+Overfull \hbox (3.08752pt too wide) in paragraph at lines 313--314
+[] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--314
+
+ []
+
+[5]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 332.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 332.
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 347.
+ [6]
+Underfull \hbox (badness 10000) in paragraph at lines 367--368
+
+ []
+
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 386.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 289.
- [6] [7]
-<./withdrawalComplexity.jpg, id=316, 552.0625pt x 391.4625pt>
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 387.
+ [7] [8]
+<./withdrawalComplexity.jpg, id=368, 552.0625pt x 391.4625pt>
 File: ./withdrawalComplexity.jpg Graphic file (type jpg)
 
 <use ./withdrawalComplexity.jpg>
-Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 371.
+Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 469.
 (pdftex.def)             Requested size: 386.4411pt x 274.02187pt.
 
-Overfull \hbox (87.68846pt too wide) in paragraph at lines 371--372
+Overfull \hbox (87.68846pt too wide) in paragraph at lines 469--470
  [][] 
  []
 
 
-Overfull \hbox (1.23772pt too wide) in paragraph at lines 374--375
+Overfull \hbox (1.23772pt too wide) in paragraph at lines 472--473
 []\T1/cmr/m/n/10 We en-vi-sion two ap-proaches
  []
 
 
-Underfull \hbox (badness 1845) in paragraph at lines 374--375
+Underfull \hbox (badness 1845) in paragraph at lines 472--473
 \T1/cmr/m/n/10 The first im-ple-men-ta-tion
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 374--375
+Underfull \hbox (badness 1292) in paragraph at lines 472--473
 \T1/cmr/m/n/10 of Mix-Eth does not ap-
  []
 
 
-Underfull \hbox (badness 4048) in paragraph at lines 374--375
+Underfull \hbox (badness 4048) in paragraph at lines 472--473
 \T1/cmr/m/n/10 and chal-leng-ing a shuf-
  []
 
 
-Underfull \hbox (badness 4024) in paragraph at lines 374--375
+Underfull \hbox (badness 4024) in paragraph at lines 472--473
 \T1/cmr/m/n/10 fle oc-curs off-chain and
  []
 
 
-Underfull \hbox (badness 5578) in paragraph at lines 374--375
+Underfull \hbox (badness 5578) in paragraph at lines 472--473
 \T1/cmr/m/n/10 only de-posit and with-
  []
 
 
-Underfull \hbox (badness 2790) in paragraph at lines 374--375
+Underfull \hbox (badness 2790) in paragraph at lines 472--473
 \T1/cmr/m/n/10 drawal trans-ac-tions hap-
  []
 
-[8 <./withdrawalComplexity.jpg>] (./main.bbl [9]) [10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 451.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 451.
+[9 <./withdrawalComplexity.jpg>] (./main.bbl [10]) [11] [12]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 578.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 578.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 451.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 451.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 578.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 578.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 37169926E37C51FC1EC7FB3DF0E47A36;2346.
+(rerunfilecheck)             Checksum: B6F93620CE6EF49AC30344CBBEC739AA;2346.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 43656 strings out of 494953
- 964719 string characters out of 6180976
- 1142081 words of memory out of 5000000
- 46134 multiletter control sequences out of 15000+600000
- 27532 words of font info for 79 fonts, out of 8000000 for 9000
+ 43830 strings out of 494953
+ 967989 string characters out of 6180976
+ 1141300 words of memory out of 5000000
+ 46251 multiletter control sequences out of 15000+600000
+ 29848 words of font info for 85 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,14n,83p,10375b,2391s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,28n,83p,10375b,2963s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </home/
 istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/istvan/.te
 xmf-var/fonts/pk/ljfour/jknappen/ec/ectt0800.600pk> </home/istvan/.texmf-var/fo
-nts/pk/ljfour/jknappen/ec/ecss1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljf
-our/jknappen/ec/ecbx1200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknapp
-en/ec/ecti1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx
-1440.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk
-> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbi1000.600pk> </home/i
-stvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/istvan/.tex
-mf-var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/istvan/.texmf-var/fon
-ts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfo
-ur/jknappen/ec/ecrm0800.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappe
-n/ec/ecrm1200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1
-728.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/
-msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
-sbm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on main.pdf (10 pages, 319562 bytes).
+nts/pk/ljfour/jknappen/ec/ecss0900.600pk> </home/istvan/.texmf-var/fonts/pk/ljf
+our/jknappen/ec/ecss1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknapp
+en/ec/ecbx1200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti
+1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk
+> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/i
+stvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbi1000.600pk> </home/istvan/.tex
+mf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/istvan/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/istvan/.texmf-var/fonts/pk/ljfo
+ur/jknappen/ec/ecbx1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappe
+n/ec/ecrm0800.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1
+200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
+rw/zapfding/uzdr.pfb>
+Output written on main.pdf (12 pages, 391377 bytes).
 PDF statistics:
- 952 PDF objects out of 1000 (max. 8388607)
- 438 compressed objects within 5 object streams
- 117 named destinations out of 1000 (max. 500000)
+ 1057 PDF objects out of 1200 (max. 8388607)
+ 526 compressed objects within 6 object streams
+ 168 named destinations out of 1000 (max. 500000)
  314 words of extra memory for PDF output out of 10000 (max. 10000000)
 
