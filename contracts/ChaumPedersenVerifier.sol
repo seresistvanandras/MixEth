@@ -7,11 +7,6 @@ import {EC} from './utils/EC.sol';
 library ChaumPedersenVerifier {
   using SafeMath for uint;
 
-  struct Point {
-    uint256 x; //x coordinate
-    uint256 y; //y coordinate
-  }
-
   /*
   uint256 Gx, uint256 Gy,uint256 Ax, uint256 Ay, uint256 Bx, uint256 By, uint256 Cx, uint256 Cy,
   uint256 s, uint256 y1x, uint256 y1y, uint256 y2x, uint256 y2y, uint256 z,

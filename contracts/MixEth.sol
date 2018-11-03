@@ -9,8 +9,6 @@ import {ECDSAGeneralized} from './utils/ECDSAGeneralized.sol';
 contract MixEth {
   using SafeMath for uint;
 
-  uint256 constant public Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798;
-  uint256 constant public Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8;
   uint256 public amt = 1000000000000000000; //1 ether in wei, the amount of ether to be mixed;
   uint256 public shufflingDeposit = 1000000000000000000; // 1 ether, TBD
   uint256 public shuffleRound = 0;

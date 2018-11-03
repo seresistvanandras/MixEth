@@ -3,7 +3,7 @@ let EC = artifacts.require("./EC.sol");
 let ChaumPedersenVerifier = artifacts.require("./ChaumPedersenVerifier.sol");
 let ECDSAGeneralized = artifacts.require("./ECDSAGeneralized.sol");
 
-module.exports = function(deployer) {
+module.exports = async function(deployer) {
   deployer.deploy(EC);
   deployer.link(EC, MixEth);
   deployer.deploy(ChaumPedersenVerifier);

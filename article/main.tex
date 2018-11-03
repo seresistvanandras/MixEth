@@ -275,7 +275,7 @@ These oracles are formally defined as follows:
 
 From now on, we will denote the number of senders and receivers in the mixer as $n$, while a specific key in a given session is denoted as $tumbler.keys_{B}$.
 
-\subsubsection{Anonymity}
+\subsubsection{Anonymity} \label{sec:defanonymity}
 \textit{Sender} anonymity is achieved if an adversary can not determine to whom honest senders are sending funds, assuming that honest senders' deposits are indistinguishable.
 
 \textit{Recipient} anonymity is achieved if honest recipients withdrawal transactions are indistinguishable. These notions of anonymity were introduced in \cite{meiklejohn2018mobius}, which are included here for sake of self-containedness.
@@ -319,6 +319,8 @@ Then the tumbler satisfies sender or recipient anonymity if for all PT adversari
 
 \subsubsection{Availability}
 It is essential for a coin mixer to provide availability, meaning that honest recipients can always withdraw their money from the mixer.
+
+
 \subsubsection{Theft prevention}
 We would like to ensure that neither coins can be withdrawn twice, nor withdrawn by anyone other but the intended recipient. 
 \section{MixEth}
@@ -480,18 +482,18 @@ On of the main bottlenecks of coin mixing protocols is the withdrawal transactio
 \begin{table}[H] 
 	\caption{Preliminary implementation gas cost results. Expect further improvements. MixEth++ refers to the implementation which leverages state channels for shuffling and challenging periods}
 	\centering 
-	\begin{tabular}{@{\extracolsep{6pt}}lcccc@{}} 
+	\begin{tabular}{@{\extracolsep{6pt}}lccccc@{}} 
 		
 		\toprule
 		\hline
-		&Deposit&\multicolumn{2}{c}{Shuffle}& Withdraw\\
-		\cline{3-4}&&Shuffle upload&Challenge\\
+		&Deployment&Deposit&\multicolumn{2}{c}{Shuffle}& Withdraw\\
+		\cline{4-5}&&&Shuffle upload&Challenge\\
 		\hline
 		\midrule
-		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{76123}$&0&0&$\num[group-separator={,}]{335714}$n   \\
-		Miximus \cite{miximus2018}&$\num[group-separator={,}]{732815}$&0&0 &$\num[group-separator={,}]{1903305}$  \\
-		MixEth&\num[group-separator={,}]{99254}&\num[group-separator={,}]{153268}+\num[group-separator={,}]{40000}n&\num[group-separator={,}]{210220}&\num[group-separator={,}]{113265}  \\
-		MixEth++&TBD&0&0&TBD\\
+		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{1046027}$&$\num[group-separator={,}]{76123}$&0&0&$\num[group-separator={,}]{335714}$n   \\
+		Miximus \cite{miximus2018}&$\num[group-separator={,}]{1751378}$&$\num[group-separator={,}]{732815}$&0&0 &$\num[group-separator={,}]{1903305}$  \\
+		MixEth&TBD&\num[group-separator={,}]{99254}&\num[group-separator={,}]{138653}+\num[group-separator={,}]{40000}n&\num[group-separator={,}]{210220}&\num[group-separator={,}]{113265}  \\
+		MixEth++&TBD&TBD&0&0&TBD\\
 		\bottomrule
 	\end{tabular}
 	\label{table:securityproperties}
@@ -544,35 +546,39 @@ We would like to thank barryWhiteHat and Dmitry Khovratovich for the insightful 
 \begin{appendices}
 
 \section{Proof of Anonymity}
-Reduction to DDH has to be added here
+Hereby we show that if there exists an adversary $\adv$ who is able to break withdrawal anonymity defined in~\ref{sec:defanonymity}, then there exists another adversary $\bdv$ who is able to break the DDH assumption.
 
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\centering
 \begin{bbrenv}{A}
- \begin{bbrbox} [name=BoxName]
+ \begin{bbrbox} [name=\bdv]
  \pseudocode {
-	 \text{ s t e p 1} \\
-	 \text{ s t e p 2} \\
-	 \pcfor\text{some c o n d i t i o n } \pcdo \\
-	 \pcind\text{step3}
+	 \text{$\textsf{PK}_{B} = (s_{0}C^{*}, s_{1}C^{*})$} \\
+	 \text{$tx \stackrel{\$}{\leftarrow}Withdraw(tumblers[j],sk_{B_{l_{b}}})$}
 	 }
 
  \begin{bbrenv}{B}
- \begin{bbrbox}[name=InnerBox]
+ \begin{bbrbox}[name=\adv]
  \pseudocode{
-	 \text{ i n n e r s t e p 1} \\
-	 \text{ i n n e r s t e p 2} \\
+ 	 \text{Input: $PK_{B}, tx$} \\
+	 \text{Output: $b^'$} \\
 	 }
  \end{bbrbox}
+ 
  \end{bbrenv}
 
- \pseudocode{
-	 \text{ s t e p 4} \\
-	 \text{ s t e p 5} \\
-	 }
  \end{bbrbox}
- \bbrinput{input}
- \bbroutput{output}
- \end{bbrenv}
-	
+ 
+ \bbrinput{$(s_{0}G,C^{*},s_{b}C^{*})$}
+ \bbroutput{$b^'$}
+\end{bbrenv}
+
+\captionof{figure}{An illustration for the reduction of withdrawal anonymity to the DDH assumption}
+\end{wrapfigure}
+
+Let us assume that the challenge to the DDH-adversary $\bdv$ is of the form $(s_{0}G,C^{*},s_{b}C^{*})$. If original keys are $(s_{0}G, s_{1}G)$ and shuffled keys are $\textsf{PK}_{B}=(s_{0}C^{*}, s_{1}C^{*})$, then $\bdv$ forwards $\textsf{PK}_{B}$ to $\adv$. Then a withdrawal transaction occurs from $s_{b}C^{*}$. After polynomial-time $\adv$ outputs $b^{'}$ and $\bdv$ will outpu the very same bit. It is straightforward to see that $\bdv$ wins the DDH-game if and only if $\adv$ wins the $\textsf{G}^{with, anon}_{mix, \adv}$ security game. Therefore, by the assumption that recipient anonymity does not hold we have that $$\textsf{non-negl}(\lambda)=\Pr[\textsf{G}^{with, anon}_{mix, \adv}]=\Pr[\textsf{DDH}_{\bdv}],$$ which contradicts to the DDH assumption.
+
+
 \end{appendices}
 
 \end{document}

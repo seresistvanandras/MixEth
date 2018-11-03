@@ -12,6 +12,7 @@ contract('MixEth', function(accounts) {
     let shuffler = accounts[0];
     let pubKeyX = '0x1ec64fdd678f8528c981fbdd742e8c79fa91c6f7bfdfbebf2f99f74df6f09589';
     let pubKeyY = '0x118caf99d37bd0f75cd9efa455261f8806c14bae4ddee43690aff3bc1b6eef48';
+
     it("Depositting to a public key", function() {
         return MixEth.deployed().then(async function(instance) {
             ContractInstance = instance;
@@ -32,6 +33,12 @@ contract('MixEth', function(accounts) {
             assert.equal(true, shufflerStateIsSet[2], "Shuffler's address and/or state is not correct");
         });
     });
+
+    /*it("Should deploy with less than 4.7 mil gas", async () => {
+      let someInstance = await MixEth.new();
+      let receipt = await web3.eth.getTransactionReceipt(someInstance.transactionHash);
+      assert.isBelow(receipt.gasUsed, 4700000);
+    });*/
 
      it("Challenging a shuffle", function() {
          return MixEth.deployed().then(async function(instance) {
