@@ -34,12 +34,6 @@ contract('MixEth', function(accounts) {
         });
     });
 
-    /*it("Should deploy with less than 4.7 mil gas", async () => {
-      let someInstance = await MixEth.new();
-      let receipt = await web3.eth.getTransactionReceipt(someInstance.transactionHash);
-      assert.isBelow(receipt.gasUsed, 4700000);
-    });*/
-
      it("Challenging a shuffle", function() {
          return MixEth.deployed().then(async function(instance) {
              ContractInstance = instance;

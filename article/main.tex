@@ -339,7 +339,7 @@ A MixEth contract living on the Ethereum blockchain at $id_{contract}$ address m
 \end{itemize}
 
 \subsection{Depositing period}
-Every sender must deposit exactly $amt$ ether to a specific public key. Deposits with incorrect ether value are rejected.  
+Every sender must deposit exactly $amt$ ether to a specific public key. Deposits with incorrect ether value or invalid public key are rejected.  
 \subsection{Shuffling period}
 After the depositing round, shuffling and challenging rounds are coming after in turns. Each shuffling round is followed by a challenging round when the correctness of the preceding shuffle can be challenged by anyone. If a challenge is accepted, then shuffler's deposit is lost, her shuffle is discarded and shuffling continues from the set of public keys prior to the discarded shuffle. In the course of a shuffle an honest shuffler should raise all the public keys to a secret exponent $c$ and then permute all the transformed public keys. Honest shuffler commits to $c$ by sending back to MixEth the new shuffling accumulated constant and the shuffled public keys.
 
@@ -382,45 +382,74 @@ Note that every recipient should perform this check after each shuffling. Noone 
 
 \subsection{Withdrawing}
 Let $C^*$ be the final shuffling accumulated constant. For a recipient $B$, whose public key $s_{B}G \in initPubKeys[]$, in the final shuffle there will be $s_{B}C^*$. The recipient can prove to MixEth that she knows secret key $s_{B}$ by using a modified ECDSA, which uses $C^*$ as the generator element instead of the standardized $G$.
-\subsection{MixEth pseudocode}
 
-\medskip
-\begin{lstlisting}[caption=MixEth contract pseudocode]
-contract MixEth {
-  uint256 amt;
-  address[] senders;
-  CurvePoint[] initPubKeys;
-  Shuffle[] Shuffles;
-  
-  struct CurvePoint {
-    uint256 x; //x coordinate
-    uint256 y; //y coordinate
-  }
-  struct Shuffle { 
-    //describes a shuffle
-    // contains the shuffled pubKeys and the shuffling accumulated constant
-  }
-  
-  constructor() public {
-   //sets amt
-  }
-  
-  function uploadShuffle(Shuffle newShuffle) public {
-    //needs to be ensured that recipient has not shuffled yet
-    Shuffles.append(newShuffle);  
-  }
-  
-  function challengeShuffle(CurvePoint[] challenge, uint256 i) public {
-    bool accepted;
-    //contract checks the correctness of the i-th shuffle which is stored at Shuffles[i]. If challenge accepted malicious shuffler's deposit is slashed.
-    return accepted;
-  }
-  
-  function withdraw() public {
-    //receivers can withdraw funds at most once
-  }   
-}
-\end{lstlisting}
+\subsection{MixEth formal specification}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccc}    
+		\begin{minipage}{5.5cm}
+			\procedure{\textsf{Deposit}($sk_A, pk_{B}$)}{%
+				\pcreturn \textsf{FormTx}(sk_A,id_{\textsf{contract}}, amt, pk_{B}) }
+		\end{minipage}
+		&
+		\begin{minipage}{5.4cm}
+			\procedure{\textsf{VerifyDeposit}(tx)}{%
+				if\ (tx[amt] \neq id_{\textsf{contract}}[amt]) \ return\ 0 \\
+				if\ (pk_{B} \notin \mathbb{G}) \ return\ 0 \\
+				\pcreturn \textsf{VerifyTx(tx)}  }
+		\end{minipage}
+		&
+		\begin{minipage}{4cm}
+			\procedure{\textsf{ProcessDeposit(tx)}}{%
+				add\ \textsf{addr(tx[pk]) to initPubKeys[]}}
+		\end{minipage}
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccc}    
+		\begin{minipage}{5.5cm}
+			\procedure{\textsf{Shuffle($PK,C^{*}$)}}{%
+				c\stackrel{\$}{\leftarrow}\mathbb{Z}_{|\mathbb{G}|} \\
+				C^{'*} \leftarrow cC^{*} \\
+				PK^{'} = \{pk^{'}_{i}|pk^{'}_{i}=c*pk_{i} \forall i \in [1..n]\} \\
+				\pcreturn (PK^{'},C^{'*}) }
+		\end{minipage}
+		&
+		\begin{minipage}{6.3cm}
+			\procedure{\textsf{Challenge}($proof_{ChP}(C^{*},sC^{*},C^{'*},sC^{'*}),PK, C^{*}$)}{%
+				if\ (\lnot Verify(proof_{ChP}) ) \ return\ 0 \\
+				if\ (sC^{*} \notin PK) \ return\ 0 \\
+				\pcreturn 1  }
+		\end{minipage}
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccc}    
+		\begin{minipage}{4.5cm}
+			\procedure{\textsf{Withdraw($C^{*},sC^{*}$)}}{%
+				\sigma \leftarrow \sig(C^{*},s, sC^{*}||msg.sender) \\
+				\pcreturn \textsf{FormTx($sC^{*}, id_{\textsf{contract}, 0}, \sigma,$)} }
+		\end{minipage}
+		&
+		\begin{minipage}{6.3cm}
+			\procedure{\textsf{VerifyWithdraw(tx)}}{%
+				if\ (sC^{*} \notin id_{\textsf{contract}}[lastShuffle] ) \ return\ 0 \\
+				if\ (\lnot\verify(C^{*}, sC^{*},\sigma, sC^{*}||tx.sender)) \ return\ 0 \\
+				\pcreturn \textsf{VerifyTx(tx)}  }
+		\end{minipage}
+		&
+		\begin{minipage}{4cm}
+			\procedure{\textsf{ProcessWithdraw(tx)})}{%
+				delete\ sC^{*} from\ id_{\textsf{contract}}[lastShuffle]   \\
+				tx^{'}\stackrel{\$}{\leftarrow} \textsf{FormTx}(id_{contract}, tx.sender, amt) }
+		\end{minipage}
+	\end{tabular}
+\end{table}
 
 \section{Security}
 This section is going to demonstrate security proofs for the notions of security introduced in Section \ref{securitygoals}.
