@@ -582,31 +582,35 @@ Hereby we show that if there exists an adversary $\adv$ who is able to break wit
 \begin{bbrenv}{A}
  \begin{bbrbox} [name=\bdv]
  \pseudocode {
-	 \text{$\textsf{PK}_{B} = (s_{0}C^{*}, s_{1}C^{*})$} \\
-	 \text{$tx \stackrel{\$}{\leftarrow}Withdraw(tumblers[j],sk_{B_{l_{b}}})$}
+ 	 \text{$c_{1}\stackrel{\$}{\leftarrow}\mathbb{Z}_p$} \\
+	 \text{$\textsf{PK}_{B} = (c_{0}G, c_{1}G)$} \\
+	 \text{$b \stackrel{\$}{\leftarrow} \bin $} \\
+	 \text{$tx \stackrel{\$}{\leftarrow}Withdraw(tumblers[j],sk_{B_{c_{b}}})$}
 	 }
 
  \begin{bbrenv}{B}
  \begin{bbrbox}[name=\adv]
  \pseudocode{
  	 \text{Input: $PK_{B}, tx$} \\
-	 \text{Output: $b^'$} \\
+	 \text{Output: $b^'$}
 	 }
  \end{bbrbox}
  
  \end{bbrenv}
-
+ 
  \end{bbrbox}
  
- \bbrinput{$(s_{0}G,C^{*},s_{b}C^{*})$}
- \bbroutput{$b^'$}
+ \bbrinput{$(sG,cG,c_{0}G)$}
+ \bbroutput{$\lnot b\lnot{b^'}+b$}
 \end{bbrenv}
 
 \captionof{figure}{An illustration for the reduction of withdrawal anonymity to the DDH assumption}
 \end{wrapfigure}
 
-Let us assume that the challenge to the DDH-adversary $\bdv$ is of the form $(s_{0}G,C^{*},s_{b}C^{*})$. If original keys are $(s_{0}G, s_{1}G)$ and shuffled keys are $\textsf{PK}_{B}=(s_{0}C^{*}, s_{1}C^{*})$, then $\bdv$ forwards $\textsf{PK}_{B}$ to $\adv$. Then a withdrawal transaction occurs from $s_{b}C^{*}$. After polynomial-time $\adv$ outputs $b^{'}$ and $\bdv$ will outpu the very same bit. It is straightforward to see that $\bdv$ wins the DDH-game if and only if $\adv$ wins the $\textsf{G}^{with, anon}_{mix, \adv}$ security game. Therefore, by the assumption that recipient anonymity does not hold we have that $$\textsf{non-negl}(\lambda)=\Pr[\textsf{G}^{with, anon}_{mix, \adv}]=\Pr[\textsf{DDH}_{\bdv}],$$ which contradicts to the DDH assumption.
+Towards contradiction let us assume that the recipient anonymity does not hold. Let us assume that the challenge to the DDH-adversary $\bdv$ is of the form $(sG,cG,c_{0}G)$. Adversary $\bdv$ generates uniformly random public key $c_{1}G$ and invokes $\adv$ with the set $\textsf{PK}_{B}=(c_{0}C^{*}, c_{1}C^{*})$, then $\bdv$ forwards $\textsf{PK}_{B}$ to $\adv$. Then a withdrawal transaction occurs from $c_{b}G$. After polynomial-time $\adv$ outputs $b^{'}$ and $\bdv$ will output $\lnot b^{'}$. If $\adv$ outputs $0$ and $b=b^{'}$, this signals to $\bdv$ that $c_{0}G$ might potentially be of the form $scG=c_{0}G$  i.e. it is a DDH tuple, therefore $\bdv$ outputs $1$. In all the other cases $\bdv$ outputs a random bit. Therefore we have that $\bdv$ has an adventage in their DDH-game if and only if $\adv$ wins their $\textsf{G}^{with, anon}_{mix, \adv}$ security game. Since we assumed that recipient anonymity does not hold we have that $$\Pr[\textsf{DDH}_{\bdv}]=\frac{1}{2}+\frac{1}{2}*\Pr[\textsf{G}^{with, anon}_{mix, \adv}]=\frac{1}{2}+\frac{1}{2}*\textsf{non-negl}(\lambda),$$ which contradicts to the DDH assumption.
 
+\section{Proof of Availability}
+\section{Proof of Theft Prevention}
 
 \end{appendices}
 

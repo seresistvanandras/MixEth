@@ -1,6 +1,7 @@
 let MixEth = artifacts.require("MixEth");
 let BigNumber = require('bignumber.js');
 let abi = require('ethereumjs-abi');
+let catchRevert = require("./exceptions.js").catchRevert;
 
 let Web3latest = require('web3');
 let web3latest = new Web3latest();
@@ -31,6 +32,28 @@ contract('MixEth', function(accounts) {
             return ContractInstance.shufflers.call(shuffler);
         }).then(function(shufflerStateIsSet) {
             assert.equal(true, shufflerStateIsSet[2], "Shuffler's address and/or state is not correct");
+        });
+    });
+
+    it("Depositting to a public key with invalid amount", function() {
+        return MixEth.deployed().then(async function(instance) {
+            ContractInstance = instance;
+            await catchRevert(ContractInstance.deposit(
+              pubKeyX,
+              pubKeyY,
+              shuffler,
+              {value:100}));
+        });
+    });
+
+    it("Depositting to an invalid public key", function() {
+        return MixEth.deployed().then(async function(instance) {
+            ContractInstance = instance;
+            await catchRevert(ContractInstance.deposit(
+              '111',
+              pubKeyY,
+              shuffler,
+              {value:1000000000000000000}));
         });
     });
 
