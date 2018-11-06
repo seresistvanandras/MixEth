@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  5 NOV 2018 22:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  6 NOV 2018 18:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2012,319 +2012,314 @@ LaTeX Font Info:    Try loading font information for T1+cmss on input line 146.
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ) [2] [3] [4]
-Overfull \hbox (64.45271pt too wide) in paragraph at lines 231--252
+Overfull \hbox (64.45271pt too wide) in paragraph at lines 233--254
  [][] 
  []
 
 
-Overfull \hbox (20.78218pt too wide) in paragraph at lines 271--271
+Overfull \hbox (20.78218pt too wide) in paragraph at lines 273--273
 [] 
  []
 
 
-Overfull \hbox (22.78218pt too wide) in paragraph at lines 271--272
+Overfull \hbox (22.78218pt too wide) in paragraph at lines 273--274
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 271--272
+Underfull \hbox (badness 10000) in paragraph at lines 273--274
 
  []
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 300.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 300.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 300.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 300.
 
 
-Overfull \hbox (1.59502pt too wide) in paragraph at lines 298--298
+Overfull \hbox (1.59502pt too wide) in paragraph at lines 300--300
 [] 
  []
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 300.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 300.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 300.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 298.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 300.
 
 
-Overfull \hbox (3.59502pt too wide) in paragraph at lines 298--299
+Overfull \hbox (3.59502pt too wide) in paragraph at lines 300--301
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 298--299
+Underfull \hbox (badness 10000) in paragraph at lines 300--301
 
  []
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 315.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 315.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 315.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 315.
 
 
-Overfull \hbox (1.08752pt too wide) in paragraph at lines 313--313
+Overfull \hbox (1.08752pt too wide) in paragraph at lines 315--315
 [] 
  []
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 315.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 315.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 315.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 313.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 315.
 
 
-Overfull \hbox (3.08752pt too wide) in paragraph at lines 313--314
+Overfull \hbox (3.08752pt too wide) in paragraph at lines 315--316
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 313--314
+Underfull \hbox (badness 10000) in paragraph at lines 315--316
 
  []
 
 [5]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 334.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 380.
 
  (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 334.
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 349.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 380.
  [6]
-Underfull \hbox (badness 10000) in paragraph at lines 369--370
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 395.
+
+Underfull \hbox (badness 10000) in paragraph at lines 415--416
 
  []
 
-
-Overfull \hbox (5.58513pt too wide) in paragraph at lines 393--393
+[7]
+Overfull \hbox (5.58513pt too wide) in paragraph at lines 439--439
 [] 
  []
 
 
-Overfull \hbox (7.58513pt too wide) in paragraph at lines 393--394
+Overfull \hbox (7.58513pt too wide) in paragraph at lines 439--440
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 393--394
+Underfull \hbox (badness 10000) in paragraph at lines 439--440
 
  []
 
 
-Overfull \hbox (2.16528pt too wide) in paragraph at lines 400--401
+Overfull \hbox (2.16528pt too wide) in paragraph at lines 446--447
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 400--401
+Underfull \hbox (badness 10000) in paragraph at lines 446--447
 
  []
 
 
-Overfull \hbox (16.23389pt too wide) in paragraph at lines 405--405
+Overfull \hbox (16.23389pt too wide) in paragraph at lines 451--451
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 405--406
+Underfull \hbox (badness 10000) in paragraph at lines 451--452
 []
  []
 
 
-Overfull \hbox (18.23389pt too wide) in paragraph at lines 405--406
+Overfull \hbox (18.23389pt too wide) in paragraph at lines 451--452
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 405--406
+Underfull \hbox (badness 10000) in paragraph at lines 451--452
 
  []
 
 
-Overfull \hbox (33.15451pt too wide) in paragraph at lines 390--408
+Overfull \hbox (33.15451pt too wide) in paragraph at lines 436--454
  [][] 
  []
 
 
-Overfull \hbox (36.23946pt too wide) in paragraph at lines 425--426
+Overfull \hbox (36.23946pt too wide) in paragraph at lines 471--472
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 425--426
+Underfull \hbox (badness 10000) in paragraph at lines 471--472
 
  []
 
 
-Overfull \hbox (12.05722pt too wide) in paragraph at lines 436--436
+Overfull \hbox (12.05722pt too wide) in paragraph at lines 482--482
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 436--437
+Underfull \hbox (badness 10000) in paragraph at lines 482--483
 []
  []
 
 
-Overfull \hbox (14.05722pt too wide) in paragraph at lines 436--437
+Overfull \hbox (14.05722pt too wide) in paragraph at lines 482--483
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 436--437
+Underfull \hbox (badness 10000) in paragraph at lines 482--483
 
  []
 
 
-Overfull \hbox (5.64552pt too wide) in paragraph at lines 443--443
+Overfull \hbox (5.64552pt too wide) in paragraph at lines 489--489
 [] 
  []
 
 
-Overfull \hbox (7.64552pt too wide) in paragraph at lines 443--444
+Overfull \hbox (7.64552pt too wide) in paragraph at lines 489--490
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 443--444
+Underfull \hbox (badness 10000) in paragraph at lines 489--490
 
  []
 
 
-Overfull \hbox (49.15137pt too wide) in paragraph at lines 449--449
+Overfull \hbox (49.15137pt too wide) in paragraph at lines 495--495
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 449--450
+Underfull \hbox (badness 10000) in paragraph at lines 495--496
 []
  []
 
 
-Overfull \hbox (51.15137pt too wide) in paragraph at lines 449--450
+Overfull \hbox (51.15137pt too wide) in paragraph at lines 495--496
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 449--450
+Underfull \hbox (badness 10000) in paragraph at lines 495--496
 
  []
 
 
-Overfull \hbox (30.30951pt too wide) in paragraph at lines 432--452
+Overfull \hbox (30.30951pt too wide) in paragraph at lines 478--498
  [][] 
  []
 
-[7] [8] <./withdrawalComplexity.jpg, id=364, 552.0625pt x 391.4625pt>
+[8] [9] <./withdrawalComplexity.jpg, id=383, 552.0625pt x 391.4625pt>
 File: ./withdrawalComplexity.jpg Graphic file (type jpg)
 
 <use ./withdrawalComplexity.jpg>
-Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 500.
+Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 546.
 (pdftex.def)             Requested size: 386.4411pt x 274.02187pt.
 
-Overfull \hbox (87.68846pt too wide) in paragraph at lines 500--501
+Overfull \hbox (87.68846pt too wide) in paragraph at lines 546--547
  [][] 
  []
 
 
-Overfull \hbox (1.23772pt too wide) in paragraph at lines 503--504
+Overfull \hbox (1.23772pt too wide) in paragraph at lines 549--550
 []\T1/cmr/m/n/10 We en-vi-sion two ap-proaches
  []
 
 
-Underfull \hbox (badness 1845) in paragraph at lines 503--504
+Underfull \hbox (badness 1845) in paragraph at lines 549--550
 \T1/cmr/m/n/10 The first im-ple-men-ta-tion
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 503--504
+Underfull \hbox (badness 1292) in paragraph at lines 549--550
 \T1/cmr/m/n/10 of Mix-Eth does not ap-
  []
 
 
-Underfull \hbox (badness 4048) in paragraph at lines 503--504
+Underfull \hbox (badness 4048) in paragraph at lines 549--550
 \T1/cmr/m/n/10 and chal-leng-ing a shuf-
  []
 
 
-Underfull \hbox (badness 4024) in paragraph at lines 503--504
+Underfull \hbox (badness 4024) in paragraph at lines 549--550
 \T1/cmr/m/n/10 fle oc-curs off-chain and
  []
 
 
-Underfull \hbox (badness 5578) in paragraph at lines 503--504
+Underfull \hbox (badness 5578) in paragraph at lines 549--550
 \T1/cmr/m/n/10 only de-posit and with-
  []
 
 
-Underfull \hbox (badness 2790) in paragraph at lines 503--504
+Underfull \hbox (badness 2790) in paragraph at lines 549--550
 \T1/cmr/m/n/10 drawal trans-ac-tions hap-
  []
 
-[9 <./withdrawalComplexity.jpg>] (./main.bbl
+[10 <./withdrawalComplexity.jpg>] (./main.bbl
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 6.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [10]) [11]
-Overfull \hbox (34.71405pt too wide) detected at line 610
+) [11]) [12]
+Overfull \hbox (34.71405pt too wide) detected at line 656
 []\OT1/cmr/m/n/10 [[][]] = [] + [] \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 [[][]
 ] = [] + [] \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^U\OT1/cm
 r/m/n/10 )\OML/cmm/m/it/10 ;
  []
 
-[12]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 617.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 617.
+[13]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 663.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 663.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 617.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 617.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 663.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 663.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: CE4C6A333D41F0628E210BED97BEA818;2481.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: E08D17EA60C6D2945F72626C84D66465;2481
-(rerunfilecheck)             After:  E6A88C3513ECDF29A3D0FB5B9B938C1E;2481.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 43502 strings out of 494953
- 965314 string characters out of 6180976
- 1105351 words of memory out of 5000000
+ 43518 strings out of 494953
+ 965567 string characters out of 6180976
+ 1105353 words of memory out of 5000000
  45936 multiletter control sequences out of 15000+600000
  31073 words of font info for 86 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -2363,10 +2358,10 @@ ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type
 c/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapf
 ding/uzdr.pfb>
-Output written on main.pdf (12 pages, 409199 bytes).
+Output written on main.pdf (13 pages, 414447 bytes).
 PDF statistics:
- 1065 PDF objects out of 1200 (max. 8388607)
- 520 compressed objects within 6 object streams
- 154 named destinations out of 1000 (max. 500000)
+ 1093 PDF objects out of 1200 (max. 8388607)
+ 542 compressed objects within 6 object streams
+ 170 named destinations out of 1000 (max. 500000)
  330 words of extra memory for PDF output out of 10000 (max. 10000000)
 

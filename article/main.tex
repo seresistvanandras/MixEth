@@ -220,9 +220,11 @@ $0/1\leftarrow VerifyWithdraw(tx)$: tumbler checks the validity of a recipient's
 $ProcessWithdraw(tx)$: upon receiving a valid withdrawal transaction, mixing contract updates its internal state accordingly.
 
 \subsection{Security goals} \label{securitygoals}
-We are aiming to achieve and prove the same notions of security as the ones defined in \cite{meiklejohn2018mobius}, namely anonymity, availability and theft prevention. We are going to assume that at most $k-2$ recipients are malicious ($k$ is the number of recipients). Otherwise, no meaningful notion of security can be achieved. Furthermore we presume that participants are on-line during the entire course of mixing in order to be able to monitor and potentially challenge any incorrect shuffle. Finally we assume that honest recipients will always exercise their rights to shuffle and they do not disclose any private information used in their shuffles.
+We are aiming to achieve and prove the same notions of security as the ones defined in \cite{meiklejohn2018mobius}, namely anonymity, availability and theft prevention. These notions of anonymity, availability and theft prevention were introduced in \cite{meiklejohn2018mobius}, which are included in this section for sake of self-containedness.
 
-In the security definitions and games introduced by \cite{meiklejohn2018mobius} adversary $\adv$ might have access to the following oracles. CORR enables $\adv$ to corrupt a sencer or receiver by learning the secret key of any party $l$ of their choice. Oracle access to AD or AW allow $\adv$ to deposit or withdraw respectively from tumbler session $j$. Furthermore $\adv$ might instruct honest senders or receivers to deposit or withdraw from tumbler session $j$ by using oracles HD and HW. In the following $C$ denotes the set of corrupted parties, while the list of honest deposits and withdrawals are denotes as $H_{d}$ and $H_{w}$ respectively The list of contract identifiers associated with distinct sessions is denoted as $tumblers$.     
+We are going to assume that at most $n-2$ recipients are malicious ($n$ is the number of recipients). Otherwise, no meaningful notion of security can be achieved. Furthermore we presume that participants are on-line during the entire course of mixing in order to be able to monitor and potentially challenge any incorrect shuffle. Finally we assume that honest recipients will always exercise their rights to shuffle and they do not disclose any private information used in their shuffles.
+
+In the security definitions and games introduced by \cite{meiklejohn2018mobius} adversary $\adv$ might have access to the following oracles. CORR enables $\adv$ to corrupt a sender or receiver by learning the secret key of any party $l$ of their choice. Oracle access to AD or AW allow $\adv$ to deposit or withdraw respectively from tumbler session $j$. Furthermore $\adv$ might instruct honest senders or receivers to deposit or withdraw from tumbler session $j$ by using oracles HD and HW. In the following $C$ denotes the set of corrupted parties, while the list of honest deposits and withdrawals are denotes as $H_{d}$ and $H_{w}$ respectively The list of contract identifiers associated with distinct sessions is denoted as $tumblers$.     
 
 These oracles are formally defined as follows: 
 
@@ -273,12 +275,12 @@ These oracles are formally defined as follows:
 \end{tabular}
 \end{table}
 
-From now on, we will denote the number of senders and receivers in the mixer as $n$, while a specific key in a given session is denoted as $tumbler.keys_{B}$.
+From now on, we will denote a specific key in a given session as as $tumbler.keys_{B}$.
 
 \subsubsection{Anonymity} \label{sec:defanonymity}
 \textit{Sender} anonymity is achieved if an adversary can not determine to whom honest senders are sending funds, assuming that honest senders' deposits are indistinguishable.
 
-\textit{Recipient} anonymity is achieved if honest recipients withdrawal transactions are indistinguishable. These notions of anonymity were introduced in \cite{meiklejohn2018mobius}, which are included here for sake of self-containedness.
+\textit{Recipient} anonymity is achieved if honest recipients withdrawal transactions are indistinguishable. 
 
 \begin{definition}
 	Define $\textbf{Adv}^{d-anon}_{mix,\adv}(\lambda) = 2\Pr[\textsf{G}^{d-anon}_{mix,\adv}(\lambda)]-1\ for\ d \in \{dep, with\}$, where these games are defined as follows:
@@ -318,11 +320,55 @@ Then the tumbler satisfies sender or recipient anonymity if for all PT adversari
 \end{definition}
 
 \subsubsection{Availability}
-It is essential for a coin mixer to provide availability, meaning that honest recipients can always withdraw their money from the mixer.
+It is essential for a coin mixer to provide availability, meaning that honest recipients can always withdraw their money from the mixer, even if senders and one but all recipients are compromised. 
+
+Adversary $\adv$ wins the availability security game if they manage to get the tumbler into a state where honest recipient can not withdraw their funds.
+
+\begin{definition}
+	Define $\textbf{Adv}^{avail}_{mix,\adv}(\lambda) = \Pr[\textsf{G}^{avail}_{mix,\adv}(\lambda)]$, where the game is defined as follows:
+	
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c}    
+			\begin{minipage}{7cm}
+				\procedure{MAIN $\textsf{G}^{avail}_{mix,\adv}(\lambda)$}{%
+					(pk_{i},sk_{i})\stackrel{\$}{\leftarrow}\kgen(1^{\lambda}) \ \forall i \in [n]\\
+					\textsf{PK}_B\leftarrow\{pk_i\}^{n}_{i=1};C,H_{w} \leftarrow \emptyset\\
+					(l,j)\stackrel{\$}{\leftarrow} \adv^{CORR,AD,HW,AW}(1^{\lambda},\textsf{PK}_{B}) \\
+					b \leftarrow  \textsf{VerifyWithdraw}(\textsf{tumblers}[j], \textsf{Withdraw}(sk_{l}) \\
+					if ((pk_{l}\in C)\ \lor\ ((j,l,\cdot)\in H_{w}))\ return \ 0 \\
+					\pcreturn (b=0)\land(pk_{l}\in tumblers[j].keys_{B})}
+			\end{minipage}
+		\end{tabular}
+	\end{table}	
+	Then the tumbler satisfies availability if for all PT adversaries $\adv$ there exists a negligible function $\nu(\cdot)$ such that $\textbf{Adv}^{avail}_{mix,\adv}(\lambda) < \nu(\lambda)$.
+\end{definition}  
 
 
 \subsubsection{Theft prevention}
-We would like to ensure that neither coins can be withdrawn twice, nor withdrawn by anyone other but the intended recipient. 
+We would like to ensure that neither coins can be withdrawn twice, nor withdrawn by anyone other but the intended recipient. Theft prevention is defined formally as follows: 
+
+\begin{definition}
+	Define $\textbf{Adv}^{theft}_{mix,\adv}(\lambda) = \Pr[\textsf{G}^{theft}_{mix,\adv}(\lambda)]$, where the game is defined as follows:
+	
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c}    
+			\begin{minipage}{7cm}
+				\procedure{MAIN $\textsf{G}^{theft}_{mix,\adv}(\lambda)$}{%
+					(pk_{i},sk_{i})\stackrel{\$}{\leftarrow}\kgen(1^{\lambda}) \ \forall i \in [n]\\
+					\textsf{PK}_B\leftarrow\{pk_i\}^{n}_{i=1};C,H_{w}, \textsf{contract} \leftarrow \emptyset\\
+					(\textsf{tx},j)\stackrel{\$}{\leftarrow} \adv^{CORR,AD,AW,HW}(1^{\lambda},\textsf{PK}_{B}) \\
+					if(\textsf{tumblers}[j].\textsf{keys}_{B}\not\subset \textsf{PK}_{B}\setminus C)\ return \ 0 \\
+					\pcreturn \textsf{VerifyWithdraw}(\textsf{tumblers}[j], \textsf{tx})}
+			\end{minipage}
+		\end{tabular}
+	\end{table}	
+	Then the tumbler satisfies theft prevention if for all PT adversaries $\adv$ there exists a negligible function $\nu(\cdot)$ such that $\textbf{Adv}^{theft}_{mix,\adv}(\lambda) < \nu(\lambda)$.
+\end{definition} 
+ 
 \section{MixEth}
 
 \subsection{Overview}
