@@ -75,6 +75,7 @@ contract MixEth {
   function withdrawAmt(uint256[12] sig, uint256 indexInShuffle) public {
     require(Shuffles[shuffleRound-1].shuffle[indexInShuffle] == sig[2] && Shuffles[shuffleRound-1].shuffle[indexInShuffle+1] == sig[3], "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
     require(Shuffles[shuffleRound-1].shuffle[10] == sig[0] && Shuffles[shuffleRound-1].shuffle[11] == sig[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
+    require(sig[4] == uint(sha3(msg.sender,sig[2],sig[3])), "Signed an invalid message!"); //this check is needed to deter front-running attacks
     require(ECDSAGeneralized.verify(sig), "Your signature is not verified!");
 
     msg.sender.transfer(amt);
