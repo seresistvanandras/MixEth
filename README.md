@@ -23,6 +23,8 @@ The protocol in a nutshell: senders need to deposit certain amount of ether to E
         * **Deposit tx:** sending one secp256k1 public key to the MixEth contract: cca. 65,000 gas. 
         * **Shuffle tx:** (2\*(n+1)\*SSTORE\)=44,000\*n. Shufflers need to send n shuffled public keys and the shuffling accumulated constant to MixEth.  
         * **Challenging a shuffle:** it requires a Chaum-Pedersen proof: cca. 198,429 gas
+        
+        (One could save the gas costs of shuffling and challenging periods by doing these operations in a state channel. We are going to implement a state channel version of MixEth as well. This would further decrease the number of on-chain transactions to 2 (deposit and withdraw))
         * **Withdraw tx:** Sending a tx to MixEth signed using a modified ECDSA: cca. 21,000 gas.  
         
 **Note:** the cost of SSTORE is 20,000 gas.
