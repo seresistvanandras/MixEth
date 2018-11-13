@@ -214,14 +214,14 @@ $0/1\leftarrow VerifyDeposit(tx)$: The tumbler contract checks the validity of s
 
 $ProcessDeposit(tx)$: upon receiving a valid deposit transaction, the mixing contract updates its internal state accordingly.
 
-After some period of time no more deposits are allowed to the tumbling contract. Let $PK_{0}$ denote the set of public keys after the depositing period to be mixed. Every recipient of the mix is allowed to shuffle the public keys at most once: 
+After some period of time no more deposits are allowed to the tumbling contract. Let $PK_{0}$ denote the set of public keys after the depositing period to be mixed. Furthermore let us set $C^{*}_{0}=G$, the standard generator point of the secp256k1 curve. be Every recipient of the mix is allowed to shuffle the public keys at most once: 
 
-$PK_{i+1},C_{i+1}^{*}\stackrel{\$}{\leftarrow}Shuffle(PK_{i},C^{*}_{i},c_{i},\pi_{i})$. Let us call $C^{*}$ as the shuffling accumulated constant, which can be obtained by $C^{*}_{i+1}=c_{i}C^{*}_{i}$. The shuffling accumulated constant is needed for receivers to audit shuffling and to collect their funds at the end of the final shuffling period. The permutation $\pi$ and the secret multiplier $c_{i}$ from the new shuffling accumulated constant should be kept private after shuffling, otherwise it is trivial to track how public keys are shuffled. All the outputs of the $Shuffle$ algorithm are public and written into the tumbling contract.  
+$PK_{i+1},C_{i+1}^{*}\stackrel{\$}{\leftarrow}Shuffle(PK_{i},C^{*}_{i},c_{i},\pi_{i})$. Let us call $C^{*}_{i}$ as the shuffling accumulated constant, which can be obtained by $C^{*}_{i+1}=c_{i}C^{*}_{i}$. The shuffling accumulated constant is needed for receivers to audit shuffling and to collect their funds at the end of the final shuffling period. The permutation $\pi$ and the secret multiplier $c_{i}$ from the new shuffling accumulated constant should be kept private after shuffling, otherwise it is trivial to track how public keys are shuffled. All the outputs of the $Shuffle$ algorithm are public and written into the tumbling contract.  
 
 $0\lor1\leftarrow 
 ChallengeShuffle(PK_{i},C^{*}_{i},PK_{i-1},C^{*}_{i-1},pk_{B})$: receiver $B$ with public key $pk_{B}=s_{B}G$ can challenge an incorrect shuffle at the $i$th round by giving a Chaum-Pedersen zero-knowledge proof that the following tuple is DDH-tuples: $(C^{*}_{i-1}, s_{B}C^{*}_{i-1}, C^{*}_{i}, s_{B}C^{*}_{i})$. If the proof verifies and $s_{B}C^{*}_{i} \notin PK_{i}$, while $s_{B}C^{*}_{i-1} \in PK_{i-1}$, then the challenge is accepted, otherwise rejected. This proof and checks allow one to be certain that indeed the $i$th round is the first round in which the corresponding public key to $s_{B}$ is shuffled incorrectly.  
 
-$tx\stackrel{\$}{\leftarrow}Withdraw(sk_B, C^{*})$: after the end of the shuffling period users are allowed to withdraw their funds. Note that here withdraw transactions will be signed with a modified version of ECDSA, where not the original generator element $G$ is used as generator rather $C^{*}$, the final shuffling accumulated constant.
+$tx\stackrel{\$}{\leftarrow}Withdraw(sk_B, C^{*})$: after the end of the shuffling period users are allowed to withdraw their funds. Note that here withdraw transactions will be signed with a modified version of ECDSA, where not the original generator element $G$ is used as generator rather $C^{*}_{final}$, the final shuffling accumulated constant.
 
 $0/1\leftarrow VerifyWithdraw(tx)$: tumbler checks the validity of a recipient's withdrawal transaction.
 
@@ -383,19 +383,13 @@ We would like to ensure that neither coins can be withdrawn twice, nor withdrawn
 MixEth is a coin mixing smart contract allowing parties to efficiently tumble coins in a trustless manner on Ethereum.
 \subsection{Initializing the tumbler}
 
-A MixEth contract living on the Ethereum blockchain at $id_{contract}$ address must be initialized with the following parameters:
-\begin{itemize}
-	\item $amt$: denomination of ether to be mixed;
-	\item $senders[]$: list of all the sender addresses;
-	\item $initPubKeys[]$: list of all the recipients' public keys;
-	\item $shuffles[][]$: list of all the shuffles with corresponding shuffling accumulated constants.
-	\item $withdrawn[]$: list of all the shuffled public keys who had already withdrawn their coins.	
-\end{itemize}
+A MixEth contract living on the Ethereum blockchain at $id_{contract}$ address must be initialized with the $amt$ parameter, which denotes the denomination of ether to be mixed.
 
 \subsection{Depositing period}
-Every sender must deposit exactly $amt$ ether to a specific public key. Deposits with incorrect ether value or invalid public key are rejected.  
+Every sender must deposit exactly $amt$ ether to a specific public key. Deposits with incorrect ether value or invalid public key are rejected. Public keys in subsequent deposit transactions are written into the $initPubKeys[]$ array.   
+
 \subsection{Shuffling period}
-After the depositing round, shuffling and challenging rounds are coming after in turns. Each shuffling round is followed by a challenging round when the correctness of the preceding shuffle can be challenged by anyone. If a challenge is accepted, then shuffler's deposit is lost, her shuffle is discarded and shuffling continues from the set of public keys prior to the discarded shuffle. In the course of a shuffle an honest shuffler should raise all the public keys to a secret exponent $c$ and then permute all the transformed public keys. Honest shuffler commits to $c$ by sending back to MixEth the new shuffling accumulated constant and the shuffled public keys.
+After the depositing round, shuffling and challenging rounds are coming after in turns. Each shuffling round is followed by a challenging round when the correctness of the preceding shuffle can be challenged by anyone. If a challenge is accepted, then shuffler's deposit is lost, their shuffle is discarded and shuffling continues from the set of public keys prior to the discarded shuffle. In the course of a shuffle an honest shuffler should multiply all the public keys with a secret exponent $c$ and then permute all the transformed public keys. Honest shuffler commits to $c$ by sending back to MixEth the new shuffling accumulated constant and the shuffled public keys.
 
 Shuffle is done off-chain, however the result and the updated shuffling accumulated constant is loaded into the MixEth contract enabling anyone to verify the shuffle's correctness and to continue public key shuffling after the corresponding challenging round.
 
@@ -435,7 +429,7 @@ Every participant should check the correctness of incoming shuffles, therefore s
 Note that every recipient should perform this check after each shuffling. Noone can check the inclusion and correctness of shuffled public keys for recipients other than themselves. This task is non-outsourcable unless one reveals her own private key, which would obviously lead to loss of funds at the end of the MixEth protocol, since anyone can claim the funds knowing the corresponding secret key.  
 
 \subsection{Withdrawing}
-Let $C^*$ be the final shuffling accumulated constant. For a recipient $B$, whose public key $s_{B}G \in initPubKeys[]$, in the final shuffle there will be $s_{B}C^*$. The recipient can prove to MixEth that she knows secret key $s_{B}$ by using a modified ECDSA, which uses $C^*$ as the generator element instead of the standardized $G$.
+Let $C^*_{final}$ be the final shuffling accumulated constant. For a recipient $B$, whose public key $s_{B}G \in initPubKeys[]$, in the final shuffle there will be $s_{B}C^*_{final}$. The recipient can prove to MixEth that she knows secret key $s_{B}$ by signing their public key using a modified ECDSA, which uses $C^*_{final}$ as the generator element instead of the standardized $G$.
 
 \subsection{MixEth formal specification}
 
@@ -507,8 +501,6 @@ Let $C^*$ be the final shuffling accumulated constant. For a recipient $B$, whos
 
 \section{Security}
 This section is going to demonstrate security proofs for the notions of security introduced in Section \ref{securitygoals}.
-
-In this early version of the MixEth paper, we only restrict ourselves to give intuition and informal proofs for certain security properties.
 
 \subsection{Recipient anonymity}
 The withdrawing transaction for recipient $B$ sends funds to the public key $s_{B}C^{*}$. This public key does not reveal any links to the original $s_{B}G$ in case if at least one honest sender shuffled and the DDH assumption holds. Adversary can only distinguish between honest recipients public keys with negligible probability.
@@ -626,7 +618,7 @@ We are going to implement and deploy MixEth on Ethereum and evaluate its perform
 An important and crucial research question is whether it is possible to design and implement an efficient and trustless Ethereum-based coin mixer with strong security guarantees which do not rely on any workaround and upcoming EIP implementation and is ready to be deployed on present-day Ethereum. 
 
 \section{Acknowledgements}
-We would like to thank barryWhiteHat and Dmitry Khovratovich for the insightful comments and discussions. 
+We would like to thank barryWhiteHat, Dmitry Khovratovich and Sina Mahmoodi for the insightful comments and discussions. 
 
 \bibliographystyle{plain}
 \bibliography{sample}
