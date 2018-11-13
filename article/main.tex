@@ -344,7 +344,7 @@ Adversary $\adv$ wins the availability security game if they manage to get the t
 					(pk_{i},sk_{i})\stackrel{\$}{\leftarrow}\kgen(1^{\lambda}) \ \forall i \in [n]\\
 					\textsf{PK}_B\leftarrow\{pk_i\}^{n}_{i=1};C,H_{w} \leftarrow \emptyset\\
 					(l,j)\stackrel{\$}{\leftarrow} \adv^{CORR,AD,HW,AW}(1^{\lambda},\textsf{PK}_{B}) \\
-					b \leftarrow  \textsf{VerifyWithdraw}(\textsf{tumblers}[j], \textsf{Withdraw}(sk_{l}) \\
+					b \leftarrow  \textsf{VerifyWithdraw}(\textsf{tumblers}[j], \textsf{Withdraw}(sk_{l})) \\
 					if ((pk_{l}\in C)\ \lor\ ((j,l,\cdot)\in H_{w}))\ return \ 0 \\
 					\pcreturn (b=0)\land(pk_{l}\in tumblers[j].keys_{B})}
 			\end{minipage}
@@ -500,12 +500,12 @@ Let $C^*_{final}$ be the final shuffling accumulated constant. For a recipient $
 \end{table}
 
 \section{Security}
-This section is going to demonstrate security proofs for the notions of security introduced in Section \ref{securitygoals}.
+This section provides informal ideas to the security proofs for the notions of security introduced in Section \ref{securitygoals}. Formal reductions are enclosed in the Appendices.
 
 \subsection{Recipient anonymity}
 The withdrawing transaction for recipient $B$ sends funds to the public key $s_{B}C^{*}$. This public key does not reveal any links to the original $s_{B}G$ in case if at least one honest sender shuffled and the DDH assumption holds. Adversary can only distinguish between honest recipients public keys with negligible probability.
 \subsection{Availability}
-If an adversary is able to destroy an honest recipient's funds' availability, it implies that adversary either breaks the soundness of the Chaum-Pedersen protocol or successfully launched an eclipse attack against the honest recipient, who can not send any transactions to the Ethereum transaction ledger. 
+If an adversary is able to destroy an honest recipient's funds' availability, it implies that adversary either breaks the soundness of the Chaum-Pedersen protocol or successfully launched an eclipse attack against the honest recipient, who can not send any transactions to honest Ethereum peers. 
 \subsection{Theft prevention} 
 If an adversary is able to steal funds from other users than it would imply that they broke discrete logarithm problem on the secp256k1 curve.
 \begin{table}[H] 
