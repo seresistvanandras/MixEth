@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  13 NOV 2018 16:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  14 NOV 2018 14:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2296,12 +2296,12 @@ Overfull \hbox (34.71405pt too wide) detected at line 661
 r/m/n/10 )\OML/cmm/m/it/10 ;
  []
 
-[13]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 668.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 668.
+[13] [14]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 700.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 700.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 668.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 668.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 700.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 700.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: CE4C6A333D41F0628E210BED97BEA818;2481.
 
@@ -2310,13 +2310,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 43501 strings out of 494953
- 965276 string characters out of 6180976
- 1101554 words of memory out of 5000000
- 45922 multiletter control sequences out of 15000+600000
+ 43520 strings out of 494953
+ 965608 string characters out of 6180976
+ 1101948 words of memory out of 5000000
+ 45934 multiletter control sequences out of 15000+600000
  31073 words of font info for 86 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,31n,83p,10375b,3040s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,31n,83p,10375b,3059s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </home/
 istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/istvan/.te
 xmf-var/fonts/pk/ljfour/jknappen/ec/ecss0600.600pk> </home/istvan/.texmf-var/fo
@@ -2351,10 +2351,10 @@ ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type
 c/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapf
 ding/uzdr.pfb>
-Output written on main.pdf (13 pages, 420632 bytes).
+Output written on main.pdf (14 pages, 425473 bytes).
 PDF statistics:
- 1096 PDF objects out of 1200 (max. 8388607)
- 544 compressed objects within 6 object streams
- 170 named destinations out of 1000 (max. 500000)
+ 1110 PDF objects out of 1200 (max. 8388607)
+ 555 compressed objects within 6 object streams
+ 177 named destinations out of 1000 (max. 500000)
  330 words of extra memory for PDF output out of 10000 (max. 10000000)
 

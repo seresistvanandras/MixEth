@@ -354,7 +354,7 @@ Adversary $\adv$ wins the availability security game if they manage to get the t
 \end{definition}  
 
 
-\subsubsection{Theft prevention}
+\subsubsection{Theft prevention} \label{sec:theftprevention}
 We would like to ensure that neither coins can be withdrawn twice, nor withdrawn by anyone other but the intended recipient. Theft prevention is defined formally as follows: 
 
 \begin{definition}
@@ -503,11 +503,11 @@ Let $C^*_{final}$ be the final shuffling accumulated constant. For a recipient $
 This section provides informal ideas to the security proofs for the notions of security introduced in Section \ref{securitygoals}. Formal reductions are enclosed in the Appendices.
 
 \subsection{Recipient anonymity}
-The withdrawing transaction for recipient $B$ sends funds to the public key $s_{B}C^{*}$. This public key does not reveal any links to the original $s_{B}G$ in case if at least one honest sender shuffled and the DDH assumption holds. Adversary can only distinguish between honest recipients public keys with negligible probability.
+The withdrawing transaction for recipient $B$ sends funds to the public key $s_{B}C^{*}$. This public key does not reveal any links to the original $s_{B}G$ in case if at least one honest sender shuffled and the DDH assumption holds. Adversary can only distinguish between honest recipients public keys with negligible probability. See reduction proof in Appendix \ref*{appendanon}.
 \subsection{Availability}
-If an adversary is able to destroy an honest recipient's funds' availability, it implies that adversary either breaks the soundness of the Chaum-Pedersen protocol or successfully launched an eclipse attack against the honest recipient, who can not send any transactions to honest Ethereum peers. 
+If an adversary is able to destroy an honest recipient's funds' availability, it implies that adversary $\adv$ either breaks the soundness of the Chaum-Pedersen protocol or successfully launched an eclipse attack against the honest recipient, who can not send any transactions to honest Ethereum peers.
 \subsection{Theft prevention} 
-If an adversary is able to steal funds from other users than it would imply that they broke discrete logarithm problem on the secp256k1 curve.
+If an adversary is able to steal funds from other users than it would imply that they managed to create a valid message/signature, $(m,\sigma)$ pair for the final shuffled public key of an honest recipient without having access to the secret key of the honest recipient. This contradicts to the assumption that ECDSA is existentially unforgeable. Reduction proof is enclosed in Appendix \ref*{appendtheft}. 
 \begin{table}[H] 
 	\caption{Security properties achieved by each coin mixing protocol.}
 	\centering 
@@ -625,7 +625,7 @@ We would like to thank barryWhiteHat, Dmitry Khovratovich and Sina Mahmoodi for 
 
 \begin{appendices}
 
-\section{Proof of Anonymity}
+\section{Proof of Anonymity} \label{appendanon}
 Hereby we show that if there exists an adversary $\adv$ who is able to break withdrawal anonymity defined in~\ref{sec:defanonymity}, then there exists another adversary $\bdv$ who is able to break the DDH assumption.
 
 \begin{wrapfigure}{r}{0.5\textwidth}
@@ -660,8 +660,40 @@ Hereby we show that if there exists an adversary $\adv$ who is able to break wit
 
 Towards contradiction let us assume that the recipient anonymity does not hold. Let us assume that the challenge to the DDH-adversary $\bdv$ is of the form $(sG,cG,c_{0}G)$. Adversary $\bdv$ generates uniformly random public key $c_{1}G$ and invokes $\adv$ with the set $\textsf{PK}_{B}=(c_{0}C^{*}, c_{1}C^{*})$, then $\bdv$ forwards $\textsf{PK}_{B}$ to $\adv$. Then a withdrawal transaction occurs from $c_{b}G$. After polynomial-time $\adv$ outputs $b^{'}$ and $\bdv$ will output $\lnot b^{'}$. If $\adv$ outputs $0$ and $b=b^{'}$, this signals to $\bdv$ that $c_{0}G$ might potentially be of the form $scG=c_{0}G$  i.e. it is a DDH tuple, therefore $\bdv$ outputs $1$. In all the other cases $\bdv$ outputs a random bit. Therefore we have that $\bdv$ has an adventage in their DDH-game if and only if $\adv$ wins their $\textsf{G}^{with, anon}_{mix, \adv}$ security game. Since we assumed that recipient anonymity does not hold we have that $$\Pr[\textsf{DDH}_{\bdv}]=\frac{1}{2}+\frac{1}{2}*\Pr[\textsf{G}^{with, anon}_{mix, \adv}]=\frac{1}{2}+\frac{1}{2}*\textsf{non-negl}(\lambda),$$ which contradicts to the DDH assumption.
 
-\section{Proof of Availability}
-\section{Proof of Theft Prevention}
+\section{Proof of Availability}  \label{appendavail}
+\section{Proof of Theft Prevention} \label{appendtheft}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\centering
+	\begin{bbrenv}{A}
+		\begin{bbrbox} [name=\bdv]
+			\pseudocode {
+				\text{$(pk_{i},sk_{i})\stackrel{\$}{\leftarrow}\kgen(1^{\lambda}) \ \forall i \in [n]$} \\
+				\text{$\textsf{PK}_{B}\leftarrow\{pk_{i}\}_{i=1}^{n}$;$C, H_{\omega}, contract \leftarrow \emptyset$}
+			}
+			
+			\begin{bbrenv}{B}
+				\begin{bbrbox}[name=\adv]
+					\pseudocode{
+						\text{Input: $(1^{\lambda},PK_{B})$} \\
+						\text{$(tx,j) \stackrel{\$}{\leftarrow}\adv^{CORR,AD,AW,HW}(1^{\lambda},PK_{B})$} \\
+						\text{Output: $(tx,j)$}
+					}
+				\end{bbrbox}
+				
+			\end{bbrenv}
+			
+		\end{bbrbox}
+		\bbrinput{$1^\lambda$}
+		\bbroutput{$(tx,\sigma_{tx})$}
+	\end{bbrenv}
+	
+	\captionof{figure}{An illustration for the reduction of theft prevention to the existentially unforgeability of ECDSA.}
+\end{wrapfigure}
+
+Towards contradiction we assume that there exists an adversary $\adv$, who is able to break the theft prevention property introduced in Section \ref{sec:theftprevention} with non-negligible probability. Using such an adversary as a subroutine we could create another efficient adversary $\bdv$ who is able to break the existential unforgeability of ECDSA. The input of the forgeability game is the security parameter which is forwarded to $\adv$ along with $n$ randomly generated public keys. By assumption $\adv$ outputs with non-negligible probability valid withdraw transaction belonging to one of the public keys in the mixer. $\bdv$ outputs the withdraw transaction and the ECDSA signature on it. $\bdv$ wins the forgeability game if and only if $\adv$ wins their $\textsf{G}^{theft}_{mix,\adv}$ game:
+$$\Pr[\textsf{Forge}_{ECDSA,\bdv}]=\Pr[\textsf{G}^{theft}_{mix, \adv}]=\frac{1}{\lambda^\alpha}, $$ for some fixed $\alpha$. This contradicts to the assumption that ECDSA is existentially unforgeable.      
+
 
 \end{appendices}
 
