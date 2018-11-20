@@ -11,10 +11,10 @@ contract MixEth {
 
   uint256 public amt = 1000000000000000000; //1 ether in wei, the amount of ether to be mixed;
   uint256 public shufflingDeposit = 1000000000000000000; // 1 ether, TBD
-  uint256 public shuffleRound = 0;
+  bool public shuffleRound; // we only store the parity of the shuffle round! false -> 0, true -> 1
   mapping(address => Status) public shufflers;
   Point[] public initPubKeys;
-  mapping(uint256 => Shuffle) Shuffles;
+  mapping(bool => Shuffle) Shuffles;
 
   struct Point {
     uint256 x; //x coordinate
@@ -25,7 +25,7 @@ contract MixEth {
   describes a shuffle: contains the shuffled pubKeys and shuffling accumulated constant
   */
   struct Shuffle {
-    uint256[12] shuffle;
+    uint256[] shuffle;
     address shuffler;
   }
 
@@ -42,11 +42,11 @@ contract MixEth {
     shufflers[shuffler].registered = true;
   }
 
-  function uploadShuffle(uint256[12] _shuffle) public payable onlyShuffler {
+  function uploadShuffle(uint256[] _shuffle) public payable onlyShuffler {
     require(msg.value == shufflingDeposit, "Invalid shuffler deposit amount!");
     require(!shufflers[msg.sender].alreadyShuffled, "Shuffler is not allowed to shuffle more than once!");
     Shuffles[shuffleRound] = Shuffle(_shuffle, msg.sender);
-    shuffleRound = shuffleRound.add(1);
+    shuffleRound = !shuffleRound;
     shufflers[msg.sender].alreadyShuffled = true; // a receiver can only shuffle once
   }
 
@@ -55,32 +55,40 @@ contract MixEth {
     which is stored at Shuffles[round].
     If challenge accepted malicious shuffler's deposit is slashed.
   */
-  function challengeShuffle(uint256[22] proofTranscript, uint256 round, uint256 indexinPrevShuffleA, uint256 indexinPrevShuffleA2) public {
-    require(proofTranscript[0] == Shuffles[round-1].shuffle[10] && proofTranscript[1] == Shuffles[round-1].shuffle[11], "Wrong shuffling accumulated constant for previous round "); //checking correctness of C*_{i-1}
-    require(proofTranscript[2] == Shuffles[round-1].shuffle[indexinPrevShuffleA] && proofTranscript[3] == Shuffles[round-1].shuffle[indexinPrevShuffleA2], "Shuffled key is not included in previous round"); //checking that shuffled key is indeed included in previous shuffle
-    require(proofTranscript[4] == Shuffles[round].shuffle[10] && proofTranscript[5] == Shuffles[round].shuffle[11], "Wrong current shuffling accumulated constant"); //checking correctness of C*_{i}
+  function challengeShuffle(uint256[22] proofTranscript, bool round, uint256 indexinPrevShuffleA, uint256 indexinPrevShuffleA2) public {
+    uint256 prevShuffleLength = Shuffles[round].shuffle.length;
+    uint256 currentShuffleLength = Shuffles[!round].shuffle.length;
+    require(proofTranscript[0] == Shuffles[round].shuffle[prevShuffleLength-2] && proofTranscript[1] == Shuffles[round].shuffle[prevShuffleLength-1], "Wrong shuffling accumulated constant for previous round "); //checking correctness of C*_{i-1}
+    require(proofTranscript[2] == Shuffles[round].shuffle[indexinPrevShuffleA] && proofTranscript[3] == Shuffles[round].shuffle[indexinPrevShuffleA2], "Shuffled key is not included in previous round"); //checking that shuffled key is indeed included in previous shuffle
+    require(proofTranscript[4] == Shuffles[!round].shuffle[currentShuffleLength-2] && proofTranscript[5] == Shuffles[!round].shuffle[currentShuffleLength-1], "Wrong current shuffling accumulated constant"); //checking correctness of C*_{i}
     bool includedInShuffle;
-    for(uint256 i=0; i < 5; i++) {
-      if(proofTranscript[6] == Shuffles[round].shuffle[2*i] && proofTranscript[7] == Shuffles[round].shuffle[2*i+1]) {
+    for(uint256 i=0; i < (currentShuffleLength-2)/2; i++) {
+      if(proofTranscript[6] == Shuffles[!round].shuffle[2*i] && proofTranscript[7] == Shuffles[!round].shuffle[2*i+1]) {
         includedInShuffle = true;
         break;
       }
     }
     require(!includedInShuffle && ChaumPedersenVerifier.verifyChaumPedersen(proofTranscript), "Chaum-Pedersen Proof not verified");
-    shufflers[Shuffles[round].shuffler].slashed = true;
-    shuffleRound = shuffleRound.sub(1);
+    shufflers[Shuffles[!round].shuffler].slashed = true;
+    shuffleRound = !shuffleRound;
+    //delete the shuffle entirely
+    for(i=0; i < (currentShuffleLength-2)/2; i++) {
+      Shuffles[!round].shuffle[2*i] = 0;
+      Shuffles[!round].shuffle[2*i+1] = 0;
+    }
   }
 
   //receivers can withdraw funds at most once
   function withdrawAmt(uint256[12] sig, uint256 indexInShuffle) public {
-    require(Shuffles[shuffleRound-1].shuffle[indexInShuffle] == sig[2] && Shuffles[shuffleRound-1].shuffle[indexInShuffle+1] == sig[3], "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
-    require(Shuffles[shuffleRound-1].shuffle[10] == sig[0] && Shuffles[shuffleRound-1].shuffle[11] == sig[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
+    uint256 currentShuffleLength = Shuffles[!shuffleRound].shuffle.length;
+    require(Shuffles[!shuffleRound].shuffle[indexInShuffle] == sig[2] && Shuffles[!shuffleRound].shuffle[indexInShuffle+1] == sig[3], "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
+    require(Shuffles[!shuffleRound].shuffle[currentShuffleLength-2] == sig[0] && Shuffles[!shuffleRound].shuffle[currentShuffleLength-1] == sig[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
     require(sig[4] == uint(sha3(msg.sender,sig[2],sig[3])), "Signed an invalid message!"); //this check is needed to deter front-running attacks
     require(ECDSAGeneralized.verify(sig), "Your signature is not verified!");
 
     msg.sender.transfer(amt);
-    Shuffles[shuffleRound-1].shuffle[indexInShuffle] = 0;
-    Shuffles[shuffleRound-1].shuffle[indexInShuffle+1] = 0;
+    Shuffles[!shuffleRound].shuffle[indexInShuffle] = 0;
+    Shuffles[!shuffleRound].shuffle[indexInShuffle+1] = 0;
   }
 
   function withdrawDeposit() public onlyShuffler onlyHonestShuffler {
@@ -88,7 +96,7 @@ contract MixEth {
   }
 
   // Shuffled pubKeys in shuffleRound
-    function getShuffle(uint256 round) public view returns (uint256[12] pubKeys) {
+    function getShuffle(bool round) public view returns (uint256[] pubKeys) {
         return Shuffles[round].shuffle;
     }
 

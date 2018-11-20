@@ -92,7 +92,7 @@ contract('MixEth', function(accounts) {
               '0x3c6fc99cb6a3861f987fd7b0403dd184977f32dbea8f46b75a0c49d3d5ef705c','0x8812a011a0df83df4cf7732775ad026a24db180a7f4af7e424c1d04bb1635de8',
               '0xcd7a64b4afa73602d19fe83f1fbf6543d67f7e3c0ccd2f79497d9d999d2303b5','0x25fc314f21964df9bc46707355347676a9cd060599d5bde52478de49d0d6e421',
               '0xcc4d05dc508d875033ec31804ce0eef81dfe681d3a1594eeb4e393f8bd95eafb','0xba800929d95fab0d049cdf1631dd4c421630df8e39c12d0c83201db897d4c1ef'],
-              1,0,1
+              false,0,1
              );
              console.log("challengeShuffle gas usage", txReceipt.receipt.gasUsed);
              return ContractInstance.shufflers.call(accounts[1]);
@@ -126,8 +126,8 @@ contract('MixEth', function(accounts) {
               '0xac402dfc8929141090a320508de763d020fedbe00286cde14673e173d691fc8f','0x8d8684b3edd169d9eefcc2732bceb5baca902476fd8e1a4dd14010a6845d3f68',
               '0xe4237819aef1db170ffe8a9e768d623f95c7b2a5f0ad717be86fbfbdf9bd679e','0xe8b71a0ee31ec3cd54af6c926943dc5986c510392f8b6b9cfce2113f9e108045',
               '0xc718652f3c3814ef324d636312e4558a21232cb806f15cccf60125ecbf91c35c'],8, {from:accounts[2]});
-              console.log("Gas cost of witdhrawing from the mixer", tx.receipt.gasUsed);
-              return ContractInstance.getShuffle(1);
+              console.log("Gas cost of witdhrawing from the mixer", tx2.receipt.gasUsed);
+              return ContractInstance.getShuffle(true);
             }).then(function(a){
               console.log("Last shuffle:",a);
             });
