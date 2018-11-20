@@ -52,9 +52,9 @@ contract MixEth is ERC223ReceivingContract {
 
   /*
      * Deposit a specific denomination of ERC20 compatible tokens which can only be withdrawn
-     * by providing a ring signature by one of the public keys.
+     * by providing a modified ECDSA sig by one of the public keys.
     **/
-  function depositERC20Compatible(address token, uint256 denomination, uint256 initPubKeyX, uint256 initPubKeyY) public {
+  function depositERC20Compatible(address token, uint256 initPubKeyX, uint256 initPubKeyY) public {
     uint256 codeLength;
     assembly {
         codeLength := extcodesize(token)
@@ -65,8 +65,7 @@ contract MixEth is ERC223ReceivingContract {
     Shuffles[token][shuffleRound[token]].shuffle.push(initPubKeyY);
 
     ERC20Compatible untrustedErc20Token = ERC20Compatible(token);
-    untrustedErc20Token.transferFrom(msg.sender, this, denomination);
-
+    untrustedErc20Token.transferFrom(msg.sender, this, 100);
 }
 
   function uploadShuffle(address token, uint256[] _shuffle) public payable {
@@ -107,28 +106,27 @@ contract MixEth is ERC223ReceivingContract {
 
   //receivers can withdraw funds at most once
   function withdrawAmt(uint256[12] sig, address token, uint256 indexInShuffle) public {
-    uint256 currentShuffleLength = Shuffles[token][shuffleRound[token]].shuffle.length;
-    require(Shuffles[token][shuffleRound[token]].shuffle[indexInShuffle] == sig[2] && Shuffles[token][shuffleRound[token]].shuffle[indexInShuffle+1] == sig[3], "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
-    require(Shuffles[token][shuffleRound[token]].shuffle[currentShuffleLength-2] == sig[0] && Shuffles[token][shuffleRound[token]].shuffle[currentShuffleLength-1] == sig[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
-    require(sig[4] == uint(sha3(msg.sender,sig[2],sig[3])), "Signed an invalid message!"); //this check is needed to deter front-running attacks
-    require(ECDSAGeneralized.verify(sig), "Your signature is not verified!");
+    withdrawChecks(sig, token, indexInShuffle);
 
     msg.sender.transfer(amt);
-    Shuffles[token][shuffleRound[token]].shuffle[indexInShuffle] = 0;
-    Shuffles[token][shuffleRound[token]].shuffle[indexInShuffle+1] = 0;
   }
 
 
   function withdrawERC20Compatible(uint256[12] sig, address token, uint256 indexInShuffle) public {
-    uint256 currentShuffleLength = Shuffles[token][shuffleRound[token]].shuffle.length;
-    require(Shuffles[token][shuffleRound[token]].shuffle[indexInShuffle] == sig[2] && Shuffles[token][shuffleRound[token]].shuffle[indexInShuffle+1] == sig[3], "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
-    require(Shuffles[token][shuffleRound[token]].shuffle[currentShuffleLength-2] == sig[0] && Shuffles[token][shuffleRound[token]].shuffle[currentShuffleLength-1] == sig[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
-    require(sig[4] == uint(sha3(msg.sender,sig[2],sig[3])), "Signed an invalid message!"); //this check is needed to deter front-running attacks
-    require(ECDSAGeneralized.verify(sig), "Your signature is not verified!");
-
+    withdrawChecks(sig, token, indexInShuffle);
 
     ERC20Compatible untrustedErc20Token = ERC20Compatible(token);
     untrustedErc20Token.transfer(msg.sender, 100); //to-be-overwritten TODO
+   }
+
+   function withdrawChecks(uint256[12] sig, address token, uint256 indexInShuffle) internal {
+     uint256 currentShuffleLength = Shuffles[token][shuffleRound[token]].shuffle.length;
+     require(Shuffles[token][shuffleRound[token]].shuffle[indexInShuffle] == sig[2] && Shuffles[token][shuffleRound[token]].shuffle[indexInShuffle+1] == sig[3], "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
+     require(Shuffles[token][shuffleRound[token]].shuffle[currentShuffleLength-2] == sig[0] && Shuffles[token][shuffleRound[token]].shuffle[currentShuffleLength-1] == sig[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
+     require(sig[4] == uint(sha3(msg.sender,sig[2],sig[3])), "Signed an invalid message!"); //this check is needed to deter front-running attacks
+     require(ECDSAGeneralized.verify(sig), "Your signature is not verified!");
+     Shuffles[token][shuffleRound[token]].shuffle[indexInShuffle] = 0;
+     Shuffles[token][shuffleRound[token]].shuffle[indexInShuffle+1] = 0;
    }
 
   function withdrawDeposit() public onlyShuffler onlyHonestShuffler {
