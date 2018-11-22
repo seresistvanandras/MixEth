@@ -10,6 +10,28 @@ web3latest.setProvider(new web3.providers.HttpProvider('http://localhost:8545'))
 let pubKeyX = '0x1ec64fdd678f8528c981fbdd742e8c79fa91c6f7bfdfbebf2f99f74df6f09589';
 let pubKeyY = '0x118caf99d37bd0f75cd9efa455261f8806c14bae4ddee43690aff3bc1b6eef48';
 
+let networkID;
+
+web3latest.eth.net.getId().then(netId => {
+  switch (netId) {
+    case 1:
+      console.log('This is mainnet')
+      networkID = 1;
+      break
+    case 2:
+      console.log('This is the deprecated Morden test network.')
+      networkID = 2;
+      break
+    case 3:
+      console.log('This is the ropsten test network.')
+      networkID = 3;
+      break
+    default:
+      console.log('This is an unknown network.')
+      networkID = netId;
+  }
+})
+
 contract('MixEth Deposits', function(accounts) {
     let ContractInstance;
     let shuffler = accounts[0];
@@ -57,10 +79,6 @@ contract('MixEth Challenge', function(accounts) {
      it("Challenging a shuffle", function() {
          return MixEth.deployed().then(async function(instance) {
              ContractInstance = instance;
-             /*let a = await ContractInstance.depositEther(pubKeyX, pubKeyY,
-             {value:1000000000000000000, from:accounts[0]});
-             let b = await ContractInstance.depositEther(pubKeyX, pubKeyY,
-             {value:1000000000000000000, from:accounts[1]});*/
              let tx = await ContractInstance.uploadShuffle('0x0000000000000000000000000000000000000000',
              [],
              ['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
@@ -69,8 +87,9 @@ contract('MixEth Challenge', function(accounts) {
              '0x23c239f04c5ac9c411379b1a3570b68526dd5d47888cdcb7caf874ff3aeab499','0x3dd81fbd6a7907275b0ce68b9261ec8a5520b6587bb7cbd33d26d72a0d917f47',
              '0x82078c021bf51fd1b3066ac43662d0c3ca63718e0ee424790ddb81f060ee7a43','0xb2954aeac3580c5ce6cfc4ca84186b5433c06a81983bb474b4aee97fef5bb031'],
              ['0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798','0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8'],
-             {value:1000000000000000000, from:accounts[0]});
+             {value:6000000000000000000, from:accounts[0]});
              console.log("Gas cost of uploading a shuffle", tx.receipt.gasUsed);
+             await mineBlock(20);
              let abd = await ContractInstance.uploadShuffle('0x0000000000000000000000000000000000000000',
              [],
              ['0x64a9a262658c9d2481b6f2d8eb4576affb8ae330fb0d9750901f3e110330dbc3', '0x241a4fbad8c75abfd00ed5f46a36620ca63adcc71be9b6d487a2c3ec1b968ebb',
@@ -124,7 +143,8 @@ contract('MixEth Challenge', function(accounts) {
               '0x23c239f04c5ac9c411379b1a3570b68526dd5d47888cdcb7caf874ff3aeab499','0x3dd81fbd6a7907275b0ce68b9261ec8a5520b6587bb7cbd33d26d72a0d917f47',
               '0xd0cc696065a9bd1f4fc83259d13ebd05a19ef97ac3440b78012405627623d672','0xf5b9894c4032a9b607c4f10ce706cf73803416d14e8c14f222d7ad0c62e544d4'],
               ['0xa25126710efb86866b63ffab6539e791c76e08f332618bd3fff7d0b1fcd68fd8','0xac55f34cd8a4e188f9629d8546ed7025036a61c5407b129cc8376e3570c7d296'],
-              {value:1000000000000000000, from:accounts[2]});
+              {value:6000000000000000000, from:accounts[2]});
+              await mineBlock(10);
               let tx2 = await ContractInstance.withdrawAmt(['0xa25126710efb86866b63ffab6539e791c76e08f332618bd3fff7d0b1fcd68fd8','0xac55f34cd8a4e188f9629d8546ed7025036a61c5407b129cc8376e3570c7d296',
               '0xd0cc696065a9bd1f4fc83259d13ebd05a19ef97ac3440b78012405627623d672','0xf5b9894c4032a9b607c4f10ce706cf73803416d14e8c14f222d7ad0c62e544d4',
               '0x0f055734df9b01fc88c282decddb06fd25e3c3faf2ec8b0eb682221c2bdd69e6',
@@ -141,3 +161,14 @@ contract('MixEth Challenge', function(accounts) {
             });
         });
   });
+
+async  function mineBlock(number) {
+  for(let i =0; i < number; i++) {
+    await web3.currentProvider.sendAsync({
+     jsonrpc: "2.0",
+     method: "evm_mine",
+     id: networkID
+    }, function(err, result) {
+    });
+  }
+}
