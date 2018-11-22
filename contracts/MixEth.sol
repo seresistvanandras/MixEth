@@ -31,6 +31,7 @@ contract MixEth is ERC223ReceivingContract {
   */
   struct Shuffle {
     mapping(uint256 => bool) shuffle; //whether a particular point is present in the shuffle or not
+    uint256[2] shufflingAccumulatedConstant; //C^*, the new generator curve point
     address shuffler;
     uint256 noOfPoints; //note that one of these points is always the shuffling accumulated constant
   }
@@ -40,7 +41,7 @@ contract MixEth is ERC223ReceivingContract {
     bool slashed;
   }
 
-  event newShuffle(address indexed token, bool actualRound, address shuffler, uint256[] shuffle);
+  event newShuffle(address indexed token, bool actualRound, address shuffler, uint256[] shuffle, uint256[2] shufflingAccumulatedConstant);
   event successfulChallenge(address indexed token, bool actualRound, address shuffler);
 
   function () public {
@@ -79,7 +80,7 @@ contract MixEth is ERC223ReceivingContract {
     @param uint256[] _oldShuffle: refers to the last but one to-be-deleted shuffle
     @param uint256[] _shuffle: the new to-be-uploaded shuffle
   */
-  function uploadShuffle(address token, uint256[] _oldShuffle, uint256[] _shuffle) public payable {
+  function uploadShuffle(address token, uint256[] _oldShuffle, uint256[] _shuffle, uint256[2] _newShufflingConstant) public payable {
     require(msg.value == shufflingDeposit, "Invalid shuffler deposit amount!");
     require(!shufflers[msg.sender].alreadyShuffled, "Shuffler is not allowed to shuffle more than once!");
     require(_oldShuffle.length == Shuffles[token][!shuffleRound[token]].noOfPoints, "Incorrectly referenced the last but one shuffle");
@@ -88,6 +89,8 @@ contract MixEth is ERC223ReceivingContract {
       require(Shuffles[token][!shuffleRound[token]].shuffle[_oldShuffle[i]]);
       Shuffles[token][!shuffleRound[token]].shuffle[_oldShuffle[i]] = false;
     }
+    Shuffles[token][!shuffleRound[token]].shufflingAccumulatedConstant[0] = _newShufflingConstant[0];
+    Shuffles[token][!shuffleRound[token]].shufflingAccumulatedConstant[1] = _newShufflingConstant[1];
     //upload new shuffle
     for(i = 0; i < _shuffle.length; i++) {
       Shuffles[token][!shuffleRound[token]].shuffle[_shuffle[i]] = true;
@@ -97,7 +100,7 @@ contract MixEth is ERC223ReceivingContract {
     shuffleRound[token] = !shuffleRound[token];
     shufflers[msg.sender].alreadyShuffled = true; // a receiver can only shuffle once
 
-    emit newShuffle(token, !shuffleRound[token], msg.sender, _shuffle);
+    emit newShuffle(token, !shuffleRound[token], msg.sender, _shuffle, _newShufflingConstant);
   }
 
   /*
@@ -107,9 +110,11 @@ contract MixEth is ERC223ReceivingContract {
   */
   function challengeShuffle(uint256[22] proofTranscript, address token) public {
     bool round = shuffleRound[token]; //only current shuffles can be challenged
-    require(Shuffles[token][!round].shuffle[proofTranscript[0]] && Shuffles[token][!round].shuffle[proofTranscript[1]], "Wrong shuffling accumulated constant for previous round "); //checking correctness of C*_{i-1}
+    require(proofTranscript[0] == Shuffles[token][!round].shufflingAccumulatedConstant[0]
+      && proofTranscript[1] == Shuffles[token][!round].shufflingAccumulatedConstant[1], "Wrong shuffling accumulated constant for previous round "); //checking correctness of C*_{i-1}
     require(Shuffles[token][!round].shuffle[proofTranscript[2]] && Shuffles[token][!round].shuffle[proofTranscript[3]], "Shuffled key is not included in previous round"); //checking that shuffled key is indeed included in previous shuffle
-    require(Shuffles[token][round].shuffle[proofTranscript[4]] && Shuffles[token][round].shuffle[proofTranscript[5]], "Wrong current shuffling accumulated constant"); //checking correctness of C*_{i}
+    require(proofTranscript[4] == Shuffles[token][round].shufflingAccumulatedConstant[0]
+      && proofTranscript[5] == Shuffles[token][round].shufflingAccumulatedConstant[1], "Wrong current shuffling accumulated constant"); //checking correctness of C*_{i}
     require(!Shuffles[token][round].shuffle[proofTranscript[6]] || !Shuffles[token][round].shuffle[proofTranscript[7]], "Final public key is indeed included in current shuffle");
     require(ChaumPedersenVerifier.verifyChaumPedersen(proofTranscript), "Chaum-Pedersen Proof not verified");
     shufflers[Shuffles[token][round].shuffler].slashed = true;
@@ -134,7 +139,8 @@ contract MixEth is ERC223ReceivingContract {
 
    function withdrawChecks(uint256[12] sig, address token) internal {
      require(Shuffles[token][shuffleRound[token]].shuffle[sig[2]] && Shuffles[token][shuffleRound[token]].shuffle[sig[3]], "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
-     require(Shuffles[token][shuffleRound[token]].shuffle[sig[0]] && Shuffles[token][shuffleRound[token]].shuffle[sig[1]], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
+     require(sig[0] == Shuffles[token][shuffleRound[token]].shufflingAccumulatedConstant[0]
+       && sig[1] == Shuffles[token][shuffleRound[token]].shufflingAccumulatedConstant[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
      require(sig[4] == uint(sha3(msg.sender, sig[2], sig[3])), "Signed an invalid message!"); //this check is needed to deter front-running attacks
      require(ECDSAGeneralized.verify(sig), "Your signature is not verified!");
      Shuffles[token][shuffleRound[token]].shuffle[sig[2]] = false;
