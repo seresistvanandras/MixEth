@@ -1,4 +1,4 @@
-noOfParticipants = 50;
+noOfParticipants = 40;
 participants = 1:1:noOfParticipants;
 
 blockGasLimit = 8000266; %https://etherscan.io/chart/gaslimit 2018.10.24.
@@ -11,7 +11,7 @@ mobiusWithdrawalCost = participants.*335714;
 noOfMobiusWithdrawal=floor(1./(mobiusWithdrawalCost./blockGasLimit));
 plotMobius = noOfMobiusWithdrawal;
 
-mixEthWithdrawalCost = 75000;
+mixEthWithdrawalCost = 113958;
 noOfMixEthWithdrawal=floor(blockGasLimit/mixEthWithdrawalCost);
 plotMixEth = noOfMixEthWithdrawal.* ones(length(participants),1);
 
@@ -26,8 +26,9 @@ lgd.NumColumns = 1;
 
 xlabel('Number of participants in the mixer')
 ylabel('Number of withdrawal tx fitting in a block')
+ylim([0 80])
 
-breakyaxis([30 100]); % Break Axis
+breakyaxis([25 65]); % Break Axis
 
 pause(0.1);
 legend({'Miximus','Möbius','MixEth'},'Location','southeast');

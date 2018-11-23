@@ -54,6 +54,8 @@ contract MixEth is ERC223ReceivingContract {
   function depositEther(uint256 initPubKeyX, uint256 initPubKeyY) public payable onlyInWithdrawalDepositPeriod(0x0) {
     require(msg.value == amt, "Ether denomination is not correct!");
     require(EC.onCurve([initPubKeyX, initPubKeyY]), "Invalid public key!");
+    require(!Shuffles[0x0][shuffleRound[0x0]].shuffle[initPubKeyX] &&
+      !Shuffles[0x0][shuffleRound[0x0]].shuffle[initPubKeyY], "This public key was already added to the shuffle");
     Shuffles[0x0][shuffleRound[0x0]].shuffle[initPubKeyX] = true;
     Shuffles[0x0][shuffleRound[0x0]].shuffle[initPubKeyY] = true;
     Shuffles[0x0][shuffleRound[0x0]].noOfPoints = Shuffles[0x0][shuffleRound[0x0]].noOfPoints.add(1);
@@ -72,6 +74,8 @@ contract MixEth is ERC223ReceivingContract {
     }
     require(token != 0 && codeLength > 0);
     require(EC.onCurve([initPubKeyX, initPubKeyY]), "Invalid public key!");
+    require(!Shuffles[token][shuffleRound[token]].shuffle[initPubKeyX] &&
+      !Shuffles[token][shuffleRound[token]].shuffle[initPubKeyY], "This public key was already added to the shuffle");
     Shuffles[token][shuffleRound[token]].shuffle[initPubKeyX] = true;
     Shuffles[token][shuffleRound[token]].shuffle[initPubKeyY] = true;
     Shuffles[token][shuffleRound[token]].noOfPoints = Shuffles[token][shuffleRound[token]].noOfPoints.add(1);
@@ -90,16 +94,17 @@ contract MixEth is ERC223ReceivingContract {
   function uploadShuffle(address token, uint256[] _oldShuffle, uint256[] _shuffle, uint256[2] _newShufflingConstant) public onlyInShufflingPeriod(token) payable {
     require(msg.value == shufflingDeposit+(_shuffle.length/2-Shuffles[token][shuffleRound[token]].noOfPoints)*1 ether, "Invalid shuffler deposit amount!"); //shuffler can also deposit new pubkeys
     require(!shufflers[msg.sender].alreadyShuffled, "Shuffler is not allowed to shuffle more than once!");
-    require(_oldShuffle.length == Shuffles[token][!shuffleRound[token]].noOfPoints, "Incorrectly referenced the last but one shuffle");
+    require(_oldShuffle.length/2 == Shuffles[token][!shuffleRound[token]].noOfPoints, "Incorrectly referenced the last but one shuffle");
     // remove the last but one shuffler
     for(uint256 i = 0; i < _oldShuffle.length; i++) {
-      require(Shuffles[token][!shuffleRound[token]].shuffle[_oldShuffle[i]]);
+      require(Shuffles[token][!shuffleRound[token]].shuffle[_oldShuffle[i]],"A public key was added twice to the shuffle");
       Shuffles[token][!shuffleRound[token]].shuffle[_oldShuffle[i]] = false;
     }
     Shuffles[token][!shuffleRound[token]].shufflingAccumulatedConstant[0] = _newShufflingConstant[0];
     Shuffles[token][!shuffleRound[token]].shufflingAccumulatedConstant[1] = _newShufflingConstant[1];
     //upload new shuffle
     for(i = 0; i < _shuffle.length; i++) {
+      require(!Shuffles[token][!shuffleRound[token]].shuffle[_shuffle[i]], "Public keys can be added only once to the shuffle!");
       Shuffles[token][!shuffleRound[token]].shuffle[_shuffle[i]] = true;
     }
     Shuffles[token][!shuffleRound[token]].shuffler = msg.sender;

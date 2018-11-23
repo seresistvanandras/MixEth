@@ -79,26 +79,75 @@ contract('MixEth Challenge', function(accounts) {
      it("Challenging a shuffle", function() {
          return MixEth.deployed().then(async function(instance) {
              ContractInstance = instance;
-             let tx = await ContractInstance.uploadShuffle('0x0000000000000000000000000000000000000000',
+             let tx0 = await ContractInstance.uploadShuffle('0x0000000000000000000000000000000000000000',
              [],
+             ['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
+             ],
+             ['0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798','0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8'],
+             {value:2000000000000000000, from:accounts[0]});
+             console.log("Gas cost of uploading a shuffle01:", tx0.receipt.gasUsed);
+             await mineBlock(20);
+             let tx1 = await ContractInstance.uploadShuffle('0x0000000000000000000000000000000000000000',
+             [],
+             ['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
+             '0xf924738fbaebf80ca5a0d1d6cc33856be448c0e60670c64f73aeac0000925808','0xe392c39c052599470fea0142bea6add7cceb5a2f99423bb45320d35f083d4f60'
+             ],
+             ['0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798','0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8'],
+             {value:2000000000000000000, from:accounts[1]});
+             console.log("Gas cost of uploading a shuffle02", tx1.receipt.gasUsed);
+             await mineBlock(20);
+             let tx2 = await ContractInstance.uploadShuffle('0x0000000000000000000000000000000000000000',
+             ['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582'],
+             ['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
+             '0xf924738fbaebf80ca5a0d1d6cc33856be448c0e60670c64f73aeac0000925808','0xe392c39c052599470fea0142bea6add7cceb5a2f99423bb45320d35f083d4f60',
+             '0x6c709bf8f273b07791824b08e1b99ece69c0fb5fbdcfe7c1150b0ccd7a816c54','0x21753728d8b3028f041a71eee89c7424a870c2ff8da41350cc15ef397df0d373'
+             ],
+             ['0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798','0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8'],
+             {value:2000000000000000000, from:accounts[2]});
+             console.log("Gas cost of uploading a shuffle13", tx2.receipt.gasUsed);
+             await mineBlock(20);
+             let tx3 = await ContractInstance.uploadShuffle('0x0000000000000000000000000000000000000000',
+             ['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
+           '0xf924738fbaebf80ca5a0d1d6cc33856be448c0e60670c64f73aeac0000925808','0xe392c39c052599470fea0142bea6add7cceb5a2f99423bb45320d35f083d4f60'],
+             ['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
+             '0xf924738fbaebf80ca5a0d1d6cc33856be448c0e60670c64f73aeac0000925808','0xe392c39c052599470fea0142bea6add7cceb5a2f99423bb45320d35f083d4f60',
+             '0x6c709bf8f273b07791824b08e1b99ece69c0fb5fbdcfe7c1150b0ccd7a816c54','0x21753728d8b3028f041a71eee89c7424a870c2ff8da41350cc15ef397df0d373',
+             '0x23c239f04c5ac9c411379b1a3570b68526dd5d47888cdcb7caf874ff3aeab499','0x3dd81fbd6a7907275b0ce68b9261ec8a5520b6587bb7cbd33d26d72a0d917f47'
+             ],
+             ['0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798','0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8'],
+             {value:2000000000000000000, from:accounts[3]});
+             console.log("Gas cost of uploading a shuffle24", tx3.receipt.gasUsed);
+             await mineBlock(20);
+             let tx4 = await ContractInstance.uploadShuffle('0x0000000000000000000000000000000000000000',
+             ['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
+             '0xf924738fbaebf80ca5a0d1d6cc33856be448c0e60670c64f73aeac0000925808','0xe392c39c052599470fea0142bea6add7cceb5a2f99423bb45320d35f083d4f60',
+             '0x6c709bf8f273b07791824b08e1b99ece69c0fb5fbdcfe7c1150b0ccd7a816c54','0x21753728d8b3028f041a71eee89c7424a870c2ff8da41350cc15ef397df0d373'
+             ],
              ['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
              '0xf924738fbaebf80ca5a0d1d6cc33856be448c0e60670c64f73aeac0000925808','0xe392c39c052599470fea0142bea6add7cceb5a2f99423bb45320d35f083d4f60',
              '0x6c709bf8f273b07791824b08e1b99ece69c0fb5fbdcfe7c1150b0ccd7a816c54','0x21753728d8b3028f041a71eee89c7424a870c2ff8da41350cc15ef397df0d373',
              '0x23c239f04c5ac9c411379b1a3570b68526dd5d47888cdcb7caf874ff3aeab499','0x3dd81fbd6a7907275b0ce68b9261ec8a5520b6587bb7cbd33d26d72a0d917f47',
              '0x82078c021bf51fd1b3066ac43662d0c3ca63718e0ee424790ddb81f060ee7a43','0xb2954aeac3580c5ce6cfc4ca84186b5433c06a81983bb474b4aee97fef5bb031'],
              ['0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798','0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8'],
-             {value:6000000000000000000, from:accounts[0]});
-             console.log("Gas cost of uploading a shuffle", tx.receipt.gasUsed);
+             {value:2000000000000000000, from:accounts[4]});
+             console.log("Gas cost of uploading a shuffle35", tx4.receipt.gasUsed);
              await mineBlock(20);
              let abd = await ContractInstance.uploadShuffle('0x0000000000000000000000000000000000000000',
-             [],
+             ['0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
+             '0xf924738fbaebf80ca5a0d1d6cc33856be448c0e60670c64f73aeac0000925808','0xe392c39c052599470fea0142bea6add7cceb5a2f99423bb45320d35f083d4f60',
+             '0x6c709bf8f273b07791824b08e1b99ece69c0fb5fbdcfe7c1150b0ccd7a816c54','0x21753728d8b3028f041a71eee89c7424a870c2ff8da41350cc15ef397df0d373',
+             '0x23c239f04c5ac9c411379b1a3570b68526dd5d47888cdcb7caf874ff3aeab499','0x3dd81fbd6a7907275b0ce68b9261ec8a5520b6587bb7cbd33d26d72a0d917f47'
+             ],
              ['0x64a9a262658c9d2481b6f2d8eb4576affb8ae330fb0d9750901f3e110330dbc3', '0x241a4fbad8c75abfd00ed5f46a36620ca63adcc71be9b6d487a2c3ec1b968ebb',
              '0x8c46882be46a4e65cfd5515f8809253654e61a7fa4135d269a1694d32f374602', '0xe8675d17c8ed23bd205fa65ab505792cd16d3cffc1f2f347ae52040d77ce0848',
              '0xb5a86dc8d8b53b77ecc08bf6d0b0c8c25aae3ba843d59a78f460694ecadf4c85', '0xb252007a5ff554be11380b8d89f81564f78d57847c9f08ae55274c1897b2ab17',
              '0x2401338e146955f1daf80056f3f9a40d2a90ba604e70e5ea0d2da69db46c2850', '0x091077733c8379f30b768e79051d6770bb1337973163e9d148720c67b2a82c36',
-             '0xc48df3eca44236e5b9b6eab8027e92fc91146cff1ed0f45ab550aa0dca6a0148', '0x380039b417da1e906010da8827b72043226949e87ec5ee73c3b38b5fe57f44c0'],
+             '0xc48df3eca44236e5b9b6eab8027e92fc91146cff1ed0f45ab550aa0dca6a0148', '0x380039b417da1e906010da8827b72043226949e87ec5ee73c3b38b5fe57f44c0',
+           '0xa25126710efb86866b63ffab6539e791c76e08f332618bd3fff7d0b1fcd68fd8', '0xac55f34cd8a4e188f9629d8546ed7025036a61c5407b129cc8376e3570c7d296'],
              ['0xa25126710efb86866b63ffab6539e791c76e08f332618bd3fff7d0b1fcd68fd8', '0xac55f34cd8a4e188f9629d8546ed7025036a61c5407b129cc8376e3570c7d296'],
-             {value:1000000000000000000, from:accounts[1]});
+             {value:2000000000000000000, from:accounts[5]});
+             console.log("Gas cost of uploading a shuffle46", abd.receipt.gasUsed);
+
              let txReceipt = await ContractInstance.challengeShuffle(['0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798','0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8',
              '0xd3b0b6d59fdd841d28821171aa912d625169d58fac04592b239bcab9b84082ee','0x99f88955859c34dc7c2cbe0ce423ded7e1d2302fc279be3f805f71dde7eca582',
              '0xa25126710efb86866b63ffab6539e791c76e08f332618bd3fff7d0b1fcd68fd8','0xac55f34cd8a4e188f9629d8546ed7025036a61c5407b129cc8376e3570c7d296',
@@ -114,7 +163,7 @@ contract('MixEth Challenge', function(accounts) {
               '0x0000000000000000000000000000000000000000'
              );
              console.log("challengeShuffle gas usage", txReceipt.receipt.gasUsed);
-             return ContractInstance.shufflers.call(accounts[1]);
+             return ContractInstance.shufflers.call(accounts[5]);
            }).then(function(shuffled) {
              assert.equal(true, shuffled[1], "Shuffler is not slashed!");
            });
