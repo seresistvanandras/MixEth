@@ -138,6 +138,7 @@ contract MixEth is ERC223ReceivingContract {
 
   //receivers can withdraw funds at most once
   function withdrawAmt(uint256[12] sig, address token) public {
+    // BUG: this should check 0x0 not token TODO:
     withdrawChecks(sig, token);
 
     msg.sender.transfer(amt);
