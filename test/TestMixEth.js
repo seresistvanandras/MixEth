@@ -201,7 +201,7 @@ contract('MixEth Challenge', function(accounts) {
               '0xac402dfc8929141090a320508de763d020fedbe00286cde14673e173d691fc8f','0x8d8684b3edd169d9eefcc2732bceb5baca902476fd8e1a4dd14010a6845d3f68',
               '0xe4237819aef1db170ffe8a9e768d623f95c7b2a5f0ad717be86fbfbdf9bd679e','0xe8b71a0ee31ec3cd54af6c926943dc5986c510392f8b6b9cfce2113f9e108045',
               '0xc718652f3c3814ef324d636312e4558a21232cb806f15cccf60125ecbf91c35c'],
-              '0x0000000000000000000000000000000000000000', {from:accounts[2]});
+              {from:accounts[2]});
               console.log("Gas cost of witdhrawing from the mixer", tx2.receipt.gasUsed);
               return ContractInstance.Shuffles('0x0000000000000000000000000000000000000000', true);
             }).then(function(a){
