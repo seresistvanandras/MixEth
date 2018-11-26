@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  26 NOV 2018 15:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  26 NOV 2018 19:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2357,46 +2357,38 @@ Underfull \hbox (badness 1789) in paragraph at lines 577--579
  []
 
 [10 <./withdrawalComplexity.jpg>]
-Overfull \hbox (41.798pt too wide) in paragraph at lines 621--623
+Overfull \hbox (41.798pt too wide) in paragraph at lines 601--603
  [][] 
  []
 
 
-Package wrapfig Warning: Collision between wrapping environments on input line 
-634.
-
-
-Overfull \hbox (47.92992pt too wide) in paragraph at lines 650--652
+Overfull \hbox (47.92992pt too wide) in paragraph at lines 629--631
  [][] 
  []
-
-
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 65
-5.
 
 [11]
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 65
-7.
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 63
+5.
 
-[12] (./main.bbl
+[12] [13] (./main.bbl
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 6.
  (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-[13] [14])
-Overfull \hbox (34.71405pt too wide) detected at line 742
+[14] [15])
+Overfull \hbox (34.71405pt too wide) detected at line 744
 []\OT1/cmr/m/n/10 [[][]] = [] + [] \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 [[][]
 ] = [] + [] \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^U\OT1/cm
 r/m/n/10 )\OML/cmm/m/it/10 ;
  []
 
-[15] [16]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 781.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 781.
+[16] [17]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 783.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 783.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 781.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 781.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 783.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 783.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: F624E27C827AF14589126D205A0EAB28;2565.
 
@@ -2405,10 +2397,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 44721 strings out of 494953
- 1002586 string characters out of 6180976
- 1145654 words of memory out of 5000000
- 47107 multiletter control sequences out of 15000+600000
+ 44724 strings out of 494953
+ 1002644 string characters out of 6180976
+ 1145909 words of memory out of 5000000
+ 47109 multiletter control sequences out of 15000+600000
  32150 words of font info for 88 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  62i,31n,83p,10375b,3060s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2447,10 +2439,10 @@ onts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
 sbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
 bm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on main.pdf (16 pages, 444841 bytes).
+Output written on main.pdf (17 pages, 448584 bytes).
 PDF statistics:
- 1175 PDF objects out of 1200 (max. 8388607)
- 591 compressed objects within 6 object streams
- 187 named destinations out of 1000 (max. 500000)
+ 1182 PDF objects out of 1200 (max. 8388607)
+ 597 compressed objects within 6 object streams
+ 188 named destinations out of 1000 (max. 500000)
  338 words of extra memory for PDF output out of 10000 (max. 10000000)
 

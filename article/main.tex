@@ -581,26 +581,6 @@ One of the main bottlenecks of coin mixing protocols is the withdrawal transacti
 
 All MixEth smart contracts were written in the Solidity language, which is currently the dominant language for developing Ethereum smart contracts. MixEth contracts are compiled using the latest version of the Solidity compiler in order to take advantage of the latest language features such as the possibility to return dynamic-sized arrays from contract functions. Note that these implementations are only proof-of-concept implementations, expect further improvements. All MixEth contracts are available online\footnote{https://github.com/seresistvanandras/MixEth}.  
 
-\begin{table}[H] 
-	\caption{Proof-of-concept implementation gas cost results. Expect further improvements. MixEthChannel refers to the implementation which leverages state channels for shuffling and challenging periods}
-	\centering 
-	\begin{tabular}{@{\extracolsep{6pt}}lccccc@{}} 
-		
-		\toprule
-		\hline
-		&Deployment&Deposit&\multicolumn{2}{c}{Shuffle}& Withdraw\\
-		\cline{4-5}&&&Shuffle upload&Challenge\\
-		\hline
-		\midrule
-		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{1046027}$&$\num[group-separator={,}]{76123}$&0&0&$\num[group-separator={,}]{335714}$n   \\
-		Miximus \cite{miximus2018}&$\num[group-separator={,}]{1751378}$&$\num[group-separator={,}]{732815}$&0&0 &$\num[group-separator={,}]{1903305}$  \\
-		MixEth&TBD&\num[group-separator={,}]{99254}&\num[group-separator={,}]{138653}+\num[group-separator={,}]{40000}n&\num[group-separator={,}]{227563}&\num[group-separator={,}]{113265}  \\
-		MixEthChannel&TBD&TBD&0&0&TBD\\
-		\bottomrule
-	\end{tabular}
-	\label{table:securityproperties}
-\end{table}   
-
 \subsection{Fully on-chain implementation} \label{fullyonchainimpl}
 
 \begin{wrapfigure}{r}{0.3\textwidth}
@@ -616,20 +596,19 @@ All MixEth smart contracts were written in the Solidity language, which is curre
 (q_shuffle) edge node {} (q_challenge)
 (q_challenge) edge [bend right, swap] node {$noFraud, j+1$} (q_shuffle)
 (q_challenge) edge [bend left] node {$fraud, j-1$} (q_shuffle)
-(q_challenge) edge node {$j=N$} (q_withdraw)
+(q_challenge) edge node {$j=N^{'}$} (q_withdraw)
 (q_withdraw) edge [loop right] node {$k+1$} ();
 \end{tikzpicture}
 \captionsetup{justification=centering}
 \caption{Shuffle-and-challenge paradigm implemented for the fully on-chain version of MixEth}
+\label{fig:shuffleandchallenge}
 \end{wrapfigure}
 
-In our first implementation of the MixEth protocol, we assumed that all transactions will take place on-chain. Since on-chain storage is extremely expensive, we decided to store only the last two sets of shuffled public keys. Note that storing only the latest shuffle would not be enough, since honest receivers could not prove to the contract that their shuffled public key is compromised unless also the last but first shuffled key is also available for the contract. Such a storage structure implies that after uploading the new shuffled keys, a challenging period should proceed in order to let receivers check the correctness of the shuffle. Furthermore we also allow senders to shuffle and deposit new public keys at the same time, meaning that only $2$ on-chain transactions are sufficient to complete the protocol. However shufflers need to withdraw their shuffling deposits with an additional on-chain transaction. We left it as a future work to determine the optimal ratio of mixed coins and shuffling deposits in order to incentivise correct shuffling.
+In our first implementation of the MixEth protocol, we assumed that all transactions will take place on-chain. Since on-chain storage is extremely expensive, we decided to store only the last two sets of shuffled public keys. Note that storing only the latest shuffle would not be enough, since honest receivers could not prove to the contract that their shuffled public key is compromised unless also the last but first shuffled key is also available for the contract. Such a storage structure implies that after uploading the new shuffled keys, a challenging period should proceed in order to let receivers check the correctness of the shuffle. Furthermore we also allow senders to shuffle and deposit new public keys at the same time, meaning that only $3$ on-chain transactions are sufficient to complete the protocol. However shufflers need to withdraw their shuffling deposits with an additional on-chain transaction. We left it as a future work to determine the optimal ratio of mixed coins and shuffling deposits in order to incentivise correct shuffling.
 
-A great advantage of the fully on-chain version of MixEth is that it allows dynamic anonymity sets. One could potentially deposit funds to the contract and shuffle public keys and leave funds in the mixing contract for indefinite amount of time. As soon as the anonymity set is large enough a receiver could withdraw their assets. This dynamic nature of the contract could even lead to a single monolithic MixEth contract instead of having multiple MixEth contracts with significantly fragmented anonymity sets. However note that the gas complexity of shuffling transactions grow linearly in the number of participants, therefore the fully on-chain implementation is not capable to support extremely large anonymity sets with participants more than cca. $300$. 
+A great advantage of the fully on-chain version of MixEth is that it allows dynamic anonymity sets. One could potentially deposit funds to the contract and shuffle public keys and leave funds in the mixing contract for indefinite amount of time. As soon as the anonymity set is large enough a receiver could withdraw their assets. The whole process is represented as a finite automata as shown in Figure \ref{fig:shuffleandchallenge}. A receiver in a MixEth contract with $N$ senders could withdraw their funds after $N^{'}$ shuffling rounds, where $N^{'}$ is arbitrary.  This dynamic nature of the contract could even lead to a single monolithic MixEth contract instead of having multiple MixEth contracts with significantly fragmented anonymity sets. However note that the gas complexity of shuffling transactions grow linearly in the number of participants, therefore the fully on-chain implementation is not capable to support extremely large anonymity sets with participants more than cca. $300$. 
 
 Also note that the on-chain cost of a shuffle transaction could be amortized among participants. Specifically if there is a group of senders and/or receivers who trust each other they could collectively charge any of them to shuffle once. Since they trust their peer, all the rest of the group does not need to shuffle anymore. Later non-shufflers could reimburse the only shuffler for their services either on-chain or off-chain.          
-
-\subsection{State channel implementation} \label{statechannelimpl}
 
 \begin{wrapfigure}{r}{0.4\textwidth}
 	\centering
@@ -650,19 +629,42 @@ Also note that the on-chain cost of a shuffle transaction could be amortized amo
 \end{tikzpicture}
 \captionsetup{justification=centering}
 \caption{Shuffle-then-challenge paradigm implemented for the channelised version of MixEth}
+\label{fig:shufflethenchallenge}
 \end{wrapfigure}
+\newpage
+\subsection{State channel implementation} \label{statechannelimpl}
 
-MixEth is also implemented in a way where shuffling and challenging periods are taking place in a state channel. We accomodated our implementation to the Counterfactual state channel framework  \cite{coleman2018counterfactual}. 
+We have also adapted MixEth to operate within a state channel. We wrote the implementation within the guidelines of the Counterfactual framework \cite{coleman2018counterfactual}. This allowed us to delegate the processes of setup, liveness disputes and finalisation to the framework so that we could focus on adapting the application logic. Unlike the on-chain implementation the state channel implementation requires that the set of participants be agreed upon upfront. In state channels each update to the state needs to be signed by all other participants, this means that state channel applications are inherently at least $\mathcal{O}(n)$. To co-ordinate these off-chain updates the Counterfactual framework enforces that all applications be turn based, introducing a turn taker for each turn who may propose a new state. The original MixEth implementation was not turn based so we have adapted the application to this constraint, an example of this adaptation is the challenge round. In the on-chain implementation a time period is allowed during which any participant may challenge, we have adapted this by proceeding turn-based through the participants offering each the chance to either challenge or pass. In the case of a breakdown in cooperation in the channel, a liveness fault, it has been shown that all operations succeeding the cooperation breakdown must proceed on chain\cite{mccorryyou} or be abandoned at some financial cost specified by the application, meaning that if every shuffle were to be succeeded by a challenge round each participant would be forced, by threat this lost deposit, to make an on-chain transaction after each shuffle, incurring $\mathcal{O}(n)$ on chain operations. To mitigate this we removed the challenge after each round and instead introduced a challenge round that takes place after all shuffles have completed, during this round any of the preceding shuffles may be challenged.
+
+Given these adaptations the application proceeds as follows, all participants including senders, shufflers and receivers, deposit funds in a mutli-signature wallet compatible with the Counterfactual framework, they then follow the installation protocols specified by the framework to install the adapted MixEth logic. Afterwards each participant signs a transaction that transfers an equal amount to each withdrawer from the multi-sig, dependent on correct execution of the channelised MixEth application logic. This application logic proceeds as follows: each sender names a public key of a shuffler as in the deposit stage of the on-chain application, then each shuffler takes it in turn to shuffle. After all shuffles have taken place each withdrawer is given a turn to either declare fraud or no-fraud on any shuffle round. Finally each withdrawer then provides proof of ownership by submitting a valid signature on the modified ECDSA scheme. If any of these steps does not occur, or does not occur correctly, the protocol aborts and the conditional transfer does not occur. In this case the perpetrator loses a deposit, either through fraud proof or through failure to take their turn when state is published on-chain. A further modification would be to distribute the slashed deposit to each of the other participants, compensating them for their lost time and the gas costs associated with proving the fault of the other party. Following this protocol the on-chain transactions are now reduced to: one transaction from each participant to deposit funds into the multi-sig, and a set of transactions that send funds from the multi-sig to each of the withdrawers and deposits back to each of the other participants. The modified procedure of the MixEth protocol is illustrated as a finite automate in Figure \ref{fig:shufflethenchallenge}. Note that all three $N$s are the same. In a channelised MixEth contract there are exactly $N$ depositors, $N$ shufflers and $N$ receivers. 
+
+\begin{table}[H] 
+	\caption{Proof-of-concept implementation gas cost results. Expect further improvements. MixEthChannel refers to the implementation which leverages state channels for shuffling and challenging periods}
+	\centering 
+	\begin{tabular}{@{\extracolsep{6pt}}lccccc@{}} 	
+		\toprule
+		\hline
+		&Deployment&Deposit&\multicolumn{2}{c}{Shuffle}& Withdraw\\
+		\cline{4-5}&&&Shuffle upload&Challenge\\
+		\hline
+		\midrule
+		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{1046027}$&$\num[group-separator={,}]{76123}$&0&0&$\num[group-separator={,}]{335714}$n   \\
+		Miximus \cite{miximus2018}&$\num[group-separator={,}]{1751378}$&$\num[group-separator={,}]{732815}$&0&0 &$\num[group-separator={,}]{1903305}$  \\
+		MixEth&TBD&\num[group-separator={,}]{99254}&\num[group-separator={,}]{138653}+\num[group-separator={,}]{40000}n&\num[group-separator={,}]{227563}&\num[group-separator={,}]{113265}  \\
+		MixEthChannel&TBD&TBD&0&0&TBD\\
+		\bottomrule
+	\end{tabular}
+	\label{table:securityproperties}
+\end{table} 
 
 \section{Related work}
 Möbius was the very first trustless coin mixer designed for Ethereum\cite{meiklejohn2018mobius}. Authors of Möbius provided formal definitions of various notions of securty such as anonymity, theft prevention and mixer availability. These properties could be used to evaluate and compare existing and future proposals from a security perspective. Möbius is a ring-signature-based trustless coin mixer with minimal on-chain transaction complexity: users of Möbius just need to create a deposit and a withdraw transaction. However the gas cost of the withdrawal transaction increases linearly in the number of receivers, which limits the size of possible anonymity sets. No more than 24 reciever could use Möbius with current cca.$\num[group-separator={,}]{8000000}$  block gas limit. If more people tries to use the mixer funds would be stucked in the mixer contract, since the gas costs of withdrawal transactions would be greater than the block gas limit. Another, maybe even more severe problem with Möbius is that withdrawal transactions can be frontrunned by anyone in the network, meaning that anyone could steal receivers' funds from the Möbius smart contract. When an honest receiver broadcasts a Möbius withdrawal transaction, other peers in the network might just create another withdrawal transaction with the very same valid linkable ring signature but with a considerably larger gas price and with their own address as recipient. Miners will act rationally and pick the transaction with the higher gas price, therefore theft-prevention in Möbius is not guaranteed.     
-
 
 Miximus is a trustless zkSNARK-based mixer for Ethereum\cite{miximus2018}. It uses zkSNARKs to conceal the mapping between depositors and recipients. A depositor creates a leaf in a Merkle-tree. A depositor needs to exchange the preimage of the leaf with the recipient. Later, a recipient could prove to the Miximus contract that they know one of the preimages of a certain, undisclosed leaf. So called nullifiers enable recipients to withdraw funds once and only once. The gas costs of depositing and withdrawing funds from a Miximus mixer is independent of the number of participants. However there are disadvantages of this approach; Miximus only provides anonymity against outsiders, since if Alice funds to Bob via Miximus, Alice will know when Bob made the withdrawal transaction. Another, more severe limitation of Miximus is the trusted setup required for generating the proving key for the zkSNARK. If this trusted setup is compromised, the deployer of the contract, who generated the proving key could potentially steal funds from the mixer. Although, this issue could be amended somehow via a multi-party computation (MPC) further increasing the off-chain communication complexitiy of Miximus.
 
 As Table \ref{table:communicationcomplexity} demonstrates, both Möbius and Miximus require $2$ on-chain transactions, while MixEth requires $3$. In spite of this seemingly added complexity, we are confident that these 3 (deposit, shuffle, withdraw) transactions consume significantly less gas than those (deposit, verify linkable ring signature/zkSNARK) of Möbius and Miximus. 
 \begin{table}[H] 
-\caption{Number of on-chain transactions and off-chain messages required to run a certain coin mixer protocol. Note that in case of Miximus if one wants to avoid the trusted setup for the zkSNARK, then they need to perform a secure multi-party computation protocol to trust-minimize the proving key generation.}
+\caption{Number of on-chain transactions and off-chain messages per a single participant required to run a certain coin mixer protocol. Note that in case of Miximus if one wants to avoid the trusted setup for the zkSNARK, then they need to perform a secure multi-party computation protocol to trust-minimize the proving key generation.}
 \centering 
 \begin{tabular}{lcc} 
 	
@@ -682,7 +684,7 @@ As Table \ref{table:communicationcomplexity} demonstrates, both Möbius and Mixi
 	XIM \cite{bissias2014sybil} & 0      & 7       \\
 	Möbius \cite{meiklejohn2018mobius} & 2    & 2       \\
 	Miximus \cite{miximus2018} & 1+MPC & 2 \\
-	MixEth & 1 & 2 \\
+	MixEth & 1 & 3 \\
 	MixEthChannel  & $\mathcal{O}(n)$ &2 \\
 	\bottomrule
 \end{tabular}
@@ -699,7 +701,7 @@ We are going to implement and deploy MixEth on Ethereum and evaluate its perform
 An important and crucial research question is whether it is possible to design and implement an efficient and trustless Ethereum-based coin mixer with strong security guarantees which do not rely on any workaround and upcoming EIP implementation and is ready to be deployed on present-day Ethereum. 
 
 \section{Acknowledgements}
-We would like to thank barryWhiteHat, Dmitry Khovratovich and Sina Mahmoodi for the insightful comments and discussions. 
+We would like to thank Liam Horne, barryWhiteHat, Dmitry Khovratovich and Sina Mahmoodi for the insightful comments and discussions. 
 
 \bibliographystyle{plain}
 \bibliography{sample}
