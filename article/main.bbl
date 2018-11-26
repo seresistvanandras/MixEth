@@ -49,6 +49,15 @@ David Chaum and Torben~Pryds Pedersen.
 \newblock In {\em Annual International Cryptology Conference}, pages 89--105.
   Springer, 1992.
 
+\bibitem{coleman2018counterfactual}
+Jeff Coleman, Liam Horne, and Li~Xuanji.
+\newblock Counterfactual: Generalized state channels, 2018.
+
+\bibitem{dziembowski2017perun}
+Stefan Dziembowski, Lisa Eckey, Sebastian Faust, and Daniel Malinowski.
+\newblock Perun: Virtual payment channels over cryptographic currencies.
+\newblock Technical report, IACR Cryptology ePrint Archive, 2017: 635, 2017.
+
 \bibitem{fersch2016provable}
 Manuel Fersch, Eike Kiltz, and Bertram Poettering.
 \newblock On the provable security of (ec) dsa signatures.
@@ -65,6 +74,12 @@ Ethan Heilman, Leen Alshenibr, Foteini Baldimtsi, Alessandra Scafuro, and
 Greg Maxwell.
 \newblock Coinjoin: Bitcoin privacy for the real world.
 \newblock In {\em Post on Bitcoin forum}, 2013.
+
+\bibitem{mccorryyou}
+Patrick McCorry, Chris Buckland, Surya Bakshi, Karl W{\"u}st, and Andrew
+  Miller.
+\newblock You sank my battleship! a case study to evaluate state channels as a
+  scaling solution for cryptocurrencies.
 
 \bibitem{meiklejohn2018mobius}
 Sarah Meiklejohn and Rebekah Mercer.
@@ -103,6 +118,12 @@ C~Andrew Neff.
 \newblock A verifiable secret shuffle and its application to e-voting.
 \newblock In {\em Proceedings of the 8th ACM conference on Computer and
   Communications Security}, pages 116--125. ACM, 2001.
+
+\bibitem{poon2016bitcoin}
+Joseph Poon and Thaddeus Dryja.
+\newblock The bitcoin lightning network: Scalable off-chain instant payments.
+\newblock {\em See https://lightning. network/lightning-network-paper. pdf},
+  2016.
 
 \bibitem{ruffing2014coinshuffle}
 Tim Ruffing, Pedro Moreno-Sanchez, and Aniket Kate.

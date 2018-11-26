@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  24 NOV 2018 20:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  26 NOV 2018 15:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1214,6 +1214,49 @@ Package: amsthm 2015/03/04 v2.20.2
 \thm@headsep=\skip62
 \dth@everypar=\toks46
 )
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryarrows.code.tex
+File: tikzlibraryarrows.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.code.
+tex
+File: pgflibraryarrows.code.tex 2013/09/23 v3.0.1a (rcs-revision 1.16)
+\arrowsize=\dimen299
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryautomata.code.tex
+File: tikzlibraryautomata.code.tex 2008/07/14 v3.0.1a (rcs-revision 1.3)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryshapes.multipart.code.tex
+File: tikzlibraryshapes.multipart.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshape
+s.multipart.code.tex
+File: pgflibraryshapes.multipart.code.tex 2010/01/07 v3.0.1a (rcs-revision 1.2)
+
+\pgfnodepartlowerbox=\box63
+\pgfnodeparttwobox=\box64
+\pgfnodepartthreebox=\box65
+\pgfnodepartfourbox=\box66
+\pgfnodeparttwentybox=\box67
+\pgfnodepartnineteenbox=\box68
+\pgfnodeparteighteenbox=\box69
+\pgfnodepartseventeenbox=\box70
+\pgfnodepartsixteenbox=\box71
+\pgfnodepartfifteenbox=\box72
+\pgfnodepartfourteenbox=\box73
+\pgfnodepartthirteenbox=\box74
+\pgfnodeparttwelvebox=\box75
+\pgfnodepartelevenbox=\box76
+\pgfnodeparttenbox=\box77
+\pgfnodepartninebox=\box78
+\pgfnodeparteightbox=\box79
+\pgfnodepartsevenbox=\box80
+\pgfnodepartsixbox=\box81
+\pgfnodepartfivebox=\box82
+)))
 (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
 
@@ -1244,9 +1287,9 @@ nment
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count191
 \float@exts=\toks47
-\float@box=\box63
+\float@box=\box83
 \@float@everytoks=\toks48
-\@floatcapt=\box64
+\@floatcapt=\box84
 )
 \@float@every@algorithm=\toks49
 \c@algorithm=\count192
@@ -1297,8 +1340,8 @@ LaTeX Info: Redefining \genfrac on input line 145.
 Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count193
 \calc@Bcount=\count194
-\calc@Adimen=\dimen299
-\calc@Bdimen=\dimen300
+\calc@Adimen=\dimen300
+\calc@Bdimen=\dimen301
 \calc@Askip=\skip66
 \calc@Bskip=\skip67
 LaTeX Info: Redefining \setlength on input line 80.
@@ -1308,15 +1351,15 @@ LaTeX Info: Redefining \addtolength on input line 81.
 )
 \inf@bad=\count196
 \maxint=\count197
-\listwidth=\dimen301
-\eqnumsep=\dimen302
-\eqmargin=\dimen303
+\listwidth=\dimen302
+\eqnumsep=\dimen303
+\eqmargin=\dimen304
 \eqlinespacing=\skip69
 \eqlineskip=\skip70
-\eqlineskiplimit=\dimen304
+\eqlineskiplimit=\dimen305
 \eqbinoffset=\muskip17
 \eqdelimoffset=\muskip18
-\eqindentstep=\dimen305
+\eqindentstep=\dimen306
 \eqstyle=\toks50
 \eqbreakdepth=\count198
 \eqinterlinepenalty=\count199
@@ -1330,39 +1373,39 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \eqrightskip=\skip73
 \eq@vspan=\skip74
 \eq@binoffset=\muskip21
-\EQ@box=\box65
-\EQ@copy=\box66
-\EQ@numbox=\box67
-\eq@wdNum=\dimen306
-\GRP@numbox=\box68
-\grp@wdNum=\dimen307
+\EQ@box=\box85
+\EQ@copy=\box86
+\EQ@numbox=\box87
+\eq@wdNum=\dimen307
+\GRP@numbox=\box88
+\grp@wdNum=\dimen308
 \eq@lines=\count269
 \eq@curline=\count270
 \eq@badness=\count271
 \EQ@vims=\count272
-\eq@dp=\dimen308
-\eq@wdL=\dimen309
-\eq@wdT=\dimen310
-\eq@wdMin=\dimen311
-\grp@wdL=\dimen312
-\grp@wdR=\dimen313
-\grp@wdT=\dimen314
-\eq@wdRmax=\dimen315
-\eq@firstht=\dimen316
-\eq@wdCond=\dimen317
-\eq@indentstep=\dimen318
-\eq@linewidth=\dimen319
-\grp@linewidth=\dimen320
-\eq@hshift=\dimen321
-\eq@given@sidespace=\dimen322
-\mathindent=\dimen323
+\eq@dp=\dimen309
+\eq@wdL=\dimen310
+\eq@wdT=\dimen311
+\eq@wdMin=\dimen312
+\grp@wdL=\dimen313
+\grp@wdR=\dimen314
+\grp@wdT=\dimen315
+\eq@wdRmax=\dimen316
+\eq@firstht=\dimen317
+\eq@wdCond=\dimen318
+\eq@indentstep=\dimen319
+\eq@linewidth=\dimen320
+\grp@linewidth=\dimen321
+\eq@hshift=\dimen322
+\eq@given@sidespace=\dimen323
+\mathindent=\dimen324
 \eq@final@linecount=\count273
-\eq@wdR=\dimen324
+\eq@wdR=\dimen325
 \EQ@continue=\toks51
 \lr@level=\count274
 \GRP@queue=\toks52
-\GRP@box=\box69
-\GRP@wholebox=\box70
+\GRP@box=\box89
+\GRP@wholebox=\box90
 \darraycolsep=\skip75
 \cur@row=\count275
 \cur@col=\count276
@@ -1391,13 +1434,13 @@ Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
 (/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2016/02/04 v1.7-139 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 67.
-\captionmargin=\dimen325
-\captionmargin@=\dimen326
-\captionwidth=\dimen327
-\caption@tempdima=\dimen328
-\caption@indent=\dimen329
-\caption@parindent=\dimen330
-\caption@hangindent=\dimen331
+\captionmargin=\dimen326
+\captionmargin@=\dimen327
+\captionwidth=\dimen328
+\caption@tempdima=\dimen329
+\caption@indent=\dimen330
+\caption@parindent=\dimen331
+\caption@hangindent=\dimen332
 )
 \c@ContinuedFloat=\count277
 Package caption Info: float package is loaded.
@@ -1410,23 +1453,23 @@ Package: subcaption 2016/02/20 v1.1-142 Sub-captions (AR)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count280
-\lst@gtempboxa=\box71
+\lst@gtempboxa=\box91
 \lst@token=\toks53
 \lst@length=\count281
-\lst@currlwidth=\dimen332
+\lst@currlwidth=\dimen333
 \lst@column=\count282
 \lst@pos=\count283
-\lst@lostspace=\dimen333
-\lst@width=\dimen334
+\lst@lostspace=\dimen334
+\lst@width=\dimen335
 \lst@newlines=\count284
 \lst@lineno=\count285
-\lst@maxwidth=\dimen335
+\lst@maxwidth=\dimen336
 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
 \c@lstnumber=\count286
 \lst@skipnumbers=\count287
-\lst@framebox=\box72
+\lst@framebox=\box92
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2015/06/04 1.6 listings configuration
@@ -1454,14 +1497,14 @@ LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \g_MT_multlinerow_int=\count291
-\l_MT_multwidth_dim=\dimen336
+\l_MT_multwidth_dim=\dimen337
 \origjot=\skip77
-\l_MT_shortvdotswithinadjustabove_dim=\dimen337
-\l_MT_shortvdotswithinadjustbelow_dim=\dimen338
-\l_MT_above_intertext_sep=\dimen339
-\l_MT_below_intertext_sep=\dimen340
-\l_MT_above_shortintertext_sep=\dimen341
-\l_MT_below_shortintertext_sep=\dimen342
+\l_MT_shortvdotswithinadjustabove_dim=\dimen338
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen339
+\l_MT_above_intertext_sep=\dimen340
+\l_MT_below_intertext_sep=\dimen341
+\l_MT_above_shortintertext_sep=\dimen342
+\l_MT_below_shortintertext_sep=\dimen343
 )
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
@@ -1561,10 +1604,10 @@ Package: pbox 2011/12/07 v1.2 Dynamic parboxes
 )
 (/usr/share/texlive/texmf-dist/tex/latex/varwidth/varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box73
+\@vwid@box=\box93
 \sift@deathcycles=\count339
-\@vwid@loff=\dimen343
-\@vwid@roff=\dimen344
+\@vwid@loff=\dimen344
+\@vwid@roff=\dimen345
 )
 (/usr/share/texlive/texmf-dist/tex/latex/bigfoot/suffix.sty
 Package: suffix 2006/07/15 1.5a Variant command support
@@ -1729,7 +1772,7 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
-\@linkdim=\dimen345
+\@linkdim=\dimen346
 \Hy@linkcounter=\count382
 \Hy@pagecounter=\count383
 
@@ -1758,10 +1801,10 @@ Package hyperref Info: Bookmarks ON on input line 4688.
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
-\XeTeXLinkMargin=\dimen346
+\XeTeXLinkMargin=\dimen347
 \Fld@menulength=\count386
-\Field@Width=\dimen347
-\Fld@charsize=\dimen348
+\Field@Width=\dimen348
+\Fld@charsize=\dimen349
 Package hyperref Info: Hyper figures OFF on input line 6295.
 Package hyperref Info: Link nesting OFF on input line 6300.
 Package hyperref Info: Hyper index ON on input line 6303.
@@ -1799,20 +1842,20 @@ LaTeX Warning: Label `table:securityproperties' multiply defined.
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 121.
-LaTeX Font Info:    ... okay on input line 121.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 138.
+LaTeX Font Info:    ... okay on input line 138.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1852,13 +1895,13 @@ ABD: EveryShipout initializing macros
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count393
-\scratchdimen=\dimen349
-\scratchbox=\box74
+\scratchdimen=\dimen350
+\scratchbox=\box94
 \nofMPsegments=\count394
 \nofMParguments=\count395
 \everyMPshowfont=\toks58
 \MPscratchCnt=\count396
-\MPscratchDim=\dimen350
+\MPscratchDim=\dimen351
 \MPnumerator=\count397
 \makeMPintoPDFobject=\count398
 \everyMPtoPDFconversion=\toks59
@@ -1966,8 +2009,8 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count399
-\AtBeginShipoutBox=\box75
-Package hyperref Info: Link coloring ON on input line 121.
+\AtBeginShipoutBox=\box95
+Package hyperref Info: Link coloring ON on input line 138.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1977,28 +2020,28 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count400
 )
-LaTeX Info: Redefining \ref on input line 121.
-LaTeX Info: Redefining \pageref on input line 121.
-LaTeX Info: Redefining \nameref on input line 121.
+LaTeX Info: Redefining \ref on input line 138.
+LaTeX Info: Redefining \pageref on input line 138.
+LaTeX Info: Redefining \nameref on input line 138.
 
 (./main.out) (./main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
 \c__siunitx_mathsf_int=\count401
-LaTeX Font Info:    Try loading font information for U+msa on input line 121.
+LaTeX Font Info:    Try loading font information for U+msa on input line 138.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 121.
+LaTeX Font Info:    Try loading font information for U+msb on input line 138.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 \c__siunitx_mathtt_int=\count402
 
-Overfull \hbox (7.78772pt too wide) in paragraph at lines 132--133
+Overfull \hbox (7.78772pt too wide) in paragraph at lines 147--148
 \T1/cmr/m/n/10 Bitcoin [[]] and other cryp-tocur-ren-cies are pseudony-mous. Us
 ers' pub-lic keys are used as pseudonyms
  []
@@ -2006,226 +2049,170 @@ ers' pub-lic keys are used as pseudonyms
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+cmss on input line 148.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 163.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [2] [3] [4]
-Overfull \hbox (64.45271pt too wide) in paragraph at lines 243--264
+) [2] [3] [4] [5]
+Overfull \hbox (64.45271pt too wide) in paragraph at lines 267--288
  [][] 
  []
 
 
-Overfull \hbox (20.78218pt too wide) in paragraph at lines 283--283
+Overfull \hbox (20.78218pt too wide) in paragraph at lines 307--307
 [] 
  []
 
 
-Overfull \hbox (22.78218pt too wide) in paragraph at lines 283--284
+Overfull \hbox (22.78218pt too wide) in paragraph at lines 307--308
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 283--284
+Underfull \hbox (badness 10000) in paragraph at lines 307--308
 
  []
 
-[5]
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 310.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 310.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 334.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 310.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 334.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 310.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 334.
 
 
-Overfull \hbox (1.59502pt too wide) in paragraph at lines 310--310
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 334.
+
+
+Overfull \hbox (1.59502pt too wide) in paragraph at lines 334--334
 [] 
  []
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 310.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 334.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 310.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 334.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 310.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 334.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 310.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 334.
 
 
-Overfull \hbox (3.59502pt too wide) in paragraph at lines 310--311
+Overfull \hbox (3.59502pt too wide) in paragraph at lines 334--335
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 310--311
+Underfull \hbox (badness 10000) in paragraph at lines 334--335
 
  []
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 325.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 349.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 325.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 349.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 325.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 349.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 325.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 349.
 
 
-Overfull \hbox (1.08752pt too wide) in paragraph at lines 325--325
+Overfull \hbox (1.08752pt too wide) in paragraph at lines 349--349
 [] 
  []
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 325.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 349.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 325.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 349.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 325.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 349.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 325.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 349.
 
 
-Overfull \hbox (3.08752pt too wide) in paragraph at lines 325--326
+Overfull \hbox (3.08752pt too wide) in paragraph at lines 349--350
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 325--326
+Underfull \hbox (badness 10000) in paragraph at lines 349--350
 
  []
 
-[6]
+[6] [7]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 399.
- [7]
-Underfull \hbox (badness 10000) in paragraph at lines 419--420
-
- []
-
-
-Overfull \hbox (5.58513pt too wide) in paragraph at lines 443--443
-[] 
- []
-
-
-Overfull \hbox (7.58513pt too wide) in paragraph at lines 443--444
-[] []
- []
-
+put line 423.
 
 Underfull \hbox (badness 10000) in paragraph at lines 443--444
 
  []
 
-
-Overfull \hbox (2.16528pt too wide) in paragraph at lines 450--451
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 450--451
-
- []
-
-
-Overfull \hbox (16.23389pt too wide) in paragraph at lines 455--455
+[8]
+Overfull \hbox (5.58513pt too wide) in paragraph at lines 467--467
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 455--456
+Overfull \hbox (7.58513pt too wide) in paragraph at lines 467--468
+[] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 467--468
+
+ []
+
+
+Overfull \hbox (2.16528pt too wide) in paragraph at lines 474--475
+[] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 474--475
+
+ []
+
+
+Overfull \hbox (16.23389pt too wide) in paragraph at lines 479--479
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 479--480
 []
  []
 
 
-Overfull \hbox (18.23389pt too wide) in paragraph at lines 455--456
+Overfull \hbox (18.23389pt too wide) in paragraph at lines 479--480
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 455--456
+Underfull \hbox (badness 10000) in paragraph at lines 479--480
 
  []
 
 
-Overfull \hbox (33.15451pt too wide) in paragraph at lines 440--458
+Overfull \hbox (33.15451pt too wide) in paragraph at lines 464--482
  [][] 
  []
 
 
-Overfull \hbox (36.23946pt too wide) in paragraph at lines 475--476
+Overfull \hbox (36.23946pt too wide) in paragraph at lines 499--500
 [] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 475--476
-
- []
-
-
-Overfull \hbox (12.05722pt too wide) in paragraph at lines 486--486
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 486--487
-[]
- []
-
-
-Overfull \hbox (14.05722pt too wide) in paragraph at lines 486--487
-[]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 486--487
-
- []
-
-
-Overfull \hbox (5.64552pt too wide) in paragraph at lines 493--493
-[] 
- []
-
-
-Overfull \hbox (7.64552pt too wide) in paragraph at lines 493--494
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 493--494
-
- []
-
-
-Overfull \hbox (49.15137pt too wide) in paragraph at lines 499--499
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 499--500
-[]
- []
-
-
-Overfull \hbox (51.15137pt too wide) in paragraph at lines 499--500
-[]
  []
 
 
@@ -2234,132 +2221,236 @@ Underfull \hbox (badness 10000) in paragraph at lines 499--500
  []
 
 
-Overfull \hbox (30.30951pt too wide) in paragraph at lines 482--502
+Overfull \hbox (12.05722pt too wide) in paragraph at lines 510--510
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
+[]
+ []
+
+
+Overfull \hbox (14.05722pt too wide) in paragraph at lines 510--511
+[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
+
+ []
+
+
+Overfull \hbox (5.64552pt too wide) in paragraph at lines 517--517
+[] 
+ []
+
+
+Overfull \hbox (7.64552pt too wide) in paragraph at lines 517--518
+[] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 517--518
+
+ []
+
+
+Overfull \hbox (49.15137pt too wide) in paragraph at lines 523--523
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 523--524
+[]
+ []
+
+
+Overfull \hbox (51.15137pt too wide) in paragraph at lines 523--524
+[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 523--524
+
+ []
+
+
+Overfull \hbox (30.30951pt too wide) in paragraph at lines 506--526
  [][] 
  []
 
-[8] [9] <./withdrawalComplexity.jpg, id=383, 562.1pt x 421.575pt>
+[9] <./withdrawalComplexity.jpg, id=395, 562.1pt x 421.575pt>
 File: ./withdrawalComplexity.jpg Graphic file (type jpg)
 
 <use ./withdrawalComplexity.jpg>
-Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 548.
+Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 572.
 (pdftex.def)             Requested size: 393.46732pt x 295.10048pt.
 
-Overfull \hbox (94.71468pt too wide) in paragraph at lines 548--549
+Overfull \hbox (94.71468pt too wide) in paragraph at lines 572--574
  [][] 
  []
 
 
-Overfull \hbox (1.23772pt too wide) in paragraph at lines 551--552
-[]\T1/cmr/m/n/10 We en-vi-sion two ap-proaches
+Underfull \hbox (badness 1490) in paragraph at lines 577--579
+[]\T1/cmr/m/n/10 We im-ple-mented Mix-Eth
  []
 
 
-Underfull \hbox (badness 1845) in paragraph at lines 551--552
+Overfull \hbox (10.65208pt too wide) in paragraph at lines 577--579
+\T1/cmr/m/n/10 with two dif-fer-ent ap-proaches.
+ []
+
+
+Underfull \hbox (badness 1845) in paragraph at lines 577--579
 \T1/cmr/m/n/10 The first im-ple-men-ta-tion
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 551--552
+Underfull \hbox (badness 1292) in paragraph at lines 577--579
 \T1/cmr/m/n/10 of Mix-Eth does not ap-
  []
 
 
-Underfull \hbox (badness 4048) in paragraph at lines 551--552
+Underfull \hbox (badness 1490) in paragraph at lines 577--579
+\T1/cmr/m/n/10 chain. This could lead
+ []
+
+
+Underfull \hbox (badness 2600) in paragraph at lines 577--579
+\T1/cmr/m/n/10 shuf-fles in-creases. One
+ []
+
+
+Underfull \hbox (badness 3872) in paragraph at lines 577--579
+\T1/cmr/m/n/10 of our main mo-ti-va-tion
+ []
+
+
+Underfull \hbox (badness 2119) in paragraph at lines 577--579
+\T1/cmr/m/n/10 an ef-fi-cient and scal-able
+ []
+
+
+Underfull \hbox (badness 4048) in paragraph at lines 577--579
 \T1/cmr/m/n/10 and chal-leng-ing a shuf-
  []
 
 
-Underfull \hbox (badness 4024) in paragraph at lines 551--552
+Underfull \hbox (badness 4024) in paragraph at lines 577--579
 \T1/cmr/m/n/10 fle oc-curs off-chain and
  []
 
 
-Underfull \hbox (badness 5578) in paragraph at lines 551--552
+Underfull \hbox (badness 5578) in paragraph at lines 577--579
 \T1/cmr/m/n/10 only de-posit and with-
  []
 
 
-Underfull \hbox (badness 2790) in paragraph at lines 551--552
+Underfull \hbox (badness 2790) in paragraph at lines 577--579
 \T1/cmr/m/n/10 drawal trans-ac-tions hap-
  []
 
 
-Underfull \hbox (badness 2080) in paragraph at lines 553--554
-\T1/cmr/m/n/10 to-cols is the with-drawal
+Underfull \hbox (badness 1789) in paragraph at lines 577--579
+\T1/cmr/m/n/10 pen on-chain. Both of
  []
 
-[10 <./withdrawalComplexity.jpg>] [11] (./main.bbl
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 6.
+[10 <./withdrawalComplexity.jpg>]
+Overfull \hbox (41.798pt too wide) in paragraph at lines 621--623
+ [][] 
+ []
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+
+Package wrapfig Warning: Collision between wrapping environments on input line 
+634.
+
+
+Overfull \hbox (47.92992pt too wide) in paragraph at lines 650--652
+ [][] 
+ []
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 65
+5.
+
+[11]
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 65
+7.
+
+[12] (./main.bbl
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 6.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [12])
-Overfull \hbox (34.71405pt too wide) detected at line 663
+)
+[13] [14])
+Overfull \hbox (34.71405pt too wide) detected at line 742
 []\OT1/cmr/m/n/10 [[][]] = [] + [] \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 [[][]
 ] = [] + [] \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^U\OT1/cm
 r/m/n/10 )\OML/cmm/m/it/10 ;
  []
 
-[13] [14]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 702.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 702.
+[15] [16]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 781.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 781.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 702.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 702.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 781.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 781.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: CE4C6A333D41F0628E210BED97BEA818;2481.
+(rerunfilecheck)             Checksum: F624E27C827AF14589126D205A0EAB28;2565.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 43521 strings out of 494953
- 965613 string characters out of 6180976
- 1101014 words of memory out of 5000000
- 45935 multiletter control sequences out of 15000+600000
- 31073 words of font info for 86 fonts, out of 8000000 for 9000
+ 44721 strings out of 494953
+ 1002586 string characters out of 6180976
+ 1145654 words of memory out of 5000000
+ 47107 multiletter control sequences out of 15000+600000
+ 32150 words of font info for 88 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,31n,83p,10375b,3059s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,31n,83p,10375b,3060s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </home/
 istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/istvan/.te
-xmf-var/fonts/pk/ljfour/jknappen/ec/ecss0600.600pk> </home/istvan/.texmf-var/fo
-nts/pk/ljfour/jknappen/ec/ecss0900.600pk> </home/istvan/.texmf-var/fonts/pk/ljf
-our/jknappen/ec/ecss1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknapp
-en/ec/ecbx1200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti
-1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk
-> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/i
-stvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbi1000.600pk> </home/istvan/.tex
-mf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/istvan/.texmf-var/fon
-ts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/istvan/.texmf-var/fonts/pk/ljfo
-ur/jknappen/ec/ecbx1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappe
-n/ec/ecrm0800.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1
-200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapf
-ding/uzdr.pfb>
-Output written on main.pdf (14 pages, 427971 bytes).
+xmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0600.600pk> </home/istvan/.texmf-var/fo
+nts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/istvan/.texmf-var/fonts/pk/ljf
+our/jknappen/ec/ecss0600.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknapp
+en/ec/ecss0900.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss
+1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk
+> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/i
+stvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk> </home/istvan/.tex
+mf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/istvan/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfo
+ur/jknappen/ec/ecbi1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappe
+n/ec/ecrm0900.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx0
+900.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk>
+ </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/is
+tvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
+sbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
+bm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on main.pdf (16 pages, 444841 bytes).
 PDF statistics:
- 1114 PDF objects out of 1200 (max. 8388607)
- 555 compressed objects within 6 object streams
- 177 named destinations out of 1000 (max. 500000)
- 330 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1175 PDF objects out of 1200 (max. 8388607)
+ 591 compressed objects within 6 object streams
+ 187 named destinations out of 1000 (max. 500000)
+ 338 words of extra memory for PDF output out of 10000 (max. 10000000)
 

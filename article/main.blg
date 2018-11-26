@@ -3,46 +3,48 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: main.aux
 The style file: plain.bst
 Database file #1: sample.bib
+Warning--empty journal in mccorryyou
+Warning--empty year in mccorryyou
 Warning--empty journal in nakamoto2008bitcoin
-You've used 20 entries,
+You've used 24 entries,
             2118 wiz_defined-function locations,
-            610 strings with 7498 characters,
-and the built_in function-call counts, 7837 in all, are:
-= -- 813
-> -- 308
+            624 strings with 8190 characters,
+and the built_in function-call counts, 8965 in all, are:
+= -- 912
+> -- 390
 < -- 11
-+ -- 126
-- -- 102
-* -- 465
-:= -- 1193
-add.period$ -- 71
-call.type$ -- 20
-change.case$ -- 111
++ -- 159
+- -- 130
+* -- 540
+:= -- 1400
+add.period$ -- 81
+call.type$ -- 24
+change.case$ -- 138
 chr.to.int$ -- 0
-cite$ -- 21
-duplicate$ -- 339
-empty$ -- 661
-format.name$ -- 102
-if$ -- 1758
+cite$ -- 27
+duplicate$ -- 374
+empty$ -- 732
+format.name$ -- 130
+if$ -- 1977
 int.to.chr$ -- 0
-int.to.str$ -- 20
-missing$ -- 17
-newline$ -- 103
-num.names$ -- 40
-pop$ -- 160
+int.to.str$ -- 24
+missing$ -- 19
+newline$ -- 121
+num.names$ -- 48
+pop$ -- 194
 preamble$ -- 1
-purify$ -- 91
+purify$ -- 113
 quote$ -- 0
-skip$ -- 256
+skip$ -- 283
 stack$ -- 0
-substring$ -- 504
-swap$ -- 125
+substring$ -- 525
+swap$ -- 127
 text.length$ -- 11
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 80
-warning$ -- 1
-while$ -- 79
-width$ -- 22
-write$ -- 226
-(There was 1 warning)
+type$ -- 96
+warning$ -- 3
+while$ -- 87
+width$ -- 26
+write$ -- 262
+(There were 3 warnings)

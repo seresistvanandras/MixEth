@@ -16,6 +16,7 @@
 \usepackage{amsmath}
 \usepackage{wrapfig}
 \usepackage{amsthm}
+\usetikzlibrary{arrows,automata}
 \usepackage{algpseudocode}
 \usepackage{graphicx}
 \usepackage{algorithm}
@@ -111,6 +112,22 @@ keys]{cryptocode}
 \renewcommand{\lstlistingname}{Figure}% Listing -> Algorithm
 \renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings -> List of Algorithms
 
+\newcommand{\smallsim}{\smallsym{\mathrel}{\sim}}
+
+\makeatletter
+\newcommand{\smallsym}[2]{#1{\mathpalette\make@small@sym{#2}}}
+\newcommand{\make@small@sym}[2]{%
+	\vcenter{\hbox{$\m@th\downgrade@style#1#2$}}%
+}
+\newcommand{\downgrade@style}[1]{%
+	\ifx#1\displaystyle\scriptstyle\else
+	\ifx#1\textstyle\scriptstyle\else
+	\scriptscriptstyle
+	\fi\fi
+}
+\makeatother
+
+
 \title{MixEth: efficient, trustless coin mixing service for Ethereum}
 \author[1]{István András Seres}
 \author[1]{Dániel A. Nagy}
@@ -121,8 +138,6 @@ keys]{cryptocode}
 \begin{document}
 \maketitle
 
-
-\textbf{Note: this is an early-stage work-in-progress! Security proofs, (state channel) implementation and many more are yet to come!} 
 \begin{abstract}
 Cryptocurrencies enable users to transact with each other without relying on trusted parties or intermediaries. These transactions are recorded in an immutable, publicly verifiable ledger. Due to the ledger's transparent nature, privacy is notably reduced. If the link between users' public key and their physical identity is exposed, their pseudonymity is lost. One way to increase users' privacy is to deploy coin mixing services. In this paper, we present MixEth, which is a trustless coin mixing service. MixEth is more efficient than any proposed trustless coin tumbler. It requires only $3$ on-chain transactions at most per user and $1$ off-chain. It achieves strong notions of anonymity and is able to resist denial-of-service attacks.      
 \end{abstract}
@@ -199,9 +214,18 @@ In Ethereum currently there are two types of accounts. The first account type is
 
 Transactions can alter the system's state by either creating a contract account or by calling to an existing account. Transactions to externally owned accounts can only transfere Ether, while transactions to contract accounts can additionally execute the code associated with them. Codes are executed in a quasi-Turing complete execution environment, called Ethereum Virtual Machine (EVM).
 
-EVM is quasi-Turing complete, since smart contract's code can not run indefinitely due to the so called \textit{gas mechanism}. In every gas the sender needs to pay upfront for the execution of the contract's code. The computational complexity of a transaction is measured in gas, which can be bought for Ether on a price set by the transaction originator, so called gas price. Therefore the transaction fee is the gas cost multiplied by the gas price. One needs to specify a gas limit, meaning that they do not allow their transaction to burn more gas than the limit. If a transaction during execution runs out of gas, then all the state changes are reverted, while the transaction fee is paid to the miner. If there are gas left after successful execution, transaction originator is reimbursed. Additionally there exists a block gas limit, which limits the number of computational steps fitting in one block. Currently the block gas limit is cca. $\num[group-separator={,}]{8000000}$ gas. Naturally users of Ethereum are very much incentivized to minimize the gas cost of their transactions in order to spend as less as possible on transactions fees. Small gas costs are also crucial from a scalability point of view, since the less gas burnt for each transaction, the more transaction can fit into a single block.    
+EVM is quasi-Turing complete, since smart contract's code can not run indefinitely due to the so called \textit{gas mechanism}. In every gas the sender needs to pay upfront for the execution of the contract's code. The computational complexity of a transaction is measured in gas, which can be bought for Ether on a price set by the transaction originator, so called gas price. Therefore the transaction fee is the gas cost multiplied by the gas price. One needs to specify a gas limit, meaning that they do not allow their transaction to burn more gas than the limit. If a transaction during execution runs out of gas, then all the state changes are reverted, while the transaction fee is paid to the miner. If there are gas left after successful execution, transaction originator is reimbursed. Additionally there exists a block gas limit, which limits the number of computational steps fitting in one block. Currently the block gas limit is cca. $\num[group-separator={,}]{8000000}$ gas. Naturally users of Ethereum are very much incentivized to minimize the gas cost of their transactions in order to spend as less as possible on transactions fees. Small gas costs are also crucial from a scalability point of view, since the less gas burnt for each transaction, the more transaction can fit into a single block.   
 
-\subsection{Ethereum account abstraction}
+\subsubsection{State channels} 
+Public blockchain's decentralization comes at an inherent cost in regard to scalability, since currently each full node verifies the full state of the public ledger. Often times Bitcoin's ($\smallsim7$ transactions per second (tps)) or Ethereum's ($\smallsim15$ tps) throughput is compared to that of Visa's ($\smallsim\num[group-separator={,}]{45000}$ tps). Blockchains' scalability issues became an increasingly growing problem as more and more users adopted the technology. One remarkable example was the launch of the Cryptokitties game in 2017, when the Ethereum network was congested for a few hours due to the enormous popularity of the game. Therefore several solutions were proposed to alleviate aforementioned scalability issues.
+
+One of the major class of these techniques is called off-chain solutions. The insight of these proposals is that it is not needed to conduct all transactions on the blockchain, since participants could lock funds on-chain and afterwards securely issue transactions off-chain, for instance micropayments, with high degree of security and finality. They only need to get back on-chain if there is a dispute about what happened precisely off-chain or they would like to lock up funds and redeem them on-chain. The first implementation of this idea was a payment channel network for Bitcoin called Lightning network \cite{poon2016bitcoin}. The advantage of the Lightning network is that participants can issue several payments without sending transactions to the blockchain and paying the sometimes costly transaction fees. Furthermore users are guaranteed to have instant finality instead of waiting several blocks to confirm their payments. 
+
+State channels are the more general form of payment channels, they can be used not only for payments, but for any arbitrary state updates on a blockchain, like changes inside a smart contract. State channels were first described in detail by Jeff Coleman et al.\cite{coleman2018counterfactual}. Since then several other frameworks for generalised state channels were elaborated (\cite{dziembowski2017perun},\cite{mccorryyou}). Recently a case study of the Battleship game was published Patrick McCorry, Chris Buckland et al. to evaluate how state channels could contribute in scaling blockchain-based applications \cite{mccorryyou}.  
+
+Later in this paper, in Section \ref{statechannelimpl} we argue that MixEth can be made more scalable by implementing shuffling in a state channel. 
+
+\subsubsection{Ethereum account abstraction}
 Unfortunately, neither Möbius nor Miximus can be deployed on the present-day Ethereum. When users of the coin mixing contract, either Möbius or Miximus would like to withdraw their funds they can not do this from a fresh address, since it does not hold any ether. Since as of now only the sender of a transaction can pay for the gas fee, users can not withdraw their funds unless they ask someone to fund their fresh address.     
 
 Another solution for this problem is the Ethereum Improvement Proposal (EIP) 86 suggested by Nick Johnson and Vitalik Buterin \cite{buterin2017accounteip}. EIP86 permits receivers of a transaction paying the gas fee. This would certainly enable a functional Möbius and Miximus as well, since the tumbling contract could pay for the withdrawal transactions' gas fee, eliminating the previous workaround to unlinkably fund freshly mixed addresses. Additionally, EIP86 also allows contracts and accounts to define their own digital signature algorithms. This means that users are no longer required to sign transactions with Elliptic Curve Digital Signature Algorithm (ECDSA). Moreover if EIP86 or something similar is implemented, which is expected in 2019, MixEth is also made viable.  
@@ -540,24 +564,25 @@ If an adversary is able to steal funds from other users than it would imply that
 	\label{table:securityproperties}
 \end{table}
 
-\newpage
+
 \section{Implementation}
 
 \begin{wrapfigure}{r}{0.7\textwidth}
 	\centering
 	\includegraphics[scale=0.7]{./withdrawalComplexity.jpg}
+	\captionsetup{justification=centering}
+	\caption{Gas complexity of withdraw transactions for various trustless Ethereum coin mixers}
 \end{wrapfigure}
 
-We envision two approaches for implementing MixEth. The first implementation of MixEth does not apply state channels, all the transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain. 
+We implemented MixEth with two different approaches. The first implementation of MixEth does not apply state channels, all the transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources, storage and gas, as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain.
+Both of the implementations allow users to mix Ether or other ERC20-compatible, a popular Ethereum token standard, tokens. 
 
-On of the main bottlenecks of coin mixing protocols is the withdrawal transactions' gas costs. A Miximus withdrawal transaction burns $\num[group-separator={,}]{1903305}$ gas, regardless of the number of participating parties. Since the block gas limit is $\num[group-separator={,}]{8000266}$ as of 2018, October 24 only 4 Miximus withdrawal transactions could fit in one Ethereum block. This is even worse for Möbius, since the gas cost for withdrawing coins from a Möbius mixer linearly increases with the numbers of participants.    
+One of the main bottlenecks of coin mixing protocols is the withdrawal transactions' gas costs. A Miximus withdrawal transaction burns $\num[group-separator={,}]{1903305}$ gas, regardless of the number of participating parties. Since the block gas limit is $\num[group-separator={,}]{8000266}$ as of 2018, October 24 only 4 Miximus withdrawal transactions could fit in one Ethereum block. This is even worse for Möbius, since the gas cost for withdrawing coins from a Möbius mixer contract linearly increases with the numbers of participants.
 
-\subsection{Fully on-chain implementation}
-
-\subsection{State channel implementation}
+All MixEth smart contracts were written in the Solidity language, which is currently the dominant language for developing Ethereum smart contracts. MixEth contracts are compiled using the latest version of the Solidity compiler in order to take advantage of the latest language features such as the possibility to return dynamic-sized arrays from contract functions. Note that these implementations are only proof-of-concept implementations, expect further improvements. All MixEth contracts are available online\footnote{https://github.com/seresistvanandras/MixEth}.  
 
 \begin{table}[H] 
-	\caption{Preliminary implementation gas cost results. Expect further improvements. MixEth++ refers to the implementation which leverages state channels for shuffling and challenging periods}
+	\caption{Proof-of-concept implementation gas cost results. Expect further improvements. MixEthChannel refers to the implementation which leverages state channels for shuffling and challenging periods}
 	\centering 
 	\begin{tabular}{@{\extracolsep{6pt}}lccccc@{}} 
 		
@@ -569,12 +594,65 @@ On of the main bottlenecks of coin mixing protocols is the withdrawal transactio
 		\midrule
 		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{1046027}$&$\num[group-separator={,}]{76123}$&0&0&$\num[group-separator={,}]{335714}$n   \\
 		Miximus \cite{miximus2018}&$\num[group-separator={,}]{1751378}$&$\num[group-separator={,}]{732815}$&0&0 &$\num[group-separator={,}]{1903305}$  \\
-		MixEth&TBD&\num[group-separator={,}]{99254}&\num[group-separator={,}]{138653}+\num[group-separator={,}]{40000}n&\num[group-separator={,}]{210220}&\num[group-separator={,}]{113265}  \\
-		MixEth++&TBD&TBD&0&0&TBD\\
+		MixEth&TBD&\num[group-separator={,}]{99254}&\num[group-separator={,}]{138653}+\num[group-separator={,}]{40000}n&\num[group-separator={,}]{227563}&\num[group-separator={,}]{113265}  \\
+		MixEthChannel&TBD&TBD&0&0&TBD\\
 		\bottomrule
 	\end{tabular}
 	\label{table:securityproperties}
-\end{table}
+\end{table}   
+
+\subsection{Fully on-chain implementation} \label{fullyonchainimpl}
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+	\centering
+\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto] 
+\node[state,initial above,initial text=] (q_deposit) {$q_{deposit_{i}}$}; 
+\node[state] (q_shuffle) [below=of q_deposit ] {$q_{shuffle_{j}}$};
+\node[state] (q_challenge) [below=of q_shuffle ] {$q_{challenge}$};
+\node[state, accepting below, below=of q_challenge] (q_withdraw) {$q_{withdraw_{k}}$};
+\path[->]
+(q_deposit) edge [loop right] node {$i+1$} ()
+(q_deposit) edge node {$i=N$} (q_shuffle)		
+(q_shuffle) edge node {} (q_challenge)
+(q_challenge) edge [bend right, swap] node {$noFraud, j+1$} (q_shuffle)
+(q_challenge) edge [bend left] node {$fraud, j-1$} (q_shuffle)
+(q_challenge) edge node {$j=N$} (q_withdraw)
+(q_withdraw) edge [loop right] node {$k+1$} ();
+\end{tikzpicture}
+\captionsetup{justification=centering}
+\caption{Shuffle-and-challenge paradigm implemented for the fully on-chain version of MixEth}
+\end{wrapfigure}
+
+In our first implementation of the MixEth protocol, we assumed that all transactions will take place on-chain. Since on-chain storage is extremely expensive, we decided to store only the last two sets of shuffled public keys. Note that storing only the latest shuffle would not be enough, since honest receivers could not prove to the contract that their shuffled public key is compromised unless also the last but first shuffled key is also available for the contract. Such a storage structure implies that after uploading the new shuffled keys, a challenging period should proceed in order to let receivers check the correctness of the shuffle. Furthermore we also allow senders to shuffle and deposit new public keys at the same time, meaning that only $2$ on-chain transactions are sufficient to complete the protocol. However shufflers need to withdraw their shuffling deposits with an additional on-chain transaction. We left it as a future work to determine the optimal ratio of mixed coins and shuffling deposits in order to incentivise correct shuffling.
+
+A great advantage of the fully on-chain version of MixEth is that it allows dynamic anonymity sets. One could potentially deposit funds to the contract and shuffle public keys and leave funds in the mixing contract for indefinite amount of time. As soon as the anonymity set is large enough a receiver could withdraw their assets. This dynamic nature of the contract could even lead to a single monolithic MixEth contract instead of having multiple MixEth contracts with significantly fragmented anonymity sets. However note that the gas complexity of shuffling transactions grow linearly in the number of participants, therefore the fully on-chain implementation is not capable to support extremely large anonymity sets with participants more than cca. $300$. 
+
+Also note that the on-chain cost of a shuffle transaction could be amortized among participants. Specifically if there is a group of senders and/or receivers who trust each other they could collectively charge any of them to shuffle once. Since they trust their peer, all the rest of the group does not need to shuffle anymore. Later non-shufflers could reimburse the only shuffler for their services either on-chain or off-chain.          
+
+\subsection{State channel implementation} \label{statechannelimpl}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\centering
+\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto] 
+\node[state,initial above,initial text=] (q_deposit) {$q_{deposit_{i}}$}; 
+\node[state] (q_shuffle) [below=of q_deposit ] {$q_{shuffle_{j}}$};
+\node[state, below=of q_shuffle] (q_no_fraud) {$q_{noFraud_j}$};	\node[state, accepting, right=of q_no_fraud] (q_fraud) {$q_{fraud}$};
+\node[state, accepting below, below=of q_no_fraud] (q_withdraw) {$q_{withdraw_{k}}$};
+\path[->]
+(q_deposit) edge [loop left] node {$i+1$} ()
+(q_deposit) edge node {$i=N$} (q_shuffle)		
+(q_shuffle) edge [loop left] node {$j+1$} ()
+(q_shuffle) edge node {$j=N$} (q_no_fraud)
+(q_no_fraud) edge node {$j=N$} (q_withdraw)
+(q_no_fraud) edge [loop left] node {$j+1$} ()
+(q_no_fraud) edge node {} (q_fraud)
+(q_withdraw) edge [loop left] node {$k+1$} ();
+\end{tikzpicture}
+\captionsetup{justification=centering}
+\caption{Shuffle-then-challenge paradigm implemented for the channelised version of MixEth}
+\end{wrapfigure}
+
+MixEth is also implemented in a way where shuffling and challenging periods are taking place in a state channel. We accomodated our implementation to the Counterfactual state channel framework  \cite{coleman2018counterfactual}. 
 
 \section{Related work}
 Möbius was the very first trustless coin mixer designed for Ethereum\cite{meiklejohn2018mobius}. Authors of Möbius provided formal definitions of various notions of securty such as anonymity, theft prevention and mixer availability. These properties could be used to evaluate and compare existing and future proposals from a security perspective. Möbius is a ring-signature-based trustless coin mixer with minimal on-chain transaction complexity: users of Möbius just need to create a deposit and a withdraw transaction. However the gas cost of the withdrawal transaction increases linearly in the number of receivers, which limits the size of possible anonymity sets. No more than 24 reciever could use Möbius with current cca.$\num[group-separator={,}]{8000000}$  block gas limit. If more people tries to use the mixer funds would be stucked in the mixer contract, since the gas costs of withdrawal transactions would be greater than the block gas limit. Another, maybe even more severe problem with Möbius is that withdrawal transactions can be frontrunned by anyone in the network, meaning that anyone could steal receivers' funds from the Möbius smart contract. When an honest receiver broadcasts a Möbius withdrawal transaction, other peers in the network might just create another withdrawal transaction with the very same valid linkable ring signature but with a considerably larger gas price and with their own address as recipient. Miners will act rationally and pick the transaction with the higher gas price, therefore theft-prevention in Möbius is not guaranteed.     
@@ -604,7 +682,8 @@ As Table \ref{table:communicationcomplexity} demonstrates, both Möbius and Mixi
 	XIM \cite{bissias2014sybil} & 0      & 7       \\
 	Möbius \cite{meiklejohn2018mobius} & 2    & 2       \\
 	Miximus \cite{miximus2018} & 1+MPC & 2 \\
-	MixEth & 1 & 3 \\
+	MixEth & 1 & 2 \\
+	MixEthChannel  & $\mathcal{O}(n)$ &2 \\
 	\bottomrule
 \end{tabular}
 \label{table:communicationcomplexity}
