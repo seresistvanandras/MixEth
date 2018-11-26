@@ -11,7 +11,7 @@ library ECDSAGeneralized {
   uint256 u1Gx, uint256 u1Gy, uint256 u2pKx, uint256 u2pKy,
   uint256 w
 */
-  function verify(uint256[12] params) public returns(bool) {
+  function verify(uint256[12] params) public pure returns(bool) {
 
     uint256 u1 = mulmod(params[4], params[11], n);
     uint256 u2 = mulmod(params[5], params[11], n);

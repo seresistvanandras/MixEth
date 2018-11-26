@@ -6,6 +6,7 @@ import {EC} from "./utils/EC.sol";
 import {ChaumPedersenVerifier} from "./ChaumPedersenVerifier.sol";
 import {ECDSAGeneralized} from "./utils/ECDSAGeneralized.sol";
 import "./ERC223ReceivingContract.sol";
+import {Transfer} from "./Transfer.sol";
 
 /**
 * This version of MixEth is designed to run inside of a Counterfactual state channel and such follows these guidelines:
@@ -27,9 +28,48 @@ contract MixEthChannel {
         uint256[2] shufflingAccumulatedConstant; //C^*, the new generator curve point
     }
 
+    function shuffleOfRound(uint256[] shuffles, uint256 pointsInRound, uint256 round) private pure returns(uint256[]) {
+        uint256[] memory shuffleRound = new uint256[](pointsInRound * 2);
+
+        // 2 points per key, round is zero indexed
+        for(uint256 i = round * 2 * pointsInRound; i < 2 * pointsInRound; i++) {
+            shuffleRound[i] = shuffles[i];
+        }
+
+        return shuffleRound;
+    }
+
+    function shufflePointExistsInRound(uint256[] shuffles, uint256 point, uint256 pointsInRound, uint256 round) private pure returns(bool) {
+        uint256[] memory shuffleRound = shuffleOfRound(shuffles, pointsInRound, round);
+        return existsInArray(shuffleRound, point);
+    }
+
+    function existsInArray(uint256[] pointArray, uint256 point) private pure returns(bool) {
+        // 2 points per key
+        for(uint256 i = 0; i < pointArray.length; i++) {
+            if(pointArray[i] == point) return true;
+        }
+
+        return false;
+    }
+
+    function accumulatorOfRound(uint256[] accumulatedConstants, uint256 round) private pure returns(uint256[]) {
+        uint256[] memory accumulatorRound = new uint256[](2);
+
+        // 2 accumulator points per round
+        for(uint256 i = (round - 1) * 2; i < round * 2; i++) {
+            accumulatorRound[i] = accumulatedConstants[i];
+        }
+
+        return accumulatorRound;
+    }
+
     struct AppState {
-        // a shuffle for each round. At the 0th index are the initial keys
-        mapping(uint256 => Shuffle) Shuffles; 
+        // the accumulated shuffles
+        // this would be much much better modeled, and be more efficient, as a mapping 
+        // but currently structs passed in to public functions cannot contain complex types
+        uint256[] shuffles;
+        uint256[] shufflingAccumulatedConstants; 
         // allParticpants includes n senders, n receivers/shufflers and n withdrawers
         address[] allParticipants;
         // n: the number of participants in each group
@@ -44,6 +84,8 @@ contract MixEthChannel {
         ActionType phase;
         // the amount of the given token/ether being mixed
         uint256 amount;
+        // A list of the keys that have already been withdrawn
+        uint256[] withdrawnKeys;
     }
 
     // types of the possible actions that can be taken
@@ -61,7 +103,8 @@ contract MixEthChannel {
         uint256 initPubKeyX;
         uint256 initPubKeyY;
         // for shuffle
-        Shuffle newShuffle;
+        uint256[] newShuffle;
+        uint256[] newAccumulatedConstant;
         // for challenge
         uint256[22] proofTranscript;
         uint256 fraudRound;
@@ -81,46 +124,53 @@ contract MixEthChannel {
         require(!state.fraud, "Cannot progress state after fraud.");
         require(state.turn < 4 * state.keyCount, "All turns have been taken."); 
 
-        if(action.ActionType == ActionType.DEPOSIT) {
+        if(action.actionType == ActionType.DEPOSIT) {
             require(state.phase == ActionType.DEPOSIT, "Only DEPOSIT actions are currently valid.");
-            require(!state.Shuffles[0].shuffle[initPubKeyX] && state.Shuffles[0].shuffle[action.initPubKeyY], "This public key was already added to the shuffle");
-            require(EC.onCurve([initPubKeyX, initPubKeyY]), "Invalid public key!");
+            require(!shufflePointExistsInRound(state.shuffles, action.initPubKeyX, state.keyCount, 0) && !shufflePointExistsInRound(state.shuffles, action.initPubKeyY, state.keyCount, 0), "This public key was already added to the shuffle");
+            require(EC.onCurve([action.initPubKeyX, action.initPubKeyY]), "Invalid public key!");
             // add to the first shuffle round
-            state.Shuffles[0].shuffle[action.initPubKeyX] = true;
-            state.Shuffles[0].shuffle[action.initPubKeyY] = true;
+            state.shuffles[state.turn * 2] = action.initPubKeyX;
+            state.shuffles[(state.turn * 2) + 1] = action.initPubKeyY;
         }
-        else if(action.ActionType == ActionType.SHUFFLE) {
+        else if(action.actionType == ActionType.SHUFFLE) {
             require(state.phase == ActionType.SHUFFLE, "Only SHUFFLE actions are currently valid.");
             // we add one to the round because the 0 shuffle not a shuffle, it's just the initialised values
-            uint256 round = (state.turn % state.keyCount) + 1;
+            uint256 shuffleRound = (state.turn % state.keyCount) + 1;
 
-            state.Shuffles[round].shufflingAccumulatedConstant[0] = action.newShuffle.shufflingAccumulatedConstant[0];
-            state.Shuffles[round].shufflingAccumulatedConstant[1] = action.newShuffle.shufflingAccumulatedConstant[1];
+            state.shufflingAccumulatedConstants[2 * (state.turn % state.keyCount)] = action.newAccumulatedConstant[0];
+            state.shufflingAccumulatedConstants[2 * (state.turn % state.keyCount) + 1] = action.newAccumulatedConstant[1];
 
             //upload new shuffle
-            for(i = 0; i < action.newShuffle.shuffle.length; i++) {
-                require(!state.Shuffles[round].shuffle[action.newShuffle.shuffle[i]], "Public keys can be added only once to the shuffle!");
-                state.Shuffles[round].shuffle[action.newShuffle.shuffle[i]] = true;
+            for(uint256 i = 0; i < action.newShuffle.length; i++) {
+                require(!shufflePointExistsInRound(state.shuffles, action.newShuffle[i], state.keyCount, shuffleRound), "Public keys can be added only once to the shuffle!");
+                state.shuffles[(shuffleRound * state.keyCount) + i] = action.newShuffle[i];
             }
         }
-        else if(action.ActionType == ActionType.NO_FRAUD) {
+        else if(action.actionType == ActionType.NO_FRAUD) {
             // during the FRAUD phase both FRAUD and NO_FRAUD actions are accepted
             require(state.phase == ActionType.FRAUD, "Only FRAUD or NO_FRAUD actions are currently valid.");
             // dont do anything here - just progress the state
         }
-        else if(action.ActionType == ActionType.FRAUD) {
+        else if(action.actionType == ActionType.FRAUD) {
             // during the FRAUD phase both FRAUD and NO_FRAUD actions are accepted
             require(state.phase == ActionType.FRAUD, "Only FRAUD or NO_FRAUD actions are currently valid.");
 
-            // check that the proof references the previous round
-            require(action.proofTranscript[0] == state.Shuffles[action.fraudRound - 1].shufflingAccumulatedConstant[0]
-                && action.proofTranscript[1] == state.Shuffles[action.fraudRound - 1].shufflingAccumulatedConstant[1], "Wrong shuffling accumulated constant for previous round "); //checking correctness of C*_{i-1}
-            require(state.Shuffles[action.fraudRound - 1].shuffle[action.proofTranscript[2]] && state.Shuffles[action.fraudRound - 1].shuffle[action.proofTranscript[3]], "Shuffled key is not included in previous round"); //checking that shuffled key is indeed included in previous shuffle
+            //uint256[] memory previousRound = shuffleOfRound(state.shuffles, state.keyCount, action.fraudRound - 1);
+            uint256[] memory previousRoundAccumulatedConstant = accumulatorOfRound(state.shufflingAccumulatedConstants, action.fraudRound - 1);
 
-            // check that the proof references the current round
-            require(action.proofTranscript[4] == state.Shuffles[action.fraudRound].shufflingAccumulatedConstant[0]
-                 && action.proofTranscript[5] == state.Shuffles[action.fraudRound].shufflingAccumulatedConstant[1], "Wrong current shuffling accumulated constant"); //checking correctness of C*_{i}
-            require(!state.Shuffles[action.fraudRound].shuffle[action.proofTranscript[6]] || !state.Shuffles[action.fraudRound].shuffle[action.proofTranscript[7]], "Final public key is indeed included in current shuffle");
+            // check that the proof references the previous round
+            require(action.proofTranscript[0] == previousRoundAccumulatedConstant[0]
+                && action.proofTranscript[1] == previousRoundAccumulatedConstant[1], "Wrong shuffling accumulated constant for previous round "); //checking correctness of C*_{i-1}
+            require(shufflePointExistsInRound(state.shuffles, action.proofTranscript[2], state.keyCount, action.fraudRound - 1)
+                && shufflePointExistsInRound(state.shuffles, action.proofTranscript[3], state.keyCount, action.fraudRound - 1), "Shuffled key is not included in previous round"); //checking that shuffled key is indeed included in previous shuffle
+
+            uint256[] memory fraudRoundAccumulatedConstant = accumulatorOfRound(state.shufflingAccumulatedConstants, action.fraudRound);
+
+            // check that the proof references the fraud round
+            require(action.proofTranscript[4] == fraudRoundAccumulatedConstant[0]
+                 && action.proofTranscript[5] == fraudRoundAccumulatedConstant[1], "Wrong current shuffling accumulated constant"); //checking correctness of C*_{i}
+            require(!shufflePointExistsInRound(state.shuffles, action.proofTranscript[6], state.keyCount, action.fraudRound) 
+                    || !shufflePointExistsInRound(state.shuffles, action.proofTranscript[7], state.keyCount, action.fraudRound) , "Final public key is indeed included in current shuffle");
             
             // is the fraud proof valid
             require(ChaumPedersenVerifier.verifyChaumPedersen(action.proofTranscript), "Chaum-Pedersen Proof not verified");
@@ -129,33 +179,40 @@ contract MixEthChannel {
             state.fraudIndex = action.fraudRound - 1 + state.keyCount;
             state.fraud = true;
 
-        } else if(action.ActionType == ActionType.WITHDRAW) {
+        } else if(action.actionType == ActionType.WITHDRAW) {
             require(state.phase == ActionType.WITHDRAW, "Only WITHDRAW actions are currently valid.");
             // the round is the final round
-            uint256 round = state.keyCount;
-
-            require(state.Shuffles[round].shuffle[sig[2]] && state.Shuffles[round].shuffle[sig[3]], "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
-            require(sig[0] == state,Shuffles[round].shufflingAccumulatedConstant[0]
-                && sig[1] == state.Shuffles[round].shufflingAccumulatedConstant[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
+            uint256 withdrawRoundNumber = state.keyCount;
+            uint256[] memory finalAccumulator = accumulatorOfRound(state.shufflingAccumulatedConstants, withdrawRoundNumber);
+            
+            require(shufflePointExistsInRound(state.shuffles, action.sig[2], state.keyCount, withdrawRoundNumber) 
+                && shufflePointExistsInRound(state.shuffles, action.sig[3], state.keyCount, withdrawRoundNumber), "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
+            // but has it already been withdrawn?
+            require(!existsInArray(state.withdrawnKeys, action.sig[2]) 
+                && !existsInArray(state.withdrawnKeys, action.sig[3]), "Public key has already been withdrawn");
+                // record this withdrawal
+            state.withdrawnKeys[2 * (state.turn % state.keyCount)] = action.sig[2];
+            state.withdrawnKeys[2 * (state.turn % state.keyCount) + 1] = action.sig[3];
+            
+            // check the accumulator
+            require(action.sig[0] == finalAccumulator[0]
+                && action.sig[1] == finalAccumulator[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
             // who is taking the current turn? they need to provide a relevant sig
             address turnTaker = state.allParticipants[getTurnTaker(state)];
-            require(sig[4] == uint(sha3(turnTaker, sig[2], sig[3])), "Signed an invalid message!"); //this check is needed to deter front-running attacks
-            require(ECDSAGeneralized.verify(sig), "Your signature is not verified!");
-
-            // remove the keys from the final shuffle - this is to prevent replay attacks
-            state.Shuffles[round].shuffle[sig[2]] = false;
-            state.Shuffles[round].shuffle[sig[3]] = false;
+            require(action.sig[4] == uint(keccak256(abi.encodePacked(turnTaker, action.sig[2], action.sig[3]))), "Signed an invalid message!"); //this check is needed to deter front-running attacks
+            
+            require(ECDSAGeneralized.verify(action.sig), "Your signature is not verified!");
         }
         else {
             // other actions are not accepted
-            require(true, false, "The supplied action type was invalid.");
+            require(false, "The supplied action type was invalid.");
         }
 
         // increment the turn
         state.turn = state.turn + 1;
 
         // move to the next phase if necessary
-        if(state.turn % state.keyCount) {
+        if(state.turn % state.keyCount == 0) {
             if(state.phase == ActionType.DEPOSIT) state.phase = ActionType.SHUFFLE;
             if(state.phase == ActionType.SHUFFLE) state.phase = ActionType.FRAUD;
             if(state.phase == ActionType.FRAUD) state.phase = ActionType.WITHDRAW;
@@ -189,24 +246,24 @@ contract MixEthChannel {
         return state.fraud || state.turn == 4 * state.keyCount;
     }
 
-    function resolve(AppState state, Transfer.Terms terms) public pure {
-        address[] memory to = new address[];
-        bytes[] memory data = new bytes[];
-        uint256[] memory amounts = new uint256[];
+    function resolve(AppState state, Transfer.Terms terms) public pure returns(Transfer.Transaction) {
+        address[] memory to = new address[](state.keyCount);
+        bytes[] memory data = new bytes[](state.keyCount);
+        uint256[] memory amounts = new uint256[](state.keyCount);
 
         if(state.turn == state.keyCount * 4) {
             // all turns have been taken, send out the proper resolution
             
             // return deposits to shufflers and withdrawers
             // and also send to withdrawers
-            for(uint256 i = 0; i < state.allParticipants.length; i++) {   
-                if(i >= state.keyCount < 2 * state.keyCount) {
-                    to.push(allParticipants[i]);
-                    amounts.push(state.amount);
+            for(uint256 participant = 0; participant < state.allParticipants.length; participant++) {   
+                if(participant >= state.keyCount && participant < 2 * state.keyCount) {
+                    to[participant] = state.allParticipants[participant];
+                    amounts[participant] = state.amount;
                 }
-                else if(i >= 2 * state.keyCount) {
-                    to.push(allParticipants[i]);
-                    amounts.push(2 * state.amount);
+                else if(participant >= 2 * state.keyCount) {
+                    to[participant] = state.allParticipants[participant];
+                    amounts[participant] = 2 * state.amount;
                 }
             }
         }
@@ -218,14 +275,13 @@ contract MixEthChannel {
                 punished = state.fraudIndex;
             }
             else {
-                punished = getTurnTaker(appState);
+                punished = getTurnTaker(state);
             }
 
             for(uint256 i = 0; i < state.allParticipants.length; i++) {   
-                // all participants had a 1 ether deposit which we refund
                 if(i != punished) {
-                    to.push(allParticipants[i]);
-                    amounts.push(state.amount);
+                    to[i] = state.allParticipants[i];
+                    amounts[i] = state.amount;
                 }
             }
         }

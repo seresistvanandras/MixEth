@@ -155,7 +155,7 @@ contract MixEth is ERC223ReceivingContract {
      require(Shuffles[token][shuffleRound[token]].shuffle[sig[2]] && Shuffles[token][shuffleRound[token]].shuffle[sig[3]], "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
      require(sig[0] == Shuffles[token][shuffleRound[token]].shufflingAccumulatedConstant[0]
        && sig[1] == Shuffles[token][shuffleRound[token]].shufflingAccumulatedConstant[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
-     require(sig[4] == uint(sha3(msg.sender, sig[2], sig[3])), "Signed an invalid message!"); //this check is needed to deter front-running attacks
+     require(sig[4] == uint(keccak256(abi.encodePacked(msg.sender, sig[2], sig[3]))), "Signed an invalid message!"); //this check is needed to deter front-running attacks
      require(ECDSAGeneralized.verify(sig), "Your signature is not verified!");
      Shuffles[token][shuffleRound[token]].shuffle[sig[2]] = false;
      Shuffles[token][shuffleRound[token]].shuffle[sig[3]] = false;
