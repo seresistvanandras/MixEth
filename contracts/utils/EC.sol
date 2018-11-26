@@ -227,7 +227,7 @@ library EC {
         qy = mulmod(qy, z, n);
     }
 
-    function onCurve(uint[2] P) public constant returns (bool) {
+    function onCurve(uint[2] P) public pure returns (bool) {
         uint p = n;
         if (0 == P[0] || P[0] == p || 0 == P[1] || P[1] == p)
             return false;
@@ -237,7 +237,7 @@ library EC {
     }
 
 
-    function isPubKey(uint[2] memory P) public constant returns (bool isPK) {
+    function isPubKey(uint[2] memory P) public pure returns (bool isPK) {
         isPK = onCurve(P);
     }
 }

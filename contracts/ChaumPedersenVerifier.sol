@@ -16,7 +16,7 @@ library ChaumPedersenVerifier {
   for that end we use ecrecover, a trick suggested by Vitalik:
   https://ethresear.ch/t/you-can-kinda-abuse-ecrecover-to-do-ecmul-in-secp256k1-today/2384
   */
-  function verifyChaumPedersen(uint256[22] params) public returns (bool) {
+  function verifyChaumPedersen(uint256[22] params) public pure returns (bool) {
     uint256[12] memory params1 = [params[0], params[1], params[2], params[3], params[9], params[10], params[8], params[13], params[14], params[15], params[16], params[17]];
     bool b1 = verifyChaumPedersenSub(params1);
     uint256[12] memory params2 = [params[4], params[5], params[6], params[7], params[11], params[12], params[8], params[13], params[18], params[19], params[20], params[21]];
