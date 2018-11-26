@@ -20,50 +20,6 @@ import {Transfer} from "./Transfer.sol";
 contract MixEthChannel {
     using SafeMath for uint;
 
-    /*
-    describes a shuffle: contains the shuffled pubKeys and shuffling accumulated constant
-    */
-    struct Shuffle {
-        mapping(uint256 => bool) shuffle; //whether a particular point is present in the shuffle or not
-        uint256[2] shufflingAccumulatedConstant; //C^*, the new generator curve point
-    }
-
-    function shuffleOfRound(uint256[] shuffles, uint256 pointsInRound, uint256 round) private pure returns(uint256[]) {
-        uint256[] memory shuffleRound = new uint256[](pointsInRound * 2);
-
-        // 2 points per key, round is zero indexed
-        for(uint256 i = round * 2 * pointsInRound; i < 2 * pointsInRound; i++) {
-            shuffleRound[i] = shuffles[i];
-        }
-
-        return shuffleRound;
-    }
-
-    function shufflePointExistsInRound(uint256[] shuffles, uint256 point, uint256 pointsInRound, uint256 round) private pure returns(bool) {
-        uint256[] memory shuffleRound = shuffleOfRound(shuffles, pointsInRound, round);
-        return existsInArray(shuffleRound, point);
-    }
-
-    function existsInArray(uint256[] pointArray, uint256 point) private pure returns(bool) {
-        // 2 points per key
-        for(uint256 i = 0; i < pointArray.length; i++) {
-            if(pointArray[i] == point) return true;
-        }
-
-        return false;
-    }
-
-    function accumulatorOfRound(uint256[] accumulatedConstants, uint256 round) private pure returns(uint256[]) {
-        uint256[] memory accumulatorRound = new uint256[](2);
-
-        // 2 accumulator points per round
-        for(uint256 i = (round - 1) * 2; i < round * 2; i++) {
-            accumulatorRound[i] = accumulatedConstants[i];
-        }
-
-        return accumulatorRound;
-    }
-
     struct AppState {
         // the accumulated shuffles
         // this would be much much better modeled, and be more efficient, as a mapping 
@@ -126,7 +82,7 @@ contract MixEthChannel {
 
         if(action.actionType == ActionType.DEPOSIT) {
             require(state.phase == ActionType.DEPOSIT, "Only DEPOSIT actions are currently valid.");
-            require(!shufflePointExistsInRound(state.shuffles, action.initPubKeyX, state.keyCount, 0) && !shufflePointExistsInRound(state.shuffles, action.initPubKeyY, state.keyCount, 0), "This public key was already added to the shuffle");
+            require(!pointExistsInRound(state.shuffles, action.initPubKeyX, state.keyCount * 2, 0) && !pointExistsInRound(state.shuffles, action.initPubKeyY, state.keyCount * 2, 0), "This public key was already added to the shuffle");
             require(EC.onCurve([action.initPubKeyX, action.initPubKeyY]), "Invalid public key!");
             // add to the first shuffle round
             state.shuffles[state.turn * 2] = action.initPubKeyX;
@@ -142,7 +98,7 @@ contract MixEthChannel {
 
             //upload new shuffle
             for(uint256 i = 0; i < action.newShuffle.length; i++) {
-                require(!shufflePointExistsInRound(state.shuffles, action.newShuffle[i], state.keyCount, shuffleRound), "Public keys can be added only once to the shuffle!");
+                require(!pointExistsInRound(state.shuffles, action.newShuffle[i], state.keyCount * 2, shuffleRound), "Public keys can be added only once to the shuffle!");
                 state.shuffles[(shuffleRound * state.keyCount) + i] = action.newShuffle[i];
             }
         }
@@ -155,22 +111,21 @@ contract MixEthChannel {
             // during the FRAUD phase both FRAUD and NO_FRAUD actions are accepted
             require(state.phase == ActionType.FRAUD, "Only FRAUD or NO_FRAUD actions are currently valid.");
 
-            //uint256[] memory previousRound = shuffleOfRound(state.shuffles, state.keyCount, action.fraudRound - 1);
-            uint256[] memory previousRoundAccumulatedConstant = accumulatorOfRound(state.shufflingAccumulatedConstants, action.fraudRound - 1);
+            uint256[] memory previousRoundAccumulatedConstant = round(state.shufflingAccumulatedConstants, 2, action.fraudRound - 1);
 
             // check that the proof references the previous round
             require(action.proofTranscript[0] == previousRoundAccumulatedConstant[0]
                 && action.proofTranscript[1] == previousRoundAccumulatedConstant[1], "Wrong shuffling accumulated constant for previous round "); //checking correctness of C*_{i-1}
-            require(shufflePointExistsInRound(state.shuffles, action.proofTranscript[2], state.keyCount, action.fraudRound - 1)
-                && shufflePointExistsInRound(state.shuffles, action.proofTranscript[3], state.keyCount, action.fraudRound - 1), "Shuffled key is not included in previous round"); //checking that shuffled key is indeed included in previous shuffle
+            require(pointExistsInRound(state.shuffles, action.proofTranscript[2], state.keyCount * 2, action.fraudRound - 1)
+                && pointExistsInRound(state.shuffles, action.proofTranscript[3], state.keyCount * 2, action.fraudRound - 1), "Shuffled key is not included in previous round"); //checking that shuffled key is indeed included in previous shuffle
 
-            uint256[] memory fraudRoundAccumulatedConstant = accumulatorOfRound(state.shufflingAccumulatedConstants, action.fraudRound);
+            uint256[] memory fraudRoundAccumulatedConstant = round(state.shufflingAccumulatedConstants, 2, action.fraudRound);
 
             // check that the proof references the fraud round
             require(action.proofTranscript[4] == fraudRoundAccumulatedConstant[0]
                  && action.proofTranscript[5] == fraudRoundAccumulatedConstant[1], "Wrong current shuffling accumulated constant"); //checking correctness of C*_{i}
-            require(!shufflePointExistsInRound(state.shuffles, action.proofTranscript[6], state.keyCount, action.fraudRound) 
-                    || !shufflePointExistsInRound(state.shuffles, action.proofTranscript[7], state.keyCount, action.fraudRound) , "Final public key is indeed included in current shuffle");
+            require(!pointExistsInRound(state.shuffles, action.proofTranscript[6], state.keyCount * 2, action.fraudRound) 
+                    || !pointExistsInRound(state.shuffles, action.proofTranscript[7], state.keyCount * 2, action.fraudRound) , "Final public key is indeed included in current shuffle");
             
             // is the fraud proof valid
             require(ChaumPedersenVerifier.verifyChaumPedersen(action.proofTranscript), "Chaum-Pedersen Proof not verified");
@@ -183,10 +138,10 @@ contract MixEthChannel {
             require(state.phase == ActionType.WITHDRAW, "Only WITHDRAW actions are currently valid.");
             // the round is the final round
             uint256 withdrawRoundNumber = state.keyCount;
-            uint256[] memory finalAccumulator = accumulatorOfRound(state.shufflingAccumulatedConstants, withdrawRoundNumber);
+            uint256[] memory finalAccumulator = round(state.shufflingAccumulatedConstants, 2, withdrawRoundNumber);
             
-            require(shufflePointExistsInRound(state.shuffles, action.sig[2], state.keyCount, withdrawRoundNumber) 
-                && shufflePointExistsInRound(state.shuffles, action.sig[3], state.keyCount, withdrawRoundNumber), "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
+            require(pointExistsInRound(state.shuffles, action.sig[2], state.keyCount * 2, withdrawRoundNumber) 
+                && pointExistsInRound(state.shuffles, action.sig[3], state.keyCount * 2, withdrawRoundNumber), "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
             // but has it already been withdrawn?
             require(!existsInArray(state.withdrawnKeys, action.sig[2]) 
                 && !existsInArray(state.withdrawnKeys, action.sig[3]), "Public key has already been withdrawn");
@@ -221,7 +176,6 @@ contract MixEthChannel {
 
         return abi.encode(state);
     }
-
 
     function getTurnTaker(AppState state) public pure returns (uint256) {
         // signingKeys = [ depositor 1..n ] [ shuffler n+1...2n] [ withdrawer 2n+1...3n]
@@ -288,5 +242,33 @@ contract MixEthChannel {
 
         // distribute to all
         return Transfer.Transaction(terms.assetType, terms.token, to, amounts, data);
+    }
+
+    // helper functions for dealing with arrays
+    function round(uint256[] array, uint256 pointsPerRound, uint256 roundNumber) private pure returns(uint256[]) {
+        uint256 start = roundNumber * pointsPerRound;
+        uint256 end = (roundNumber + 1) * pointsPerRound;
+        return slice(array, start, end);
+    }
+
+    function pointExistsInRound(uint256[] array, uint256 point, uint256 pointsPerRound, uint256 roundNumber) private pure returns(bool) {
+        uint256[] memory batchRound = round(array, pointsPerRound, roundNumber);
+        return existsInArray(batchRound, point);
+    }
+
+    function existsInArray(uint256[] pointArray, uint256 point) private pure returns(bool) {
+        for(uint256 i = 0; i < pointArray.length; i++) {
+            if(pointArray[i] == point) return true;
+        }
+
+        return false;
+    }
+
+    function slice(uint256[] array, uint256 start, uint256 end) private pure returns(uint256[]) {
+        uint256[] memory slicedArray = new uint256[](end - start);
+        for(uint256 i = start; i < end; i++) {
+            slicedArray[i] = array[i];
+        }
+        return slicedArray;
     }
 }
