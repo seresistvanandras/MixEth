@@ -141,7 +141,7 @@ keys]{cryptocode}
 \begin{abstract}
 Cryptocurrencies enable users to transact with each other without relying on trusted parties or intermediaries. These transactions are recorded in an immutable, publicly verifiable ledger. Due to the ledger's transparent nature, privacy is notably reduced. If the link between users' public key and their physical identity is exposed, their pseudonymity is lost. One way to increase users' privacy is to deploy coin mixing services. In this paper, we present MixEth, which is a trustless coin mixing service. MixEth is more efficient than any proposed trustless coin tumbler. It requires only $3$ on-chain transactions at most per user and $1$ off-chain. It achieves strong notions of anonymity and is able to resist denial-of-service attacks.      
 \end{abstract}
-\keywords{Cryptography, Verifiable shuffle, Cryptocurrency, Ethereum, Coin mixer}
+\keywords{Cryptography, Verifiable shuffle, Cryptocurrency, Ethereum, Coin mixer, State Channel}
 
 \section{Introduction}
 Bitcoin \cite{nakamoto2008bitcoin} and other cryptocurrencies are pseudonymous. Users' public keys are used as pseudonyms in these systems. Transactions essentially record a flow of cryptocurrency from one (or more) public keys to another public key (or more). Flow of cryptocurrency can be easily tracked due to the open and transparent nature of cryptocurrencies' transaction ledger. Moreover, coherent public keys, which are used by the same user, can be clustered merely by analyzing the ledger. Recently several tools and algorithms were proposed to diminish users' privacy (\cite{meiklejohn2013fistful},\cite{moser2013inquiry}, \cite{moreno2016listening}). Such deanomyzation attacks are extremely harmful to user privacy, especially in the case when any of the users' pseudonyms, public keys, are linked to their real world identity. 
@@ -150,9 +150,11 @@ One of the methods to increase users' privacy is coin mixing or tumbling. This t
 
 Several coin mixing protocols were proposed in the literature both centralized (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}, \cite{heilman2017tumblebit}) and decentralized (\cite{maxwell2013coinjoin}, \cite{ruffing2014coinshuffle}, \cite{miximus2018}, \cite{meiklejohn2018mobius}, \cite{bissias2014sybil}). A major drawback of centralized coin mixing is that the availability of the tumbler is entirely dependent on the trusted party and in most cases theft prevention can not be guaranteed (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}). On the other hand decentralized tumblers achieve availability, theft prevention and satisfy strong notions of anonymity although they are considerably heavier computationally. In the following we will solely focus on the problem of coin mixing on Ethereum \cite{wood2014ethereum}. 
 
-The two major techniques to provide mixing services for Ethereum are Möbius, a ring-signature-based solution \cite{meiklejohn2018mobius} and Miximus, a zkSNARK-based proposal \cite{miximus2018}. Both of them burn tremendous amounts of gas to withdraw funds, which could be prohibitive for many use cases. Möbius requires $\num[group-separator={,}]{335714}n$ gas ($n$ is the ring size) while Miximus consumes $\num[group-separator={,}]{1903305}$ gas to verify a zkSNARK proof \cite{miximus2018gascost}.   
+The two major techniques to provide mixing services for Ethereum are Möbius, a ring-signature-based solution \cite{meiklejohn2018mobius} and Miximus, a zkSNARK-based proposal \cite{miximus2018}. Both of them burn tremendous amounts of gas to withdraw funds, which could be prohibitive for many use cases. Möbius requires $\num[group-separator={,}]{335714}n$ gas ($n$ is the ring size) while Miximus consumes $\num[group-separator={,}]{1903305}$ gas to verify a zkSNARK proof \cite{miximus2018gascost}. As the Ethereum network is congested, ie. blocks were full during 2018\footnote{https://etherscan.io/chart/gasused}, we argue that it is essential for the network scalability to aim to create protocols and applications that burn as few gas as possible.    
 
-\textbf{Our contributions.} In this paper, we present MixEth, to overcome the above mentioned efficiency issues while retaining strong notions of anonymity already achieved by previous proposals. MixEth requires as few off-chain messages and on-chain transactions as Möbius and Miximus, meanwhile it burns significantly less gas.
+\textbf{Our contributions.} In this paper, we present MixEth, a privacy-enhancing protocol and a practical tool for Ethereum, to overcome the above mentioned efficiency issues while retaining strong notions of anonymity, mixer availability and theft prevention already achieved by previous proposals. MixEth requires as few off-chain messages and on-chain transactions as Möbius and Miximus, meanwhile it burns significantly less gas.
+
+We also implement MixEth in a state channel to leverage the scalability and instant finality of off-chain scaling solutions. Furthermore, the MixEth protocol could be used in any state channel application to mix funds before going back to on-chain. 
 
 
 \section{Background}
@@ -531,7 +533,7 @@ This section provides informal ideas to the security proofs for the notions of s
 \subsection{Recipient anonymity}
 The withdrawing transaction for recipient $B$ sends funds to the public key $s_{B}C^{*}$. This public key does not reveal any links to the original $s_{B}G$ in case if at least one honest sender shuffled and the DDH assumption holds. Adversary can only distinguish between honest recipients public keys with negligible probability. See reduction proof in Appendix \ref*{appendanon}.
 \subsection{Availability}
-If an adversary is able to destroy an honest recipient's funds' availability, it implies that adversary $\adv$ either breaks the soundness of the Chaum-Pedersen protocol or successfully launched an eclipse attack against the honest recipient, who can not send any transactions to honest Ethereum peers.
+If an adversary is able to destroy an honest recipient's funds' availability, it implies that adversary $\adv$ either breaks the completeness of the Chaum-Pedersen protocol or successfully launched an eclipse attack against the honest recipient, who can not send any transactions to honest Ethereum peers.
 \subsection{Theft prevention} 
 If an adversary is able to steal funds from other users than it would imply that they managed to create a valid message/signature, $(m,\sigma)$ pair for the final shuffled public key of an honest recipient without having access to the secret key of the honest recipient. This contradicts to the assumption that ECDSA is existentially unforgeable. Reduction proof is enclosed in Appendix \ref*{appendtheft}. 
 \begin{table}[H] 
@@ -631,7 +633,7 @@ Also note that the on-chain cost of a shuffle transaction could be amortized amo
 \caption{Shuffle-then-challenge paradigm implemented for the channelised version of MixEth}
 \label{fig:shufflethenchallenge}
 \end{wrapfigure}
-\newpage
+
 \subsection{State channel implementation} \label{statechannelimpl}
 
 We have also adapted MixEth to operate within a state channel. We wrote the implementation within the guidelines of the Counterfactual framework \cite{coleman2018counterfactual}. This allowed us to delegate the processes of setup, liveness disputes and finalisation to the framework so that we could focus on adapting the application logic. Unlike the on-chain implementation the state channel implementation requires that the set of participants be agreed upon upfront. In state channels each update to the state needs to be signed by all other participants, this means that state channel applications are inherently at least $\mathcal{O}(n)$. To co-ordinate these off-chain updates the Counterfactual framework enforces that all applications be turn based, introducing a turn taker for each turn who may propose a new state. The original MixEth implementation was not turn based so we have adapted the application to this constraint, an example of this adaptation is the challenge round. In the on-chain implementation a time period is allowed during which any participant may challenge, we have adapted this by proceeding turn-based through the participants offering each the chance to either challenge or pass. In the case of a breakdown in cooperation in the channel, a liveness fault, it has been shown that all operations succeeding the cooperation breakdown must proceed on chain\cite{mccorryyou} or be abandoned at some financial cost specified by the application, meaning that if every shuffle were to be succeeded by a challenge round each participant would be forced, by threat this lost deposit, to make an on-chain transaction after each shuffle, incurring $\mathcal{O}(n)$ on chain operations. To mitigate this we removed the challenge after each round and instead introduced a challenge round that takes place after all shuffles have completed, during this round any of the preceding shuffles may be challenged.
@@ -694,9 +696,7 @@ As Table \ref{table:communicationcomplexity} demonstrates, both Möbius and Mixi
 \section{Extensions and improvements}
 MixEth is not fully compatible with the current EVM, however it could be deployed with a workaround. A recipient could ask another party or service to send a signed transaction including a signature which uses the modified version of ECDSA, where the generator element is the shuffling accumulated constant. MixEth could check this signature and send out funds to a fresh Ethereum address given in the withdraw transaction. 
  
-\section{Conclusion} \label{conclusion}
- 
-\section{Future work}
+\section{Conclusion and Future Work} \label{conclusion}
 We are going to conduct external code audits, deploy MixEth on the Ethereum main net and evaluate its performance. An important and crucial research question is whether it is possible to design and implement an efficient and trustless Ethereum-based coin mixer with strong security guarantees which do not rely on any workaround or upcoming EIP implementation and is ready to be deployed on present-day Ethereum. 
 
 \section{Acknowledgements}
@@ -745,6 +745,9 @@ Hereby we show that if there exists an adversary $\adv$ who is able to break wit
 Towards contradiction let us assume that the recipient anonymity does not hold. Let us assume that the challenge to the DDH-adversary $\bdv$ is of the form $(sG,cG,c_{0}G)$. Adversary $\bdv$ generates uniformly random public key $c_{1}G$ and invokes $\adv$ with the set $\textsf{PK}_{B}=(c_{0}C^{*}, c_{1}C^{*})$, then $\bdv$ forwards $\textsf{PK}_{B}$ to $\adv$. Then a withdrawal transaction occurs from $c_{b}G$. After polynomial-time $\adv$ outputs $b^{'}$ and $\bdv$ will output $\lnot b^{'}$. If $\adv$ outputs $0$ and $b=b^{'}$, this signals to $\bdv$ that $c_{0}G$ might potentially be of the form $scG=c_{0}G$  i.e. it is a DDH tuple, therefore $\bdv$ outputs $1$. In all the other cases $\bdv$ outputs a random bit. Therefore we have that $\bdv$ has an adventage in their DDH-game if and only if $\adv$ wins their $\textsf{G}^{with, anon}_{mix, \adv}$ security game. Since we assumed that recipient anonymity does not hold we have that $$\Pr[\textsf{DDH}_{\bdv}]=\frac{1}{2}+\frac{1}{2}*\Pr[\textsf{G}^{with, anon}_{mix, \adv}]=\frac{1}{2}+\frac{1}{2}*\textsf{non-negl}(\lambda),$$ which contradicts to the DDH assumption.
 
 \section{Proof of Availability}  \label{appendavail}
+
+The only possibility for an adversary to threaten the availability of funds for an honest receiver if they create an incorrect shuffle, where honest receiver's shuffled public key is compromised. Since the Chaum-Pedersen zero-knowledge protocol is complete, an honest receiver is alway able to create a Chaum-Pedersen proof, which demonstrates to the contract that their shuffled public key is compromised. Therefore we have for any PPT $\adv$ and $\forall \lambda \in \mathbb{N}$ that, $$\Pr[\textsf{G}^{avail}_{mix, \adv}]=0<negl(\lambda).$$
+
 \section{Proof of Theft Prevention} \label{appendtheft}
 
 \begin{wrapfigure}{r}{0.5\textwidth}
@@ -776,7 +779,8 @@ Towards contradiction let us assume that the recipient anonymity does not hold. 
 \end{wrapfigure}
 
 Towards contradiction we assume that there exists an adversary $\adv$, who is able to break the theft prevention property introduced in Section \ref{sec:theftprevention} with non-negligible probability. Using such an adversary as a subroutine we could create another efficient adversary $\bdv$ who is able to break the existential unforgeability of ECDSA. The input of the forgeability game is the security parameter which is forwarded to $\adv$ along with $n$ randomly generated public keys. By assumption $\adv$ outputs with non-negligible probability valid withdraw transaction belonging to one of the public keys in the mixer. $\bdv$ outputs the withdraw transaction and the ECDSA signature on it. $\bdv$ wins the forgeability game if and only if $\adv$ wins their $\textsf{G}^{theft}_{mix,\adv}$ game:
-$$\Pr[\textsf{Forge}_{ECDSA,\bdv}]=\Pr[\textsf{G}^{theft}_{mix, \adv}]=\frac{1}{\lambda^\alpha}, $$ for some fixed $\alpha$. This contradicts to the assumption that ECDSA is existentially unforgeable.      
+$$\Pr[\textsf{Forge}_{ECDSA,\bdv}]=\Pr[\textsf{G}^{theft}_{mix, \adv}]=\frac{1}{\lambda^\alpha}, $$ for some fixed $\alpha$. This contradicts to the assumption that ECDSA is existentially unforgeable.
+      
 
 
 \end{appendices}
