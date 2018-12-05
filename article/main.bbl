@@ -1,5 +1,10 @@
 \begin{thebibliography}{10}
 
+\bibitem{aztecprotocol2018}
+Aztec.
+\newblock The aztec protocol.
+\newblock \url{ https://github.com/AztecProtocol/AZTEC}, 2018.
+
 \bibitem{miximus2018}
 barryWhiteHat.
 \newblock Miximus.
@@ -42,6 +47,18 @@ Vitalik Buterin and Nick Johnson.
 \newblock Eip86: Account abstraction.
 \newblock \url{https://github.com/ethereum/EIPs/blob/master/EIPS/eip-86.md},
   2017.
+
+\bibitem{catalano2013vector}
+Dario Catalano and Dario Fiore.
+\newblock Vector commitments and their applications.
+\newblock In {\em Public-Key Cryptography--PKC 2013}, pages 55--72. Springer,
+  2013.
+
+\bibitem{chan2017ethereum}
+Wren Chan and Aspen Olmsted.
+\newblock Ethereum transaction graph analysis.
+\newblock In {\em 2017 12th International Conference for Internet Technology
+  and Secured Transactions (ICITST)}, pages 498--500. IEEE, 2017.
 
 \bibitem{chaum1992wallet}
 David Chaum and Torben~Pryds Pedersen.
@@ -113,6 +130,19 @@ Satoshi Nakamoto.
 \newblock Bitcoin: A peer-to-peer electronic cash system.
 \newblock 2008.
 
+\bibitem{ethmacrofag2016}
+Nchinda Nchinda.
+\newblock Exploring pseudonimity on ethereum.
+\newblock \url{
+  https://media.consensys.net/exploring-pseudonimity-on-ethereum-dda257019eb4},
+  2016.
+
+\bibitem{hugemixer2017}
+Serge Nedashkovsky.
+\newblock Huge ethereum mixer.
+\newblock \url{ https://blog.cyber.fund/huge-ethereum-mixer-6cf98680ee6c},
+  2017.
+
 \bibitem{neff2001verifiable}
 C~Andrew Neff.
 \newblock A verifiable secret shuffle and its application to e-voting.
@@ -122,8 +152,7 @@ C~Andrew Neff.
 \bibitem{poon2016bitcoin}
 Joseph Poon and Thaddeus Dryja.
 \newblock The bitcoin lightning network: Scalable off-chain instant payments.
-\newblock {\em See https://lightning. network/lightning-network-paper. pdf},
-  2016.
+\newblock 2016.
 
 \bibitem{ruffing2014coinshuffle}
 Tim Ruffing, Pedro Moreno-Sanchez, and Aniket Kate.
