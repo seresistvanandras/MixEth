@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  11 DEC 2018 22:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  13 DEC 2018 16:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2045,463 +2045,183 @@ ers' pub-lic keys are used as pseudonyms
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+cmss on input line 172.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 167.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [2] [3] [4] [5]
-Overfull \hbox (64.45271pt too wide) in paragraph at lines 280--301
- [][] 
- []
+) [2] [3]
 
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 215.
 
-Overfull \hbox (20.78218pt too wide) in paragraph at lines 320--320
-[] 
- []
-
-
-Overfull \hbox (22.78218pt too wide) in paragraph at lines 320--321
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 320--321
-
- []
-
-[6]
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 347.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 347.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 347.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 347.
-
-
-Overfull \hbox (1.59502pt too wide) in paragraph at lines 347--347
-[] 
- []
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 347.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 347.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 347.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 347.
-
-
-Overfull \hbox (3.59502pt too wide) in paragraph at lines 347--348
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 347--348
-
- []
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 362.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 362.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 362.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 362.
-
-
-Overfull \hbox (1.08752pt too wide) in paragraph at lines 362--362
-[] 
- []
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 362.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 362.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 362.
-
-
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 362.
-
-
-Overfull \hbox (3.08752pt too wide) in paragraph at lines 362--363
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 362--363
-
- []
-
-[7]
+[4]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 436.
- [8]
-Underfull \hbox (badness 10000) in paragraph at lines 456--457
+put line 245.
+
+Underfull \hbox (badness 10000) in paragraph at lines 265--266
 
  []
 
+[5]
 
-Overfull \hbox (5.58513pt too wide) in paragraph at lines 480--480
-[] 
- []
+LaTeX Warning: Reference `appendanon' on page 6 undefined on input line 286.
 
 
-Overfull \hbox (7.58513pt too wide) in paragraph at lines 480--481
-[] []
- []
+LaTeX Warning: Reference `appendtheft' on page 6 undefined on input line 290.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 480--481
-
- []
-
-
-Overfull \hbox (2.16528pt too wide) in paragraph at lines 487--488
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 487--488
-
- []
-
-
-Overfull \hbox (16.23389pt too wide) in paragraph at lines 492--492
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 492--493
-[]
- []
-
-
-Overfull \hbox (18.23389pt too wide) in paragraph at lines 492--493
-[]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 492--493
-
- []
-
-
-Overfull \hbox (33.15451pt too wide) in paragraph at lines 477--495
- [][] 
- []
-
-
-Overfull \hbox (4.41281pt too wide) in paragraph at lines 505--505
-[] 
- []
-
-
-Overfull \hbox (6.41281pt too wide) in paragraph at lines 505--506
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 505--506
-
- []
-
-
-Overfull \hbox (5.79483pt too wide) in paragraph at lines 510--510
-[] 
- []
-
-
-Overfull \hbox (7.79483pt too wide) in paragraph at lines 510--511
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 510--511
-
- []
-
-
-Overfull \hbox (44.00198pt too wide) in paragraph at lines 524--525
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 524--525
-
- []
-
-
-Overfull \hbox (3.68394pt too wide) in paragraph at lines 529--529
-[] 
- []
-
-
-Overfull \hbox (5.68394pt too wide) in paragraph at lines 529--530
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 529--530
-
- []
-
-
-Overfull \hbox (31.65776pt too wide) in paragraph at lines 534--534
-[] 
- []
-
-
-Overfull \hbox (33.65776pt too wide) in paragraph at lines 534--535
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 534--535
-
- []
-
-
-Overfull \hbox (50.22678pt too wide) in paragraph at lines 517--537
- [][] 
- []
-
-[9]
-Overfull \hbox (8.4223pt too wide) in paragraph at lines 545--545
-[] 
- []
-
-
-Overfull \hbox (10.4223pt too wide) in paragraph at lines 545--546
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 545--546
-
- []
-
-
-Overfull \hbox (5.64552pt too wide) in paragraph at lines 552--552
-[] 
- []
-
-
-Overfull \hbox (7.64552pt too wide) in paragraph at lines 552--553
-[] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 552--553
-
- []
-
-
-Overfull \hbox (49.15137pt too wide) in paragraph at lines 558--558
-[] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 558--559
-[]
- []
-
-
-Overfull \hbox (51.15137pt too wide) in paragraph at lines 558--559
-[]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 558--559
-
- []
-
-
-Overfull \hbox (35.99997pt too wide) in paragraph at lines 541--561
- [][] 
- []
-
-<./withdrawalComplexity.jpg, id=397, 562.1pt x 421.575pt>
+<./withdrawalComplexity.jpg, id=227, 562.1pt x 421.575pt>
 File: ./withdrawalComplexity.jpg Graphic file (type jpg)
 
 <use ./withdrawalComplexity.jpg>
-Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 606.
+Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 296.
 (pdftex.def)             Requested size: 393.46732pt x 295.10048pt.
 
-Overfull \hbox (94.71468pt too wide) in paragraph at lines 606--608
+Overfull \hbox (94.71468pt too wide) in paragraph at lines 296--298
  [][] 
  []
 
-[10]
-Underfull \hbox (badness 1490) in paragraph at lines 611--613
+
+Underfull \hbox (badness 1490) in paragraph at lines 301--303
 []\T1/cmr/m/n/10 We im-ple-mented Mix-Eth
  []
 
 
-Overfull \hbox (10.65208pt too wide) in paragraph at lines 611--613
+Overfull \hbox (10.65208pt too wide) in paragraph at lines 301--303
 \T1/cmr/m/n/10 with two dif-fer-ent ap-proaches.
  []
 
 
-Underfull \hbox (badness 1845) in paragraph at lines 611--613
+Underfull \hbox (badness 1845) in paragraph at lines 301--303
 \T1/cmr/m/n/10 The first im-ple-men-ta-tion
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 611--613
+Underfull \hbox (badness 1292) in paragraph at lines 301--303
 \T1/cmr/m/n/10 of Mix-Eth does not ap-
  []
 
 
-Underfull \hbox (badness 1490) in paragraph at lines 611--613
+Underfull \hbox (badness 1490) in paragraph at lines 301--303
 \T1/cmr/m/n/10 chain. This could lead
  []
 
 
-Underfull \hbox (badness 2600) in paragraph at lines 611--613
+Underfull \hbox (badness 2600) in paragraph at lines 301--303
 \T1/cmr/m/n/10 shuf-fles in-creases. One
  []
 
 
-Underfull \hbox (badness 3872) in paragraph at lines 611--613
+Underfull \hbox (badness 3872) in paragraph at lines 301--303
 \T1/cmr/m/n/10 of our main mo-ti-va-tion
  []
 
 
-Underfull \hbox (badness 2119) in paragraph at lines 611--613
+Underfull \hbox (badness 2119) in paragraph at lines 301--303
 \T1/cmr/m/n/10 an ef-fi-cient and scal-able
  []
 
 
-Underfull \hbox (badness 4048) in paragraph at lines 611--613
+Underfull \hbox (badness 4048) in paragraph at lines 301--303
 \T1/cmr/m/n/10 and chal-leng-ing a shuf-
  []
 
 
-Underfull \hbox (badness 4024) in paragraph at lines 611--613
+Underfull \hbox (badness 4024) in paragraph at lines 301--303
 \T1/cmr/m/n/10 fle oc-curs off-chain and
  []
 
 
-Underfull \hbox (badness 5578) in paragraph at lines 611--613
+Underfull \hbox (badness 5578) in paragraph at lines 301--303
 \T1/cmr/m/n/10 only de-posit and with-
  []
 
 
-Underfull \hbox (badness 2790) in paragraph at lines 611--613
+Underfull \hbox (badness 2790) in paragraph at lines 301--303
 \T1/cmr/m/n/10 drawal trans-ac-tions hap-
  []
 
 
-Underfull \hbox (badness 1789) in paragraph at lines 611--613
+Underfull \hbox (badness 1789) in paragraph at lines 301--303
 \T1/cmr/m/n/10 pen on-chain. Both of
  []
 
-[11 <./withdrawalComplexity.jpg>]
-Overfull \hbox (41.798pt too wide) in paragraph at lines 635--637
+[6 <./withdrawalComplexity.jpg>]
+Overfull \hbox (41.798pt too wide) in paragraph at lines 325--327
+ [][] 
+ []
+
+[7]
+Overfull \hbox (47.92992pt too wide) in paragraph at lines 355--357
  [][] 
  []
 
 
-Overfull \hbox (47.92992pt too wide) in paragraph at lines 665--667
- [][] 
- []
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 36
+1.
 
-[12]
-
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 67
-2.
-
-[13] [14] [15] (./main.bbl
+[8] (./main.bbl
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 6.
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [16]
-Underfull \hbox (badness 10000) in paragraph at lines 141--145
+)
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 135--139
 []\T1/cmr/m/n/10 Serge Nedashkovsky.  Huge ethereum mixer.  [][]$\T1/cmtt/m/n/1
 0 https : / / blog . cyber . fund /
  []
 
-) [17]
-Overfull \hbox (34.71405pt too wide) detected at line 785
-[]\OT1/cmr/m/n/10 [[][]] = [] + [] \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 [[][]
-] = [] + [] \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^U\OT1/cm
-r/m/n/10 )\OML/cmm/m/it/10 ;
- []
-
-[18]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 828.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 828.
+) [10]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 395.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 395.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 828.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 828.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 395.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 395.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 9E552ADA4CBD1921E6E2DF19CA269C68;2606.
+(rerunfilecheck)             Checksum: 051F4F873808C77CF6400A6A64104F47;1797.
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 44743 strings out of 494953
- 1002985 string characters out of 6180976
- 1141162 words of memory out of 5000000
- 47115 multiletter control sequences out of 15000+600000
- 32150 words of font info for 88 fonts, out of 8000000 for 9000
+ 44509 strings out of 494953
+ 999259 string characters out of 6180976
+ 1130079 words of memory out of 5000000
+ 47012 multiletter control sequences out of 15000+600000
+ 27203 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,31n,83p,10375b,3056s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </home/
-istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/istvan/.te
-xmf-var/fonts/pk/ljfour/jknappen/ec/ecss0600.600pk> </home/istvan/.texmf-var/fo
-nts/pk/ljfour/jknappen/ec/ecss0900.600pk> </home/istvan/.texmf-var/fonts/pk/ljf
+ 62i,14n,83p,10375b,908s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/
+istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1000.600pk> </home/istvan/.te
+xmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/istvan/.texmf-var/fo
+nts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljf
 our/jknappen/ec/ecrm0600.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknapp
-en/ec/ecss1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx
-1200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk
-> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/i
-stvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk> </home/istvan/.tex
-mf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/istvan/.texmf-var/fon
-ts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfo
-ur/jknappen/ec/ecbi1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappe
-n/ec/ecrm0900.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx0
-900.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk>
- </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/is
-tvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
-sbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
-bm7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on main.pdf (18 pages, 462966 bytes).
+en/ec/ecrm0700.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti
+1000.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk
+> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/i
+stvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbi1000.600pk> </home/istvan/.tex
+mf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/istvan/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/istvan/.texmf-var/fonts/pk/ljfo
+ur/jknappen/ec/ecrm0800.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappe
+n/ec/ecrm1200.600pk> </home/istvan/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1
+728.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/
+msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
+sbm7.pfb>
+Output written on main.pdf (10 pages, 315123 bytes).
 PDF statistics:
- 1232 PDF objects out of 1440 (max. 8388607)
- 628 compressed objects within 7 object streams
- 201 named destinations out of 1000 (max. 500000)
- 338 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 844 PDF objects out of 1000 (max. 8388607)
+ 360 compressed objects within 4 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 234 words of extra memory for PDF output out of 10000 (max. 10000000)
 
