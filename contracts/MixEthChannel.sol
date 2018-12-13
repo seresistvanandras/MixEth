@@ -169,8 +169,8 @@ contract MixEthChannel {
         // move to the next phase if necessary
         if(state.turn % state.keyCount == 0) {
             if(state.phase == ActionType.DEPOSIT) state.phase = ActionType.SHUFFLE;
-            if(state.phase == ActionType.SHUFFLE) state.phase = ActionType.FRAUD;
-            if(state.phase == ActionType.FRAUD) state.phase = ActionType.WITHDRAW;
+            else if(state.phase == ActionType.SHUFFLE) state.phase = ActionType.FRAUD;
+            else if(state.phase == ActionType.FRAUD) state.phase = ActionType.WITHDRAW;
         }
 
 
