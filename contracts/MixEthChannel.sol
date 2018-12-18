@@ -13,8 +13,8 @@ import {Transfer} from "./Transfer.sol";
 * https://specs.counterfactual.com/02-state-machines#appdefinitions
 * Unlike the original MixEth it requires a fixed set of participants, subdivided into 3 groups each of size n: Senders, shufflers and withdrawers
 * These must occupy the first n, 2nd n and 3rd n slots in the allParticipants array.
-* MixEthChannel also has a different challenge flow, challenges are not made after each shuffle rather all shuffles are made then 
-* each shuffler is then given the chance to challenge any shuffle or declare that they see no fraud. If fraud occurs the balance 
+* MixEthChannel also has a different challenge flow, challenges are not made after each shuffle rather all shuffles are made then
+* each shuffler is then given the chance to challenge any shuffle or declare that they see no fraud. If fraud occurs the balance
 * of the shuffler is slashed and particpants will be required to restart the whole process.
 */
 contract MixEthChannel {
@@ -22,10 +22,10 @@ contract MixEthChannel {
 
     struct AppState {
         // the accumulated shuffles
-        // this would be much much better modeled, and be more efficient, as a mapping 
+        // this would be much much better modeled, and be more efficient, as a mapping
         // but currently structs passed in to public functions cannot contain complex types
         uint256[] shuffles;
-        uint256[] shufflingAccumulatedConstants; 
+        uint256[] shufflingAccumulatedConstants;
         // allParticpants includes n senders, n receivers/shufflers and n withdrawers
         address[] allParticipants;
         // n: the number of participants in each group
@@ -64,7 +64,7 @@ contract MixEthChannel {
         // for challenge
         uint256[22] proofTranscript;
         uint256 fraudRound;
-        // for deposit
+        // for withdraw
         uint256[12] sig;
     }
 
@@ -78,7 +78,7 @@ contract MixEthChannel {
 
         // there are only 4n turns, and the protocol stops after registering fraud
         require(!state.fraud, "Cannot progress state after fraud.");
-        require(state.turn < 4 * state.keyCount, "All turns have been taken."); 
+        require(state.turn < 4 * state.keyCount, "All turns have been taken.");
 
         if(action.actionType == ActionType.DEPOSIT) {
             require(state.phase == ActionType.DEPOSIT, "Only DEPOSIT actions are currently valid.");
@@ -124,12 +124,12 @@ contract MixEthChannel {
             // check that the proof references the fraud round
             require(action.proofTranscript[4] == fraudRoundAccumulatedConstant[0]
                  && action.proofTranscript[5] == fraudRoundAccumulatedConstant[1], "Wrong current shuffling accumulated constant"); //checking correctness of C*_{i}
-            require(!pointExistsInRound(state.shuffles, action.proofTranscript[6], state.keyCount * 2, action.fraudRound) 
+            require(!pointExistsInRound(state.shuffles, action.proofTranscript[6], state.keyCount * 2, action.fraudRound)
                     || !pointExistsInRound(state.shuffles, action.proofTranscript[7], state.keyCount * 2, action.fraudRound) , "Final public key is indeed included in current shuffle");
-            
+
             // is the fraud proof valid
             require(ChaumPedersenVerifier.verifyChaumPedersen(action.proofTranscript), "Chaum-Pedersen Proof not verified");
-            
+
             // find the index of the person who commited fraud
             state.fraudIndex = action.fraudRound - 1 + state.keyCount;
             state.fraud = true;
@@ -139,23 +139,23 @@ contract MixEthChannel {
             // the round is the final round
             uint256 withdrawRoundNumber = state.keyCount;
             uint256[] memory finalAccumulator = round(state.shufflingAccumulatedConstants, 2, withdrawRoundNumber);
-            
-            require(pointExistsInRound(state.shuffles, action.sig[2], state.keyCount * 2, withdrawRoundNumber) 
+
+            require(pointExistsInRound(state.shuffles, action.sig[2], state.keyCount * 2, withdrawRoundNumber)
                 && pointExistsInRound(state.shuffles, action.sig[3], state.keyCount * 2, withdrawRoundNumber), "Your public key is not included in the final shuffle!"); //public key is included in Shuffled
             // but has it already been withdrawn?
-            require(!existsInArray(state.withdrawnKeys, action.sig[2]) 
+            require(!existsInArray(state.withdrawnKeys, action.sig[2])
                 && !existsInArray(state.withdrawnKeys, action.sig[3]), "Public key has already been withdrawn");
                 // record this withdrawal
             state.withdrawnKeys[2 * (state.turn % state.keyCount)] = action.sig[2];
             state.withdrawnKeys[2 * (state.turn % state.keyCount) + 1] = action.sig[3];
-            
+
             // check the accumulator
             require(action.sig[0] == finalAccumulator[0]
                 && action.sig[1] == finalAccumulator[1], "Your signature is using a wrong generator!"); //shuffling accumulated constant is correct
             // who is taking the current turn? they need to provide a relevant sig
             address turnTaker = state.allParticipants[getTurnTaker(state)];
             require(action.sig[4] == uint(keccak256(abi.encodePacked(turnTaker, action.sig[2], action.sig[3]))), "Signed an invalid message!"); //this check is needed to deter front-running attacks
-            
+
             require(ECDSAGeneralized.verify(action.sig), "Your signature is not verified!");
         }
         else {
@@ -194,7 +194,7 @@ contract MixEthChannel {
         if(state.turn >= 2 * state.keyCount && state.turn < 3 * state.keyCount) return state.turn - state.keyCount;
         if(state.turn >= 3 * state.keyCount) return state.turn - state.keyCount;
         else return state.turn;
-    }    
+    }
 
     function isTerminalState(AppState state) public pure returns(bool) {
         return state.fraud || state.turn == 4 * state.keyCount;
@@ -207,10 +207,10 @@ contract MixEthChannel {
 
         if(state.turn == state.keyCount * 4) {
             // all turns have been taken, send out the proper resolution
-            
+
             // return deposits to shufflers and withdrawers
             // and also send to withdrawers
-            for(uint256 participant = 0; participant < state.allParticipants.length; participant++) {   
+            for(uint256 participant = 0; participant < state.allParticipants.length; participant++) {
                 if(participant >= state.keyCount && participant < 2 * state.keyCount) {
                     to[participant] = state.allParticipants[participant];
                     amounts[participant] = state.amount;
@@ -232,7 +232,7 @@ contract MixEthChannel {
                 punished = getTurnTaker(state);
             }
 
-            for(uint256 i = 0; i < state.allParticipants.length; i++) {   
+            for(uint256 i = 0; i < state.allParticipants.length; i++) {
                 if(i != punished) {
                     to[i] = state.allParticipants[i];
                     amounts[i] = state.amount;

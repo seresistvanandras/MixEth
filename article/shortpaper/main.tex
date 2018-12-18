@@ -164,7 +164,6 @@ We also implement MixEth in a state channel to leverage the scalability and inst
 In most cases if it is possible we will stick to the notations used in \cite{meiklejohn2018mobius} for sake of uniformity. 
 Let $[]$ denote the empty tuple. For a tuple $t=(x_1,\dots,x_n)$ we denote as $t[x_i]$ the value stored at $x_{i}$. The cardinality of a finite set $X$ is denoted as $|X|$. In the following let $\lambda \in \mathbb{N}$ be the security parameter and its unary representation is $1^{\lambda}$. If $x$ is uniformly randomly sampled from a set $A$ we write $x\stackrel{\$}{\leftarrow}A$. The symmetric group of degree $n$ is written as ${S}_n$. In a cyclic group $\mathbb{G}$, the standardized generator is denoted as $G$ and we use the additive notation. Secret keys and public keys are denoted as $sk$ and $pk$ respectively (or often times $s$ and $sG$), while the user the corresponding key belongs to is indicated in subscript. Let $PK_{i}$ denote the set of public keys belonging to receivers at a particular shuffling round $i$.
 
-We use games in definitions and proofs of security. At the end of each game, the main procedure of game \textsf{G} outputs a single bit. $\Pr(\textsf{G})$ denotes the probability that the output is $1$.
 \subsection{Cryptographic keys in Ethereum}
 Ethereum uses Elliptic Curve Cryptography (ECC) to secure users' funds. More specifically, it uses the secp256k1 curve, the same one as used in Bitcoin. If a user wants to create an Ethereum address, first they needs to generate a secret key  $s\stackrel{\$}{\leftarrow}\mathbb{Z}_n$, where $n$ is the order of secp256k1 over a finite prime field $\mathbb{F}_{p}$. The corresponding public key will be $sG$. Note that any multiples of $G$ is also a generator of curve points since $n$, the order of the group is also a prime. Accounts in Ethereum are identified by their addresses which can be obtained by taking the right most 20 bytes of the Keccak hashed public key \cite{wood2014ethereum}. 
     
@@ -190,15 +189,7 @@ Elliptic Curve Digital Signature Algorithm (ECDSA) is a key component of MixEth.
 
 However, in MixEth, we deploy a somewhat loosened version of ECDSA, where we allow arbitrary generator elements to be used. Such an extension is indeed needed for withdrawing funds from the mixer, because shuffled public keys remain public keys with respect to non-standardized generator elements. Therefore the usial $\sig$ and $\verify$ algorithms for signing and verifying a messages gets an additional parameter $G^{'}$, which is not necessarily the standardized generator element. Key generation algorithm works as usual $(pk,sk)\stackrel{\$}{\leftarrow}\kgen(1^{\lambda})$, on the other hand $\sigma\stackrel{\$}{\leftarrow}\sig(G^{'},sk,m)$ and  $0/1\leftarrow \verify(G^{'},pk,\sigma, m)$ accept new generators.
 
-\subsection{Ethereum}
-
-Ethereum is a cryptocurrency built on top of a blockchain. Similarly to Bitcoin, network participants broadcast transactions in a peer-to-peer network, where transactions are bundled together into blocks that are appended to a public ledger called blockchain. Only those specific nodes can append new blocks to the blockchain who previously solved a difficult cryptographic puzzle. The state of the system consists of the state of different accounts populating it. 
-
-In Ethereum currently there are two types of accounts. The first account type is called \textit{externally owned account}. It owns an ECDSA keypair controlled by its user. Private keys are used to sign transactions. On the other hand there are \textit{contract accounts}, often smart contracts, that additionally have persistent storage and contract's code. Both of the account types have Ether balances, which is the native currency of the Ethereum network. Ether is denominated in wei, where $1\ ETH = 10^ {18}\ wei$.
-
-Transactions can alter the system's state by either creating a contract account or by calling to an existing account. Transactions to externally owned accounts can only transfere Ether, while transactions to contract accounts can additionally execute the code associated with them. Codes are executed in a quasi-Turing complete execution environment, called Ethereum Virtual Machine (EVM).
-
-\subsubsection{State channels} 
+\subsection{State channels} 
 Public blockchain's decentralization comes at an inherent cost in regard to scalability, since currently each full node verifies the full state of the public ledger. Often times Bitcoin's ($\smallsim7$ transactions per second (tps)) or Ethereum's ($\smallsim15$ tps) throughput is compared to that of Visa's ($\smallsim\num[group-separator={,}]{45000}$ tps). Blockchains' scalability issues became an increasingly growing problem as more and more users adopted the technology. One remarkable example was the launch of the Cryptokitties game in 2017, when the Ethereum network was congested for a few hours due to the enormous popularity of the game. Therefore several solutions were proposed to alleviate aforementioned scalability issues.
 
 One of the major class of these techniques is called off-chain solutions. The insight of these proposals is that it is not needed to conduct all transactions on the blockchain, since participants could lock funds on-chain and afterwards securely issue transactions off-chain, for instance micropayments, with high degree of security and finality. Participants only need to get back on-chain if there is a dispute about what happened precisely off-chain or they would like to lock up funds and redeem them on-chain. The first implementation of this idea was a payment channel network for Bitcoin called Lightning network \cite{poon2016bitcoin}. The advantage of the Lightning network is that participants can issue several payments without sending transactions to the blockchain and paying the sometimes costly transaction fees. Furthermore users are guaranteed to have instant finality instead of waiting several blocks to confirm their payments. 
@@ -212,28 +203,18 @@ We are aiming to achieve and prove the same notions of security as the ones defi
 
 We are going to assume that at most $n-2$ recipients are malicious ($n$ is the number of recipients). Otherwise, no meaningful notion of security can be achieved. Furthermore we presume that participants are on-line during the entire course of mixing in order to be able to monitor and potentially challenge any incorrect shuffle. Finally we assume that honest recipients will always exercise their rights to shuffle and they do not disclose any private information used in their shuffles.
 
-\subsubsection{Anonymity} \label{sec:defanonymity}
-\textit{Sender} anonymity is achieved if an adversary can not determine to whom honest senders are sending funds, assuming that honest senders' deposits are indistinguishable.
+\begin{itemize}
+	\item \textbf{Anonymity}: \textit{Sender} anonymity is achieved if an adversary can not determine to whom honest senders are sending funds, assuming that honest senders' deposits are indistinguishable. \textit{Recipient} anonymity is achieved if honest recipients withdrawal transactions are indistinguishable. 
+	\item \textbf{Availability}: means that honest recipients can always withdraw their assets from the mixer, even if all participants are compromised. Adversary $\adv$ wins the availability security game if they manage to get the tumbler into a state where honest recipient can not withdraw their funds.
+	\item \textbf{Theft prevention}: We would like to ensure that neither coins can be withdrawn twice, nor withdrawn by anyone other but the intended recipient.
+\end{itemize}
 
-\textit{Recipient} anonymity is achieved if honest recipients withdrawal transactions are indistinguishable. 
 
-\subsubsection{Availability}
-It is essential for a coin mixer to provide availability, meaning that honest recipients can always withdraw their money from the mixer, even if senders and one but all recipients are compromised. 
-
-Adversary $\adv$ wins the availability security game if they manage to get the tumbler into a state where honest recipient can not withdraw their funds.  
-
-\subsubsection{Theft prevention} \label{sec:theftprevention}
-We would like to ensure that neither coins can be withdrawn twice, nor withdrawn by anyone other but the intended recipient.
  
 \section{MixEth}
-
-\subsection{Overview}
-MixEth is a coin mixing smart contract allowing parties to efficiently tumble coins in a trustless manner on Ethereum.
-\subsection{Initializing the tumbler}
+\subsection{Initializing the tumbler and depositing period}
 
 A MixEth contract living on the Ethereum blockchain at $id_{contract}$ address must be initialized with the $amt$ parameter, which denotes the denomination of ether to be mixed.
-
-\subsection{Depositing period}
 Every sender must deposit exactly $amt$ ether to a specific public key. Deposits with incorrect ether value or invalid public key are rejected. Public keys in subsequent deposit transactions are written into the $initPubKeys[]$ array.   
 
 \subsection{Shuffling period}
@@ -244,11 +225,10 @@ Shuffle is done off-chain, however the result and the updated shuffling accumula
 \begin{algorithm}
 \caption{Off-chain public key shuffling algorithm for the $i$th shuffling round}\label{shufflingoffchain}
 \begin{algorithmic}[1]
-	\State $PK_{i} \gets []$
-	\State $c\stackrel{\$}{\leftarrow}\mathbb{Z}_n$
+	\State $PK_{i} \gets []
+ ,c\stackrel{\$}{\leftarrow}\mathbb{Z}_n,\pi\stackrel{\$}{\leftarrow}S_{|PK_{i-1}|}$
 	\State $C^{*}_{i-1}\leftarrow read\ from\ MixEth\ contract$
 	\State $PK_{i-1}\leftarrow read\ from\ MixEth\ contract\ the\ current\ sequence\ of\ shuffled\ public\ keys$
-	\State $\pi\stackrel{\$}{\leftarrow}S_{|PK_{i-1}|}$ 
 	\For{$j=0;j<|PK_{i-1}|;j++$}
 	\State $PK_{i}[\pi(j)]=c*PK_{i-1}[j]$ 
 	\EndFor
@@ -274,36 +254,34 @@ Every participant should check the correctness of incoming shuffles, therefore s
 		\hspace*{\algorithmicindent} \textbf{Output:} $b^{*}$ 
 	\end{algorithmic}   
 \end{algorithm}
-Note that every recipient should perform this check after each shuffling. Noone can check the inclusion and correctness of shuffled public keys for recipients other than themselves. This task is non-outsourcable unless one reveals her own private key, which would obviously lead to loss of funds at the end of the MixEth protocol, since anyone can claim the funds knowing the corresponding secret key.  
+Note that every recipient should perform this check after each shuffling. Noone can check the inclusion and correctness of shuffled public keys for recipients other than themselves. This task is non-outsourcable unless one reveals her own private key, which would obviously lead to loss of funds at the end of the MixEth protocol, since anyone can claim the funds knowing the corresponding secret key. 
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.5]{./withdrawalComplexity.jpg}
+	\captionsetup{justification=centering}
+	\caption{Gas complexity of withdraw txs for various trustless Ethereum coin mixers}
+\end{wrapfigure} 
 
 \subsection{Withdrawing}
 Let $C^*_{final}$ be the final shuffling accumulated constant. For a recipient $B$, whose public key $s_{B}G \in initPubKeys[]$, in the final shuffle there will be $s_{B}C^*_{final}$. The recipient can prove to MixEth that she knows secret key $s_{B}$ by signing their public key using a modified ECDSA, which uses $C^*_{final}$ as the generator element instead of the standardized $G$.
 
-
 \section{Informal reasoning about security properties}
 
-\subsection{Recipient anonymity}
-The withdrawing transaction for recipient $B$ sends funds to the public key $s_{B}C^{*}$. This public key does not reveal any links to the original $s_{B}G$ in case if at least one honest sender shuffled and the DDH assumption holds. Adversary can only distinguish between honest recipients public keys with negligible probability. See reduction proof in Appendix \ref*{appendanon}.
-\subsection{Availability}
+\begin{itemize}
+\item \textbf{Recipient anonymity}
+The withdrawing transaction for recipient $B$ sends funds to the public key $s_{B}C^{*}$. This public key does not reveal any links to the original $s_{B}G$ in case if at least one honest participant shuffled and the DDH assumption holds. Adversary can only distinguish between honest recipients public keys with negligible probability.
+\item \textbf{Availability}
 If an adversary is able to destroy an honest recipient's funds' availability, it implies that adversary $\adv$ either breaks the completeness of the Chaum-Pedersen protocol or successfully launched an eclipse attack against the honest recipient, who can not send any transactions to honest Ethereum peers.
-\subsection{Theft prevention} 
-If an adversary is able to steal funds from other users than it would imply that they managed to create a valid message/signature, $(m,\sigma)$ pair for the final shuffled public key of an honest recipient without having access to the secret key of the honest recipient. This contradicts to the assumption that ECDSA is existentially unforgeable. Reduction proof is enclosed in Appendix \ref*{appendtheft}. 
-
+\item \textbf{Theft prevention} 
+If an adversary is able to steal funds from other users than it would imply that they managed to create a valid message/signature, $(m,\sigma)$ pair for the final shuffled public key of an honest recipient without having access to the secret key of the honest recipient. This contradicts to the assumption that ECDSA is existentially unforgeable. 
+\end{itemize}
 \section{Implementation}
 
-\begin{wrapfigure}{r}{0.7\textwidth}
-	\centering
-	\includegraphics[scale=0.7]{./withdrawalComplexity.jpg}
-	\captionsetup{justification=centering}
-	\caption{Gas complexity of withdraw transactions for various trustless Ethereum coin mixers}
-\end{wrapfigure} 
-
-We implemented MixEth with two different approaches. The first implementation of MixEth does not apply state channels, all the transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources, storage and gas, as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain.
-Both of the implementations allow users to mix Ether or other ERC20-compatible, a popular Ethereum token standard, tokens.
+We implemented MixEth in Solidity with two different approaches. The first one does not apply state channels, all the transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources, storage and gas, as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain.
+Both of the implementations allow users to mix Ether or other ERC20-compatible tokens.
 
 One of the main bottlenecks of coin mixing protocols is the withdrawal transactions' gas costs. A Miximus withdrawal transaction burns $\num[group-separator={,}]{1903305}$ gas, regardless of the number of participating parties. Since the block gas limit is $\num[group-separator={,}]{8000266}$ as of 2018, October 24 only 4 Miximus withdrawal transactions could fit in one Ethereum block. This is even worse for Möbius, since the gas cost for withdrawing coins from a Möbius mixer contract linearly increases with the numbers of participants.
-
-All MixEth smart contracts were written in the Solidity language, which is currently the dominant language for developing Ethereum smart contracts. MixEth contracts are compiled using the latest version of the Solidity compiler in order to take advantage of the latest language features such as the possibility to return dynamic-sized arrays from contract functions. Note that these implementations are only proof-of-concept implementations, expect further improvements. All MixEth contracts are available online\footnote{https://github.com/seresistvanandras/MixEth}.  
 
 \subsection{Fully on-chain implementation} \label{fullyonchainimpl}
 
