@@ -4,15 +4,13 @@
 \BOOKMARK [2][-]{subsection.2.2}{Cryptographic keys in Ethereum}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{Decision Diffie-Hellman Problem and Chaum-Pedersen Protocol}{section.2}% 5
 \BOOKMARK [2][-]{subsection.2.4}{ECDSA with arbitrary generator element}{section.2}% 6
-\BOOKMARK [2][-]{subsection.2.5}{State channels}{section.2}% 7
-\BOOKMARK [1][-]{section.3}{Security goals}{}% 8
-\BOOKMARK [1][-]{section.4}{MixEth}{}% 9
-\BOOKMARK [2][-]{subsection.4.1}{Initializing the tumbler and depositing period}{section.4}% 10
-\BOOKMARK [2][-]{subsection.4.2}{Shuffling period}{section.4}% 11
-\BOOKMARK [2][-]{subsection.4.3}{Challenging period}{section.4}% 12
-\BOOKMARK [2][-]{subsection.4.4}{Withdrawing}{section.4}% 13
-\BOOKMARK [1][-]{section.5}{Informal reasoning about security properties}{}% 14
-\BOOKMARK [1][-]{section.6}{Implementation}{}% 15
-\BOOKMARK [2][-]{subsection.6.1}{Fully on-chain implementation}{section.6}% 16
-\BOOKMARK [2][-]{subsection.6.2}{State channel implementation}{section.6}% 17
-\BOOKMARK [1][-]{section.7}{Acknowledgements}{}% 18
+\BOOKMARK [1][-]{section.3}{Security goals}{}% 7
+\BOOKMARK [1][-]{section.4}{MixEth}{}% 8
+\BOOKMARK [2][-]{subsection.4.1}{Initializing the tumbler and depositing period}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.2}{Shuffling period}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.3}{Challenging period}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.4}{Withdrawing}{section.4}% 12
+\BOOKMARK [1][-]{section.5}{Informal reasoning about security properties}{}% 13
+\BOOKMARK [1][-]{section.6}{Implementation}{}% 14
+\BOOKMARK [2][-]{subsection.6.1}{Fully on-chain implementation}{section.6}% 15
+\BOOKMARK [2][-]{subsection.6.2}{State channel implementation}{section.6}% 16

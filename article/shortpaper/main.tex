@@ -144,17 +144,13 @@ Cryptocurrencies enable users to transact pseudonymously with each other without
 \keywords{Cryptography, Verifiable shuffle, Cryptocurrency, Ethereum, Coin mixer, State Channel}
 
 \section{Introduction}
-Bitcoin \cite{nakamoto2008bitcoin} and other cryptocurrencies are pseudonymous. Users' public keys are used as pseudonyms in these systems. Transactions essentially record a flow of cryptocurrency from one (or more) public keys to another public key (or more). Flow of cryptocurrency can be easily tracked due to the open and transparent nature of cryptocurrencies' transaction ledger. Moreover, coherent public keys, which are used by the same user, can be clustered merely by analyzing the ledger. Recently several tools and algorithms were proposed to diminish users' privacy (\cite{meiklejohn2013fistful},\cite{moser2013inquiry}, \cite{moreno2016listening}). Such deanomyzation attacks are extremely harmful to user privacy, especially in the case when any of the users' pseudonyms, public keys, are linked to their real world identity. 
+One of the methods to increase cryptocurrency users' privacy is coin mixing or tumbling. This technique provides \textit{k-anonymity} or \textit{plausible deniability}. The idea is that $k$ users deposit $1$ coin each and then in the course of a coin shuffling protocol either a centralized trusted third party or a smart contract mixes the coins and redistributes them to designated fresh public keys. This powerful technique gives users superior privacy and anonimity since their new received coins can not be linked to them.
 
-One of the methods to increase users' privacy is coin mixing or tumbling. This technique provides \textit{k-anonymity} or \textit{plausible deniability}. The idea is that $k$ users deposit $1$ coin each and then in the course of a coin shuffling protocol either a centralized trusted third party or a smart contract mixes the coins and redistributes them to designated fresh public keys. This powerful technique gives users superior privacy and anonimity since their new received coins can not be linked to them.
+Several coin mixing protocols were proposed in the literature both centralized (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}, \cite{heilman2017tumblebit}) and decentralized (\cite{maxwell2013coinjoin}, \cite{ruffing2014coinshuffle}, \cite{miximus2018}, \cite{meiklejohn2018mobius}, \cite{bissias2014sybil}). A major drawback of centralized coin mixing is that the availability of the tumbler is entirely dependent on the trusted party and in most cases theft prevention can not be guaranteed (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}). On the other hand decentralized tumblers achieve availability, theft prevention and satisfy strong notions of anonymity although they are considerably heavier computationally. 
 
-Several coin mixing protocols were proposed in the literature both centralized (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}, \cite{heilman2017tumblebit}) and decentralized (\cite{maxwell2013coinjoin}, \cite{ruffing2014coinshuffle}, \cite{miximus2018}, \cite{meiklejohn2018mobius}, \cite{bissias2014sybil}). A major drawback of centralized coin mixing is that the availability of the tumbler is entirely dependent on the trusted party and in most cases theft prevention can not be guaranteed (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}). On the other hand decentralized tumblers achieve availability, theft prevention and satisfy strong notions of anonymity although they are considerably heavier computationally. In the following we will solely focus on the problem of coin mixing on Ethereum \cite{wood2014ethereum}. 
+The two major techniques to provide decentralized mixing services for Ethereum are Möbius, a ring-signature-based solution \cite{meiklejohn2018mobius} and Miximus, a zkSNARK-based proposal \cite{miximus2018}. Both of them burn tremendous amounts of gas to withdraw funds, which could be prohibitive for many use cases. Möbius requires $\num[group-separator={,}]{335714}n$ gas ($n$ is the ring size) while Miximus consumes $\num[group-separator={,}]{1903305}$ gas to verify a zkSNARK proof \cite{miximus2018gascost}.
 
-The two major techniques to provide decentralized mixing services for Ethereum are Möbius, a ring-signature-based solution \cite{meiklejohn2018mobius} and Miximus, a zkSNARK-based proposal \cite{miximus2018}. Both of them burn tremendous amounts of gas to withdraw funds, which could be prohibitive for many use cases. Möbius requires $\num[group-separator={,}]{335714}n$ gas ($n$ is the ring size) while Miximus consumes $\num[group-separator={,}]{1903305}$ gas to verify a zkSNARK proof \cite{miximus2018gascost}. As the Ethereum network is congested, ie. blocks were full during 2018\footnote{https://etherscan.io/chart/gasused}, we argue that it is essential for the network scalability to aim to create protocols and applications that burn as few gas as possible. 
-
-\textbf{Our contributions.} In this paper, we present a trustless and efficient mixing protocol for Turing-complete blockchains. This protocol can be used to shuffle cyphertexts, ballots or public keys. The protocol have many use cases: shuffling ElGamal-cyphertexts, decentralized mixnets, e-voting.
-
-To show the practicality of the protocol, we introduce MixEth, a privacy-enhancing protocol and a practical tool for Ethereum, to overcome the above mentioned efficiency issues of Ethereum-based coin-mixers while retaining strong notions of anonymity, mixer availability and theft prevention already achieved by previous proposals (\cite{meiklejohn2018mobius},\cite{miximus2018}). MixEth requires as few off-chain messages and on-chain transactions as Möbius and Miximus, meanwhile it burns significantly less gas.
+\textbf{Our contributions.} In this paper, we present a trustless and efficient mixing protocol for Turing-complete blockchains. To show the practicality of the protocol, we introduce MixEth, a privacy-enhancing protocol and a practical tool for Ethereum, to overcome the above mentioned efficiency issues of Ethereum-based coin-mixers while retaining strong notions of anonymity, mixer availability and theft prevention already achieved by previous proposals (\cite{meiklejohn2018mobius},\cite{miximus2018}). MixEth requires as few off-chain messages and on-chain transactions as Möbius and Miximus, meanwhile it burns significantly less gas.
 
 We also implement MixEth in a state channel to leverage the scalability and instant finality of off-chain scaling solutions. Furthermore, the MixEth protocol could be used in any state channel application to mix funds before going back to on-chain. 
 
@@ -170,8 +166,6 @@ Ethereum uses Elliptic Curve Cryptography (ECC) to secure users' funds. More spe
 \subsection{Decision Diffie-Hellman Problem and Chaum-Pedersen Protocol}
 
 The Decision Diffie-Hellman assumption (DDH) is a standard cryptographic hardness assumption which underlies the security of many cryptographic protocols. Roughly speaking DDH states that no efficient algorithm can distinguish between the two distributions $(aG, bG, abG)$ and $(aG, bG, cG)$, where $a,b,c\stackrel{\$}{\leftarrow}\mathbb{Z}_{|\mathbb{G}|}$. It is believed that the DDH assumption holds for elliptic curves with prime order over a prime field with large embedding factor \cite{boneh1998decision}, specifically DDH holds for the secp256k1 curve, which is used to generate accounts and sign transactions in Bitcoin and Ethereum among other cryptocurrencies. 
-
- Although it is hard to decide whether a triplet is a DDH-triplet without knowing the multipliers, one could convince anyone in zero-knowledge that a tuple is indeed a DDH-tuple if possesses the multipliers.    
 
 The language $\mathcal{L}_{DDH}$ is defined to be the set of all tuples $(G,aG,bG,abG)$ where $G\in \mathbb{G}$ is of order prime $q$. The Chaum-Pedersen protocol enables a prover $\mathcal{P}$ to prove to a verifier $\mathcal{V}$ that $(G,A,B,C)\in\mathcal{L}_{DDH}$ in zero-knowledge for groups of prime order \cite{chaum1992wallet}. The protocol is organized as follows:
 
@@ -189,15 +183,6 @@ Elliptic Curve Digital Signature Algorithm (ECDSA) is a key component of MixEth.
 
 However, in MixEth, we deploy a somewhat loosened version of ECDSA, where we allow arbitrary generator elements to be used. Such an extension is indeed needed for withdrawing funds from the mixer, because shuffled public keys remain public keys with respect to non-standardized generator elements. Therefore the usial $\sig$ and $\verify$ algorithms for signing and verifying a messages gets an additional parameter $G^{'}$, which is not necessarily the standardized generator element. Key generation algorithm works as usual $(pk,sk)\stackrel{\$}{\leftarrow}\kgen(1^{\lambda})$, on the other hand $\sigma\stackrel{\$}{\leftarrow}\sig(G^{'},sk,m)$ and  $0/1\leftarrow \verify(G^{'},pk,\sigma, m)$ accept new generators.
 
-\subsection{State channels} 
-Public blockchain's decentralization comes at an inherent cost in regard to scalability, since currently each full node verifies the full state of the public ledger. Often times Bitcoin's ($\smallsim7$ transactions per second (tps)) or Ethereum's ($\smallsim15$ tps) throughput is compared to that of Visa's ($\smallsim\num[group-separator={,}]{45000}$ tps). Blockchains' scalability issues became an increasingly growing problem as more and more users adopted the technology. One remarkable example was the launch of the Cryptokitties game in 2017, when the Ethereum network was congested for a few hours due to the enormous popularity of the game. Therefore several solutions were proposed to alleviate aforementioned scalability issues.
-
-One of the major class of these techniques is called off-chain solutions. The insight of these proposals is that it is not needed to conduct all transactions on the blockchain, since participants could lock funds on-chain and afterwards securely issue transactions off-chain, for instance micropayments, with high degree of security and finality. Participants only need to get back on-chain if there is a dispute about what happened precisely off-chain or they would like to lock up funds and redeem them on-chain. The first implementation of this idea was a payment channel network for Bitcoin called Lightning network \cite{poon2016bitcoin}. The advantage of the Lightning network is that participants can issue several payments without sending transactions to the blockchain and paying the sometimes costly transaction fees. Furthermore users are guaranteed to have instant finality instead of waiting several blocks to confirm their payments. 
-
-State channels are the more general form of payment channels, they can be used not only for payments, but for any arbitrary state updates on a blockchain, like changes inside a smart contract. State channels were first described in detail by Jeff Coleman et al.\cite{coleman2018counterfactual}. Since then several other frameworks for generalised state channels were elaborated (\cite{dziembowski2017perun},\cite{mccorryyou}). Recently a case study of the Battleship game was published by Patrick McCorry, Chris Buckland et al. to evaluate how state channels could contribute in scaling blockchain-based applications \cite{mccorryyou}.  
-
-Later in this paper, in Section \ref{statechannelimpl} we argue that MixEth can be made more scalable by implementing shuffling in a state channel.   
-
 \section{Security goals} \label{securitygoals}
 We are aiming to achieve and prove the same notions of security as the ones defined in \cite{meiklejohn2018mobius}, namely anonymity, availability and theft prevention. These notions of anonymity, availability and theft prevention were introduced in \cite{meiklejohn2018mobius}.
 
@@ -208,9 +193,6 @@ We are going to assume that at most $n-2$ recipients are malicious ($n$ is the n
 	\item \textbf{Availability}: means that honest recipients can always withdraw their assets from the mixer, even if all participants are compromised. Adversary $\adv$ wins the availability security game if they manage to get the tumbler into a state where honest recipient can not withdraw their funds.
 	\item \textbf{Theft prevention}: We would like to ensure that neither coins can be withdrawn twice, nor withdrawn by anyone other but the intended recipient.
 \end{itemize}
-
-
- 
 \section{MixEth}
 \subsection{Initializing the tumbler and depositing period}
 
@@ -253,12 +235,11 @@ Every participant should check the correctness of incoming shuffles, therefore s
 		\EndIf
 		\hspace*{\algorithmicindent} \textbf{Output:} $b^{*}$ 
 	\end{algorithmic}   
-\end{algorithm}
-Note that every recipient should perform this check after each shuffling. Noone can check the inclusion and correctness of shuffled public keys for recipients other than themselves. This task is non-outsourcable unless one reveals her own private key, which would obviously lead to loss of funds at the end of the MixEth protocol, since anyone can claim the funds knowing the corresponding secret key. 
+\end{algorithm} 
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{wrapfigure}{r}{0.35\textwidth}
 	\centering
-	\includegraphics[scale=0.5]{./withdrawalComplexity.jpg}
+	\includegraphics[scale=0.35]{./withdrawalComplexity.jpg}
 	\captionsetup{justification=centering}
 	\caption{Gas complexity of withdraw txs for various trustless Ethereum coin mixers}
 \end{wrapfigure} 
@@ -360,12 +341,6 @@ Given these adaptations the application proceeds as follows, all participants in
 	\end{tabular}
 	\label{table:gasproperties}
 \end{table} 
-
-
-\section{Acknowledgements}
-Chris Buckland is supported by an Ethereum Foundation
-scaling grant and an Ethereum Community Fund grant.
-We would like to thank Liam Horne for helping with the state channel implementation, Patrick McCorry for proofreading, barryWhiteHat, Dmitry Khovratovich and Sina Mahmoodi for the insightful comments and discussions. 
 
 \bibliographystyle{plain}
 \bibliography{sample}
