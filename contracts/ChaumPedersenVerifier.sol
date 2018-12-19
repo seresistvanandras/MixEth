@@ -1,7 +1,7 @@
 pragma solidity ^0.4.24;
 pragma experimental ABIEncoderV2;
 
-import './utils/SafeMath.sol';
+import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import {EC} from './utils/EC.sol';
 
 library ChaumPedersenVerifier {

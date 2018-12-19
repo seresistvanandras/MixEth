@@ -6,6 +6,7 @@ let ECDSAGeneralized = artifacts.require("./ECDSAGeneralized.sol");
 module.exports = async function(deployer) {
   deployer.deploy(EC);
   deployer.link(EC, MixEth);
+  deployer.link(EC, ChaumPedersenVerifier);
   deployer.deploy(ChaumPedersenVerifier);
   deployer.link(ChaumPedersenVerifier, MixEth);
   deployer.deploy(EC);
