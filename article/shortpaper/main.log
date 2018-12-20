@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.12.20)  20 DEC 2018 12:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.12.20)  20 DEC 2018 16:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2068,23 +2068,23 @@ LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <10> not available
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 206.
  [3]
-Underfull \hbox (badness 10000) in paragraph at lines 228--229
+Underfull \hbox (badness 10000) in paragraph at lines 226--227
 
  []
 
 <./withdrawalComplexity.jpg, id=145, 562.1pt x 421.575pt>
 File: ./withdrawalComplexity.jpg Graphic file (type jpg)
 <use ./withdrawalComplexity.jpg>
-Package pdftex.def Info: ./withdrawalComplexity.jpg  used on input line 243.
+Package pdftex.def Info: ./withdrawalComplexity.jpg  used on input line 241.
 (pdftex.def)             Requested size: 196.73795pt x 147.55345pt.
 
-Overfull \hbox (47.35837pt too wide) in paragraph at lines 243--245
+Overfull \hbox (47.35837pt too wide) in paragraph at lines 241--243
  [][] 
  []
 
 
 Package wrapfig Warning: Stationary wrapfigure forced to float on input line 24
-8.
+6.
 
 [4 <./withdrawalComplexity.jpg>] [5] [6] (./main.bbl
 LaTeX Font Info:    Try loading font information for T1+aett on input line 6.
@@ -2098,18 +2098,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 135--139
  []
 
 ) [8]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 306.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 306.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 308.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 308.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 306.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 306.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 308.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 308.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 67108C5235D7C3AFE7CA4E1E2FE3F57A;1091.
  ) 
 Here is how much of TeX's memory you used:
  45307 strings out of 494847
  1020636 string characters out of 6179079
- 1173630 words of memory out of 5000000
+ 1173601 words of memory out of 5000000
  47837 multiletter control sequences out of 15000+600000
  573914 words of font info for 121 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
@@ -2135,7 +2135,7 @@ ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type
 ic/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/symbols/msbm7.pfb>
-Output written on main.pdf (8 pages, 308812 bytes).
+Output written on main.pdf (8 pages, 308445 bytes).
 PDF statistics:
  288 PDF objects out of 1000 (max. 8388607)
  252 compressed objects within 3 object streams
