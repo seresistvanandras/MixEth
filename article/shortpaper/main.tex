@@ -258,7 +258,7 @@ If an adversary is able to steal funds from other users than it would imply that
 \end{itemize}
 \section{Implementation}
 
-We implemented MixEth in Solidity with two different approaches. The first one does not apply state channels, all the transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources, storage and gas, as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain.
+We implemented MixEth in Solidity with two different approaches \footnote{https://github.com/seresistvanandras/MixEth}. The first one does not apply state channels, all the transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources, storage and gas, as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain.
 Both of the implementations allow users to mix Ether or other ERC20-compatible tokens.
 
 The bottleneck of coin mixing protocols is the withdrawal transactions' gas costs. A Miximus withdrawal transaction burns $\num[group-separator={,}]{1903305}$ gas, regardless of the number of participating parties. Since the block gas limit is $\num[group-separator={,}]{8000266}$ as of 2018, October 24 only 4 Miximus withdrawal transactions could fit in one Ethereum block. This is even worse for Möbius, since the gas cost for withdrawing coins from a Möbius mixer contract linearly increases with the numbers of participants.
@@ -295,7 +295,7 @@ Following this protocol the on-chain transactions are now reduced to: one transa
 		\midrule
 		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{1046027}$&$\num[group-separator={,}]{76123}$&0&0&$\num[group-separator={,}]{335714}$n   \\
 		Miximus \cite{miximus2018}&$\num[group-separator={,}]{1751378}$&$\num[group-separator={,}]{732815}$&0&0 &$\num[group-separator={,}]{1903305}$  \\
-		MixEth&TBD&$\num[group-separator={,}]{99254}$&$\num[group-separator={,}]{138653}+\num[group-separator={,}]{10000}n$&$\num[group-separator={,}]{227563}$&$\num[group-separator={,}]{113265}$  \\
+		MixEth&5395945&$\num[group-separator={,}]{99254}$&$\num[group-separator={,}]{138653}+\num[group-separator={,}]{10000}n$&$\num[group-separator={,}]{227563}$&$\num[group-separator={,}]{113265}$  \\
 		MixEthChannel&672276&21000&0&0&TBD\\
 		\bottomrule
 	\end{tabular}
