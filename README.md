@@ -1,6 +1,11 @@
 # MixEth: efficient, trustless coin mixing service for Ethereum
 
-**Note**: this is a proof-of-concept implementation of the MixEth protocol. The protocol is also implemented in a state channel. Expect further improvements and soon more tests are going to be added. 
+**Note:** this is a proof-of-concept implementation of the MixEth protocol. The protocol is also implemented in a state channel. Expect further improvements and soon more tests are going to be added. 
+
+**Rinkeby POC deployment:** 0xece3820c8781374aa0f6a4868baf749c523d7f46.
+
+
+If you'd like to play with MixEth on Rinkeby, you can do so at the address above or just click [here](https://rinkeby.etherscan.io/address/0xece3820c8781374aa0f6a4868baf749c523d7f46).
 
 ## Introduction
 The basic idea is that unlike previous proposals ([Möbius](https://eprint.iacr.org/2017/881.pdf) and [Miximus](https://github.com/barryWhiteHat/miximus) by [barryWhiteHat](https://github.com/barryWhiteHat)) which used linkable ring signatures and zkSNARKS respectively for coin mixing, we propose using verifiable shuffles. Möbius supports only small anonymity sets (max 25 participants) and withdrawal transactions are frontrunnable in their implementation, meaning that anyone could steal funds from the Möbius mixer. On the other hand Miximus would require a trusted setup for the zkSNARK proving-key generation, however this could be somewhat alleviated by deploying a multi-party computation, which is not quite ideal.
@@ -14,9 +19,49 @@ Our vision for this project is that in a few months, after thorough auditing and
 
 We are also going to release a state channelised MixEth, where shuffling happens inside a state channel. The upside of this approach is efficiency, through conducting all shuffles off-chain, however in certain cases participants need to go back on-chain and continue the protocol on-chain. In an optimistic protocol run the state channel approach gives enormous efficiency gains.
 
-One of the limitations I see with the state channel approach is that once you open the channel and go off-chain, no other participant can join to your anonymity set, meaning that you need to work with a constant size anonymity set. In contrast, if you do the whole process on-chain, participants could join and leave freely, this way you could have a much larger, dynamic anonymity set. Solely from a privacy perspective the fully on-chain approach seems more suitable. 
+One of the limitations we see with the state channel approach is that once you open the channel and go off-chain, no other participant can join to your anonymity set, meaning that you need to work with a constant size anonymity set. In contrast, if you do the whole process on-chain, participants could join and leave freely, this way you could have a much larger, dynamic anonymity set. Solely from a privacy perspective the fully on-chain approach seems more suitable. 
+
+* In the long term we are considering 2 options regarding MixEth:
+    * Standalone DApp: MixEth might operate as an independent privacy overlay for Ethereum.
+    * Integrated into some wallet: a more stealthier way from a UX perspective would be to integrate MixEth into some wallets. We could have a **_send mixed coins_** or **_receive mixed coins_** checkbox where one could get higher anonimity guarantees directly from their already accustomed and beloved wallets.
+
+We are seeking to have community feedback on this so if you have any thoughts on how you'd like to use MixEth, please share it with us!
+
+# MixEth
+Command line tools are available to generate a shuffle or to generate and verify a Chaum-Pedersen Proof and a generalized ECDSA.
+## Shuffling
+One can generate shuffles of random public keys to start playing around with MixEth. 
+```
+node shuffle_generation.js <previousShufflingAccumulatedConstant> shuffleGenerator
+```
+## Chaum-Pedersen Proof (ChP)
+ChP gives a zero-knowledge-proof about **privKey=log <sub>G</sub>(A)=log <sub>B</sub>(C)** without disclosing privKey.
+```
+node chaum_pedersen_generator.js <G> <A> <B> <C> <privKey> <s> proofGenerator
+```
+Outputs: proof=(G,A,B,C,s,y<sub>1</sub>,y<sub>2</sub>,z)
 
 
+One can also verify a ChP proof from the command line:
+```
+node chaum_pedersen_verifier.js <G> <A> <B> <C> <s> <y1> <y2> <z>  proofVerifier
+```
+Outputs: true/false
+
+## ECDSA with arbitrary generator elements
+Sign a message with arbitrary generator element. Here G is not necessarily the standardized generator element of the secp256k1 curve.
+```
+node sign.js sign <G> <privKey> <msgHash>
+```
+
+Outputs: (r,s)
+
+
+Verifing the signature:
+```
+node sign.js verify <G> <pubKey> <msgHash> <r> <s>
+```
+Outputs: true/false
 
 ## Preliminary performance analysis 
 **Expect further improvements! (_n denotes the number of participants in the mixer_)**
@@ -40,8 +85,10 @@ One of the limitations I see with the state channel approach is that once you op
         * **Withdraw tx:** Sending a tx to MixEth signed using a modified ECDSA: cca. 113,000 gas.  
         
 ## Deployment and testing
-I recommend using [ganache-cli](https://github.com/trufflesuite/ganache-cli) with the [Truffle](https://github.com/trufflesuite/truffle) development framework. But it will also work well with [Parity](https://github.com/paritytech/parity-ethereum) or [Geth](https://github.com/ethereum/go-ethereum) nodes.
-
+We recommend using [ganache-cli](https://github.com/trufflesuite/ganache-cli) with the [Truffle](https://github.com/trufflesuite/truffle) development framework. But it will also work well with [Parity](https://github.com/paritytech/parity-ethereum) or [Geth](https://github.com/ethereum/go-ethereum) nodes. Note, that withdraw and challenge test cases will only pass if you use the deterministic addresses of ganache-cli. Therefore you might want to start by firing up ganache:
+```
+ganache-cli --deterministic
+```
 You can easily deploy the necessary contracts to your Ethereum node via Truffle:
 ```
 truffle migrate
