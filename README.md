@@ -30,9 +30,13 @@ We are seeking to have community feedback on this so if you have any thoughts on
 # MixEth
 Command line tools are available to generate a shuffle or to generate and verify a Chaum-Pedersen Proof and a generalized ECDSA.
 ## Shuffling
-One can generate shuffles of random public keys to start playing around with MixEth. 
+You can generate your shuffles off-chain using the following nodeJS script:
 ```
-node shuffle_generation.js <previousShufflingAccumulatedConstant> shuffleGenerator
+node shuffle_generation.js shuffleGenerator <toBeShuffledPubKeyArray> <previousShufflingAccumulatedConstant> 
+```
+In case if you do not have your own public keys to play with, you can generate shuffles of random public keys to start playing around with MixEth. 
+```
+node shuffle_generation.js shuffleGeneratorWithRandKeys <previousShufflingAccumulatedConstant> 
 ```
 ## Chaum-Pedersen Proof (ChP)
 ChP gives a zero-knowledge-proof about **privKey=log <sub>G</sub>(A)=log <sub>B</sub>(C)** without disclosing privKey.
