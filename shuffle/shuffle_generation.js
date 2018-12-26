@@ -4,8 +4,31 @@ var EC = require('elliptic').ec;
 var ec = new EC('secp256k1');
 let G = '0479BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8'; //Generator point
 
+function shuffleGenerator(pubKeys, prevCumulatedConstant) {
+  let pubKeyArray = pubKeys.split(',');
 
-function shuffleGenerator(prevCumulatedConstant) {
+  let shufflingConstant = randomBytes(32);
+  console.log("Shuffling constant: ", shufflingConstant.toString('hex'));
+  let shuffledPubKeys = [];
+
+  let prevCumulatedC=ec.keyFromPublic(prevCumulatedConstant,'hex').getPublic();
+  currentCumulatedC=prevCumulatedC.mul(shufflingConstant);
+  let cG  = ec.keyFromPublic(G,'hex').getPublic().mul(shufflingConstant);
+  console.log("cG",cG);
+
+  for(var i=0; i < pubKeyArray.length; i++) {
+    console.log("figyuka",pubKeyArray[i].toString('hex'));
+    let pub = ec.keyFromPublic('04'+pubKeyArray[i].toString('hex'),'hex').getPublic();
+    console.log("pub",pub);
+    shuffledPubKeys.push(pub.mul(shufflingConstant));
+  }
+  shuffledArray = shuffle(shuffledPubKeys);
+
+  return {"shuffledPubkeys": shuffledArray,"cG":cG,"currentCumulatedConstant":currentCumulatedC};
+}
+
+
+function shuffleGeneratorWithRandKeys(prevCumulatedConstant) {
 
   let shufflingConstant = randomBytes(32);
   console.log("Shuffling constant: ", shufflingConstant.toString('hex'));
@@ -16,7 +39,7 @@ function shuffleGenerator(prevCumulatedConstant) {
   let cG  = ec.keyFromPublic(G,'hex').getPublic().mul(shufflingConstant);
 
   let pubKeys=generatePubKeys(6);
-  for(var i=0; i<pubKeys.length; i++) {
+  for(var i=0; i < pubKeys.length; i++) {
     let pub = pubKeys[i].getPublic();
     console.log(i+": "+JSON.stringify(pub.mul(shufflingConstant)));
     shuffledPubKeys.push(pub.mul(shufflingConstant));
@@ -61,5 +84,6 @@ function generatePubKeys(i) {
   return publicKeys;
 }
 
-module.exports = shuffleGenerator;
+module.exports = {shuffleGenerator: shuffleGenerator,
+  shuffleGeneratorWithRandKeys: shuffleGeneratorWithRandKeys};
 require('make-runnable');
