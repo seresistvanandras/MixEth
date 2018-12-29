@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  29 DEC 2018 10:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  29 DEC 2018 10:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2088,6 +2088,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 321--322
 
  []
 
+[6]
 
 LaTeX Warning: Command \textquoteright invalid in math mode on input line 348.
 
@@ -2166,15 +2167,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 363--364
 
  []
 
-[6] [7]
+[7]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 437.
-
+ [8]
 Underfull \hbox (badness 10000) in paragraph at lines 457--458
 
  []
 
-[8]
+
 Overfull \hbox (4.03429pt too wide) in paragraph at lines 481--481
 [] 
  []
@@ -2289,7 +2290,7 @@ Overfull \hbox (50.22678pt too wide) in paragraph at lines 518--538
  [][] 
  []
 
-
+[9]
 Overfull \hbox (6.86066pt too wide) in paragraph at lines 546--546
 [] 
  []
@@ -2344,7 +2345,7 @@ Overfull \hbox (35.99997pt too wide) in paragraph at lines 542--562
  [][] 
  []
 
-[9] <./withdrawalComplexity.jpg, id=405, 562.1pt x 421.575pt>
+<./withdrawalComplexity.jpg, id=389, 562.1pt x 421.575pt>
 File: ./withdrawalComplexity.jpg Graphic file (type jpg)
 
 <use ./withdrawalComplexity.jpg>
@@ -2355,7 +2356,7 @@ Overfull \hbox (94.71468pt too wide) in paragraph at lines 607--609
  [][] 
  []
 
-
+[10]
 Underfull \hbox (badness 1552) in paragraph at lines 612--614
 []\T1/aer/m/n/10 We im-ple-mented Mix-Eth
  []
@@ -2425,7 +2426,7 @@ Underfull \hbox (badness 1824) in paragraph at lines 612--614
 \T1/aer/m/n/10 pen on-chain. Both of
  []
 
-[10 <./withdrawalComplexity.jpg>] [11]
+[11 <./withdrawalComplexity.jpg>]
 Overfull \hbox (41.80173pt too wide) in paragraph at lines 636--638
  [][] 
  []
@@ -2470,7 +2471,7 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  44851 strings out of 494953
  1004144 string characters out of 6180976
- 1149562 words of memory out of 5000000
+ 1141562 words of memory out of 5000000
  47166 multiletter control sequences out of 15000+600000
  62532 words of font info for 136 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -2503,7 +2504,7 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on main.pdf (18 pages, 459980 bytes).
+Output written on main.pdf (18 pages, 460821 bytes).
 PDF statistics:
  640 PDF objects out of 1000 (max. 8388607)
  583 compressed objects within 6 object streams
