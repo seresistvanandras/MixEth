@@ -1,0 +1,63 @@
+To summarize, this project had solid motivation and novelty and expect
+it will make for a good demonstration, although the reviewers also
+raised several questions about the accuracy of the performance claims
+and security model as well as exactly what steps would be involved in
+the demo.
+
+Motivation:
+====
+the motivation is pretty sensible. They want a decentralized Ethereum
+privacy solution. While others exist, they are subject to certain
+limitations.
+--
+Understandable and not prohibitively expensive privacy
+
+Novelty:
+====
+this paper generally covers a good number of quality ideas, and it is
+clear that they thought through some of its possible uses. Mixing
+protocols are not radical, but it was interesting nevertheless to
+document a process whereby users could follow a set protocol to
+interactively mix funds.
+--
+This introduces a relatively novel, interesting, and competitively
+inexpensive (per round) protocol for trustless tumbling in Ethereum.
+
+Soundness:
+==== I believe the authors got carried away here with many of their
+claims. The protocol is more efficient in some ways, but it is less
+efficient in others. For instance, the high deployment costs were not
+even acknowledged. Furthermore, the shuffle upload and challenge costs
+are obviously large in comparison to the other technologies.
+Furthermore, they make generous assumptions (eg: assuming at least 2
+recipients are honest) to claim similar security. Overall, it seems
+like this solution may make sense in some circumstances, especially
+with side channels. However, it isn't the clear drop-in replacement
+they make it out to be.
+---
+I'm not entirely sure how this contract is expected to be used -- a
+proof that the keys and committed constant DO form a DDH tuple is
+evidence that the shuffler behaved correctly, but lack of a proof/a
+proof that does not verify cannot prove that they did not act
+correctly (unless the permutation is revealed, as otherwise the
+malicious prover could just show that one keypair that was his and one
+keypair that was not his don't form a DDH tuple.. which is correct,
+and gives us no information). If each of the proofs is needed for the
+next round to take place this would make sense but I'm not sure the
+cost would be competitive in that case, as there would be N^2 proofs
+in total.
+
+Also "Möbius supports only small anonymity sets (max 25 participants)
+and withdrawal transactions are frontrunnable in their implementation,
+meaning that anyone could steal funds from the Möbius mixer." is
+incorrect, the inclusion of the intended withdrawal address in the
+signed information means that although a malicious party could
+frontrun the withdrawal transaction, they would just be paying the gas
+for the withdrawal money to go to where initially intended anyway.
+
+Reproducibility:
+====
+this would lend itself to a useful, interesting demo in my opinion.
+They included 5 test transactions in the block explorer link.
+--
+A walkthrough would have to be in more detail than the abstract.
