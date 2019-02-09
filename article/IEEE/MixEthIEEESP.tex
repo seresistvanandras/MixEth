@@ -1,17 +1,139 @@
 \documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
-\usepackage{cite}
+\usepackage[noadjust]{cite}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{ae,aecompl}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{textcomp}
+\usepackage[numbers]{natbib}
 \usepackage{xcolor}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+%% Useful packages
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.12}
+\usepackage[group-separator={,}]{siunitx}
+\usepackage{amsmath}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usetikzlibrary{arrows,automata}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{breqn}
+\usepackage{algpseudocode}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\usepackage{eufrak}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage[toc,page]{appendix}
+\usepackage{color}
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\floatname{algorithm}{Procedure}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\lstdefinelanguage{JavaScript}{
+	keywords={typeof, contract, struct, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+\lstset{
+	language=JavaScript,
+	backgroundcolor=\color{lightgray},
+	extendedchars=true,
+	basicstyle=\footnotesize\ttfamily,
+	showstringspaces=false,
+	showspaces=false,
+	numbers=left,
+	numberstyle=\footnotesize,
+	numbersep=9pt,
+	tabsize=2,
+	breaklines=true,
+	showtabs=false,
+	captionpos=b
+}
+
+\usepackage{graphicx}
+\usepackage[
+n,
+operators,
+advantage,
+sets,
+adversary,
+landau,
+probability,
+notions,	
+logic,
+ff,
+mm,
+primitives,
+events,
+complexity,
+asymptotics,
+keys]{cryptocode}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\def\bitcoinA{%
+	\leavevmode
+	\vtop{\offinterlineskip %\bfseries
+		\setbox0=\hbox{B}%
+		\setbox2=\hbox to\wd0{\hfil\hskip-.03em
+			\vrule height .3ex width .15ex\hskip .08em
+			\vrule height .3ex width .15ex\hfil}
+		\vbox{\copy2\box0}\box2}}
+
+\DeclareMathOperator{\EX}{\mathbb{E}}% expected value
+\providecommand{\keywords}[1]{\textbf{\textit{Keywords:}} #1}
+
+\renewcommand{\lstlistingname}{Figure}% Listing -> Algorithm
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings -> List of Algorithms
+
+\newcommand{\smallsim}{\smallsym{\mathrel}{\sim}}
+
+\makeatletter
+\newcommand{\smallsym}[2]{#1{\mathpalette\make@small@sym{#2}}}
+\newcommand{\make@small@sym}[2]{%
+	\vcenter{\hbox{$\m@th\downgrade@style#1#2$}}%
+}
+\newcommand{\downgrade@style}[1]{%
+	\ifx#1\displaystyle\scriptstyle\else
+	\ifx#1\textstyle\scriptstyle\else
+	\scriptscriptstyle
+	\fi\fi
+}
+\makeatother
+
 \begin{document}
 
 \title{MixEth: efficient, trustless coin mixing service for Ethereum}
@@ -43,222 +165,486 @@ Cryptography, Verifiable shuffle, Cryptocurrency, Ethereum, Coin mixer, State Ch
 \end{IEEEkeywords}
 
 \section{Introduction}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits. 
+Bitcoin ~\cite{nakamoto2008bitcoin} and other cryptocurrencies are pseudonymous. Users' public keys are used as pseudonyms in these systems. Transactions essentially record a flow of cryptocurrency from one (or more) public keys to another public key (or more). Flow of cryptocurrency can be easily tracked due to the open and transparent nature of cryptocurrencies' transaction ledger. Moreover, coherent public keys, which are used by the same user, can be clustered merely by analyzing the ledger. Recently several tools and algorithms were proposed to diminish users' privacy (\cite{meiklejohn2013fistful},\cite{moser2013inquiry},\cite{moreno2016listening}). Such deanomyzation attacks are extremely harmful to user privacy, especially in the case when any of the users' pseudonyms, public keys, are linked to their real world identity.
 
-\section{Ease of Use}
+One of the methods to increase users' privacy is coin mixing or tumbling. This technique provides \textit{k-anonymity} or \textit{plausible deniability}. The idea is that $k$ users deposit $1$ coin each and then in the course of a coin shuffling protocol either a centralized trusted third party or a smart contract mixes the coins and redistributes them to designated fresh public keys. This powerful technique gives users superior privacy and anonimity since their new received coins can not be linked to them.
 
-\subsection{Maintaining the Integrity of the Specifications}
+Several coin mixing protocols were proposed in the literature both centralized (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}, \cite{heilman2017tumblebit}) and decentralized (\cite{maxwell2013coinjoin}, \cite{ruffing2014coinshuffle}, \cite{miximus2018}, \cite{meiklejohn2018mobius}, \cite{bissias2014sybil}). A major drawback of centralized coin mixing is that the availability of the tumbler is entirely dependent on the trusted party and in most cases theft prevention can not be guaranteed (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}). On the other hand decentralized tumblers achieve availability, theft prevention and satisfy strong notions of anonymity although they are considerably heavier computationally. In the following we will solely focus on the problem of coin mixing on Ethereum \cite{wood2014ethereum}. 
 
-The IEEEtran class file is used to format your paper and style the text. All margins, 
-column widths, line spaces, and text fonts are prescribed; please do not 
-alter them. You may note peculiarities. For example, the head margin
-measures proportionately more than is customary. This measurement 
-and others are deliberate, using specifications that anticipate your paper 
-as one part of the entire proceedings, and not as an independent document. 
-Please do not revise any of the current designations.
+There is no doubt that there exists a tremendous need for privacy overlays for Ethereum as new tools for transaction deanonymization are getting developed and used \cite{chan2017ethereum}. This need of the Ethereum community for privacy was spectacularly embodied in September, 2017 when for several days $68\%$ of all the transaction volume was controlled by a centralized coin mixing service \cite{hugemixer2017}.
 
-\section{Prepare Your Paper Before Styling}
-Before you begin to format your paper, first write and save the content as a 
-separate text file. Complete all content and organizational editing before 
-formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on 
-proofreading, spelling and grammar.
+The two major techniques to provide decentralized mixing services for Ethereum are Möbius, a ring-signature-based solution \cite{meiklejohn2018mobius} and Miximus, a zkSNARK-based proposal \cite{miximus2018}. Both of them burn tremendous amounts of gas to withdraw funds, which could be prohibitive for many use cases. Möbius requires $335714n$ gas ($n$ is the ring size) while Miximus consumes $1903305$ gas to verify a zkSNARK proof \cite{miximus2018gascost}. As the Ethereum network is congested, ie. blocks were full during 2018\footnote{https://etherscan.io/chart/gasused}, we argue that it is essential for the network scalability to aim to create protocols and applications that burn as few gas as possible. 
 
-Keep your text and graphic files separate until after the text has been 
-formatted and styled. Do not number text heads---{\LaTeX} will do that 
-for you.
+Eventhough (Ethereum) users and transactions can be deanonymized already on the network layer \cite{ethmacrofag2016}, we consider network anonymity an orthogonal problem to that of anonymity on the transaction ledger.    
 
-\subsection{Abbreviations and Acronyms}\label{AA}
-Define abbreviations and acronyms the first time they are used in the text, 
-even after they have been defined in the abstract. Abbreviations such as 
-IEEE, SI, MKS, CGS, ac, dc, and rms do not have to be defined. Do not use 
-abbreviations in the title or heads unless they are unavoidable.
+\textbf{Our contributions.} In this paper, we present a trustless and efficient mixing protocol for Turing-complete blockchains. This protocol can be used to shuffle cyphertexts, ballots or public keys. The protocol have many use cases: shuffling ElGamal-cyphertexts, decentralized mixnets, e-voting.
 
-\subsection{Units}
-\begin{itemize}
-\item Use either SI (MKS) or CGS as primary units. (SI units are encouraged.) English units may be used as secondary units (in parentheses). An exception would be the use of English units as identifiers in trade, such as ``3.5-inch disk drive''.
-\item Avoid combining SI and CGS units, such as current in amperes and magnetic field in oersteds. This often leads to confusion because equations do not balance dimensionally. If you must use mixed units, clearly state the units for each quantity that you use in an equation.
-\item Do not mix complete spellings and abbreviations of units: ``Wb/m\textsuperscript{2}'' or ``webers per square meter'', not ``webers/m\textsuperscript{2}''. Spell out units when they appear in text: ``. . . a few henries'', not ``. . . a few H''.
-\item Use a zero before decimal points: ``0.25'', not ``.25''. Use ``cm\textsuperscript{3}'', not ``cc''.)
-\end{itemize}
+To show the practicality of the protocol, we introduce MixEth, a privacy-enhancing protocol and a practical tool for Ethereum, to overcome the above mentioned efficiency issues of Ethereum-based coin-mixers while retaining strong notions of anonymity, mixer availability and theft prevention already achieved by previous proposals (\cite{meiklejohn2018mobius},\cite{miximus2018}). MixEth requires as few off-chain messages and on-chain transactions as Möbius and Miximus, meanwhile it burns significantly less gas.
 
-\subsection{Equations}
-Number equations consecutively. To make your 
-equations more compact, you may use the solidus (~/~), the exp function, or 
-appropriate exponents. Italicize Roman symbols for quantities and variables, 
-but not Greek symbols. Use a long dash rather than a hyphen for a minus 
-sign. Punctuate equations with commas or periods when they are part of a 
-sentence, as in:
-\begin{equation}
-a+b=\gamma\label{eq}
-\end{equation}
+We also implement MixEth in a state channel to leverage the scalability and instant finality of off-chain scaling solutions. Furthermore, the MixEth protocol could be used in any state channel application to mix funds before going back to on-chain.
 
-Be sure that the 
-symbols in your equation have been defined before or immediately following 
-the equation. Use ``\eqref{eq}'', not ``Eq.~\eqref{eq}'' or ``equation \eqref{eq}'', except at 
-the beginning of a sentence: ``Equation \eqref{eq} is . . .''
+\section{Background}
+In this section we introduce the building bocks required to create our mixing protocol and MixEth, the trustless coin tumbler.
+\subsection{Notations}
+In most cases if it is possible we will stick to the notations used in \cite{meiklejohn2018mobius} for sake of uniformity. 
+Let $[]$ denote the empty tuple. For a tuple $t=(x_1,\dots,x_n)$ we denote as $t[x_i]$ the value stored at $x_{i}$. The cardinality of a finite set $X$ is denoted as $|X|$. In the following let $\lambda \in \mathbb{N}$ be the security parameter and its unary representation is $1^{\lambda}$. If $x$ is uniformly randomly sampled from a set $A$ we write $x\stackrel{\$}{\leftarrow}A$. The symmetric group of degree $n$ is written as ${S}_n$. In a cyclic group $\mathbb{G}$, the standardized generator is denoted as $G$ and we use the additive notation. Secret keys and public keys are denoted as $sk$ and $pk$ respectively (or often times $s$ and $sG$), while the user the corresponding key belongs to is indicated in subscript. Let $PK_{i}$ denote the set of public keys belonging to receivers at a particular shuffling round $i$.
 
-\subsection{\LaTeX-Specific Advice}
+We use games in definitions and proofs of security. At the end of each game, the main procedure of game \textsf{G} outputs a single bit. $\Pr(\textsf{G})$ denotes the probability that the output is $1$.
+\subsection{Cryptographic keys in Ethereum}
+Ethereum uses Elliptic Curve Cryptography (ECC) to secure users' funds. More specifically, it uses the secp256k1 curve, the same one as used in Bitcoin. If a user wants to create an Ethereum address, first they needs to generate a secret key  $s\stackrel{\$}{\leftarrow}\mathbb{Z}_n$, where $n$ is the order of secp256k1 over a finite prime field $\mathbb{F}_{p}$. The corresponding public key will be $sG$. Note that any multiples of $G$ is also a generator of curve points since $n$, the order of the group is also a prime. Accounts in Ethereum are identified by their addresses which can be obtained by taking the right most 20 bytes of the Keccak hashed public key \cite{wood2014ethereum}. 
 
-Please use ``soft'' (e.g., \verb|\eqref{Eq}|) cross references instead
-of ``hard'' references (e.g., \verb|(1)|). That will make it possible
-to combine sections, add equations, or change the order of figures or
-citations without having to go through the file line by line.
+\subsection{Verifiable shuffle}
 
-Please don't use the \verb|{eqnarray}| equation environment. Use
-\verb|{align}| or \verb|{IEEEeqnarray}| instead. The \verb|{eqnarray}|
-environment leaves unsightly spaces around relation symbols.
+Neff introduced the notion of verifiable shuffle \cite{neff2001verifiable}. It is a cryptographic protocol allowing a party to verifiably shuffle a sequence of $k$ modular integers. The output of the shuffle is another $k$ modular integers multiplied by the same secret multiplier only known to the shuffler. The shuffler can generate a publicly verifiable zero-knowledge proof to convince the public that the shuffle was done correctly without disclosing the secret multiplier. 
 
-Please note that the \verb|{subequations}| environment in {\LaTeX}
-will increment the main equation counter even when there are no
-equation numbers displayed. If you forget that, you might write an
-article in which the equation numbers skip from (17) to (20), causing
-the copy editors to wonder if you've discovered a new method of
-counting.
+Neff's mathematical construct is extremely powerful, since it only relies on the intractability of the Decision Diffie-Hellman (DDH) problem. Therefore, Neff's verifiable shuffle can also be applied in groups over elliptic curves.
 
-{\BibTeX} does not work by magic. It doesn't get the bibliographic
-data from thin air but from .bib files. If you use {\BibTeX} to produce a
-bibliography you must send the .bib files. 
+Verifiable shuffle can be used to shuffle a set of public keys, $PK=(s_{1}G,s_{2}G\dots,s_{k}G)$. Note that secret keys are not known to the shuffler.
 
-{\LaTeX} can't read your mind. If you assign the same label to a
-subsubsection and a table, you might find that Table I has been cross
-referenced as Table IV-B3. 
+\begin{enumerate}
+	\item Shuffler commits to $C=cG$, 
+		$$PK^*=(c(s_{\pi^{-1}(1)}G),c(s_{\pi^{-1}(2)}G),\dots,c({s_{\pi^{-1}(k)}}G))$$
 
-{\LaTeX} does not have precognitive abilities. If you put a
-\verb|\label| command before the command that updates the counter it's
-supposed to be using, the label will pick up the last counter to be
-cross referenced instead. In particular, a \verb|\label| command
-should not go before the caption of a figure or a table.
+	  where $\pi$ is a random permutation. Shuffler additionally computes and publishes a zero-knowledge proof about the correctness of the shuffle. This proof can be made non-interactive via the Fiat-Shamir heuristic. Let us call $C$ as the shuffling constant.
+	\item Assuming the proof verifies users gain new public keys with respect to another generator element, namely $cG$.
+\end{enumerate}
 
-Do not use \verb|\nonumber| inside the \verb|{array}| environment. It
-will not stop equation numbers inside \verb|{array}| (there won't be
-any anyway) and it might stop a wanted equation number in the
-surrounding equation.
+For verifying the proof one needs to compute $8k+5$ exponentiations, however later this result was ameliorated to $3,5k$ exponentiations by Bayer and Groth \cite{bayer2012efficient}.
 
-\subsection{Some Common Mistakes}\label{SCM}
-\begin{itemize}
-\item The word ``data'' is plural, not singular.
-\item The subscript for the permeability of vacuum $\mu_{0}$, and other common scientific constants, is zero with subscript formatting, not a lowercase letter ``o''.
-\item In American English, commas, semicolons, periods, question and exclamation marks are located within quotation marks only when a complete thought or name is cited, such as a title or full quotation. When quotation marks are used, instead of a bold or italic typeface, to highlight a word or phrase, punctuation should appear outside of the quotation marks. A parenthetical phrase or statement at the end of a sentence is punctuated outside of the closing parenthesis (like this). (A parenthetical sentence is punctuated within the parentheses.)
-\item A graph within a graph is an ``inset'', not an ``insert''. The word alternatively is preferred to the word ``alternately'' (unless you really mean something that alternates).
-\item Do not use the word ``essentially'' to mean ``approximately'' or ``effectively''.
-\item In your paper title, if the words ``that uses'' can accurately replace the word ``using'', capitalize the ``u''; if not, keep using lower-cased.
-\item Be aware of the different meanings of the homophones ``affect'' and ``effect'', ``complement'' and ``compliment'', ``discreet'' and ``discrete'', ``principal'' and ``principle''.
-\item Do not confuse ``imply'' and ``infer''.
-\item The prefix ``non'' is not a word; it should be joined to the word it modifies, usually without a hyphen.
-\item There is no period after the ``et'' in the Latin abbreviation ``et al.''.
-\item The abbreviation ``i.e.'' means ``that is'', and the abbreviation ``e.g.'' means ``for example''.
-\end{itemize}
-An excellent style manual for science writers is \cite{b7}.
+So far verifiable shuffles were only applied in voting schemes, we argue that they are useful in trustless coin mixers as well. The key insight in order to be able to apply verifiable shuffles in a decentralized, computational-resource-constrained environment, for instance Ethereum smart contracts, is to dismiss the proof generation for the correctness of the shuffle, rather we request users to give more succints proofs for the incorrectness of the shuffle, if applies.   
 
-\subsection{Authors and Affiliations}
-\textbf{The class file is designed for, but not limited to, six authors.} A 
-minimum of one author is required for all conference articles. Author names 
-should be listed starting from left to right and then moving down to the 
-next line. This is the author sequence that will be used in future citations 
-and by indexing services. Names should not be listed in columns nor group by 
-affiliation. Please keep your affiliations as succinct as possible (for 
-example, do not differentiate among departments of the same organization).
+\subsection{Decision Diffie-Hellman Problem and Chaum-Pedersen Protocol}
 
-\subsection{Identify the Headings}
-Headings, or heads, are organizational devices that guide the reader through 
-your paper. There are two types: component heads and text heads.
+The Decision Diffie-Hellman assumption (DDH) is a standard cryptographic hardness assumption which underlies the security of many cryptographic protocols. Roughly speaking DDH states that no efficient algorithm can distinguish between the two distributions $(aG, bG, abG)$ and $(aG, bG, cG)$, where $a,b,c\stackrel{\$}{\leftarrow}\mathbb{Z}_{|\mathbb{G}|}$. It is believed that the DDH assumption holds for elliptic curves with prime order over a prime field with large embedding factor \cite{boneh1998decision}, specifically DDH holds for the secp256k1 curve, which is used to generate accounts and sign transactions in Bitcoin and Ethereum among other cryptocurrencies. 
 
-Component heads identify the different components of your paper and are not 
-topically subordinate to each other. Examples include Acknowledgments and 
-References and, for these, the correct style to use is ``Heading 5''. Use 
-``figure caption'' for your Figure captions, and ``table head'' for your 
-table title. Run-in heads, such as ``Abstract'', will require you to apply a 
-style (in this case, italic) in addition to the style provided by the drop 
-down menu to differentiate the head from the text.
+Although it is hard to decide whether a triplet is a DDH-triplet without knowing the multipliers, one could convince anyone in zero-knowledge that a tuple is indeed a DDH-tuple if possesses the multipliers.    
 
-Text heads organize the topics on a relational, hierarchical basis. For 
-example, the paper title is the primary text head because all subsequent 
-material relates and elaborates on this one topic. If there are two or more 
-sub-topics, the next level head (uppercase Roman numerals) should be used 
-and, conversely, if there are not at least two sub-topics, then no subheads 
-should be introduced.
+The language $\mathcal{L}_{DDH}$ is defined to be the set of all tuples $(G,aG,bG,abG)$ where $G\in \mathbb{G}$ is of order prime $q$. The Chaum-Pedersen protocol enables a prover $\mathcal{P}$ to prove to a verifier $\mathcal{V}$ that $(G,A,B,C)\in\mathcal{L}_{DDH}$ in zero-knowledge for groups of prime order \cite{chaum1992wallet}. The protocol is organized as follows:
 
-\subsection{Figures and Tables}
-\paragraph{Positioning Figures and Tables} Place figures and tables at the top and 
-bottom of columns. Avoid placing them in the middle of columns. Large 
-figures and tables may span across both columns. Figure captions should be 
-below the figures; table heads should appear above the tables. Insert 
-figures and tables after they are cited in the text. Use the abbreviation 
-``Fig.~\ref{fig}'', even at the beginning of a sentence.
+\begin{enumerate}
+	\item $\mathcal{V}$: $s\stackrel{\$}{\leftarrow}\mathbb{Z}_q$, then sends $commit(s)$ 
+	\item $\mathcal{P}$: $r\stackrel{\$}{\leftarrow}\mathbb{Z}_q$, then sends $y_1=rG$, $y_2=rB$.
+	\item $\mathcal{V}$ opens commitment by sending $s$
+	\item $\mathcal{P}$ sends $z=r+as \Mod{q}$
+	\item $\mathcal{V}$ checks $zG=y_{1}+sA \Mod{q} \land zB=y_{2}+sC \Mod{q}$
+\end{enumerate} 
+Note that in the following a non-interactive version of this protocol will only be considered that can be achieved by applying the Fiat-Shamir heuristic. 
 
-\begin{table}[htbp]
-\caption{Table Type Styles}
-\begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Table}&\multicolumn{3}{|c|}{\textbf{Table Column Head}} \\
-\cline{2-4} 
-\textbf{Head} & \textbf{\textit{Table column subhead}}& \textbf{\textit{Subhead}}& \textbf{\textit{Subhead}} \\
-\hline
-copy& More table copy$^{\mathrm{a}}$& &  \\
-\hline
-\multicolumn{4}{l}{$^{\mathrm{a}}$Sample of a Table footnote.}
-\end{tabular}
-\label{tab1}
-\end{center}
+\subsection{ECDSA with arbitrary generator element}
+Elliptic Curve Digital Signature Algorithm (ECDSA) is a key component of MixEth. ECDSA is widely deployed in practice, where in most cases signatures are generated and verified with respect to a fixed generator element of the underlying group \cite{fersch2016provable}. Since all generators are equal from a security point of view, a single generator element is usually fixed in order to promote standardization and assists usability.
+
+However, in MixEth, we deploy a somewhat loosened version of ECDSA, where we allow arbitrary generator elements to be used. Such an extension is indeed needed for withdrawing funds from the mixer, because shuffled public keys remain public keys with respect to non-standardized generator elements. Therefore the usual $\sig$ and $\verify$ algorithms for signing and verifying a messages gets an additional parameter $G^{'}$, which is not necessarily the standardized generator element. Key generation algorithm works as usual $(pk,sk)\stackrel{\$}{\leftarrow}\kgen(1^{\lambda})$, on the other hand $\sigma\stackrel{\$}{\leftarrow}\sig(G^{'},sk,m)$ and  $0/1\leftarrow \verify(G^{'},pk,\sigma, m)$ accept new generators.
+
+In our security proofs we will be relying on the fact that ECDSA is \textit{existentially unforgeable} \cite{{fersch2016provable}}, i.e. no efficient adversary could forge a signature on any given message with non-negligible probability. 
+
+
+\subsection{Ethereum}
+
+Ethereum is a cryptocurrency built on top of a blockchain. Similarly to Bitcoin, network participants broadcast transactions in a peer-to-peer network, where transactions are bundled together into blocks that are appended to a public ledger called blockchain. Only those specific nodes can append new blocks to the blockchain who previously solved a difficult cryptographic puzzle. The state of the system consists of the state of different accounts populating it. 
+
+In Ethereum currently there are two types of accounts. The first account type is called \textit{externally owned account}. It owns an ECDSA keypair controlled by its user. Private keys are used to sign transactions. On the other hand there are \textit{contract accounts}, often smart contracts, that additionally have persistent storage and contract's code. Both of the account types have Ether balances, which is the native currency of the Ethereum network. Ether is denominated in wei, where $1\ ETH = 10^ {18}\ wei$.
+
+Transactions can alter the system's state by either creating a contract account or by calling to an existing account. Transactions to externally owned accounts can only transfere Ether, while transactions to contract accounts can additionally execute the code associated with them. Codes are executed in a quasi-Turing complete execution environment, called Ethereum Virtual Machine (EVM).
+
+EVM is quasi-Turing complete, since smart contract's code can not run indefinitely due to the so called \textit{gas mechanism}. In every transaction the sender needs to pay upfront for the execution of the contract's code. The computational complexity of a transaction is measured in gas, which can be bought for Ether on a price set by the transaction originator, so called gas price. Therefore the transaction fee is the gas cost multiplied by the gas price. One needs to specify a gas limit, meaning that they do not allow their transaction to burn more gas than the limit. If a transaction during execution runs out of gas, then all the state changes are reverted, while the transaction fee is paid to the miner. If there are gas left after successful execution, transaction originator is reimbursed. Additionally there exists a block gas limit, which limits the number of computational steps fitting in one block. Currently the block gas limit is cca. $\num[group-separator={,}]{8000000}$ gas. Naturally users of Ethereum are very much incentivized to minimize the gas cost of their transactions in order to spend as less as possible on transactions fees. Small gas costs are also crucial from a scalability point of view, since the less gas burnt for each transaction, the more transaction can fit into a single block.   
+
+\subsubsection{State channels} 
+Public blockchain's decentralization comes at an inherent cost in regard to scalability, since currently each full node verifies the full state of the public ledger. Often times Bitcoin's ($\smallsim7$ transactions per second (tps)) or Ethereum's ($\smallsim15$ tps) throughput is compared to that of Visa's ($\smallsim\num[group-separator={,}]{45000}$ tps). Blockchains' scalability issues became an increasingly growing problem as more and more users adopted the technology. One remarkable example was the launch of the Cryptokitties game in 2017, when the Ethereum network was congested for a few hours due to the enormous popularity of the game. Therefore several solutions were proposed to alleviate aforementioned scalability issues.
+
+One of the major class of these techniques is called off-chain solutions. The insight of these proposals is that it is not needed to conduct all transactions on the blockchain, since participants could lock funds on-chain and afterwards securely issue transactions off-chain, for instance micropayments, with high degree of security and finality. Participants only need to get back on-chain if there is a dispute about what happened precisely off-chain or they would like to lock up funds and redeem them on-chain. The first implementation of this idea was a payment channel network for Bitcoin called Lightning network \cite{poon2016bitcoin}. The advantage of the Lightning network is that participants can issue several payments without sending transactions to the blockchain and paying the sometimes costly transaction fees. Furthermore users are guaranteed to have instant finality instead of waiting several blocks to confirm their payments. 
+
+State channels are the more general form of payment channels, they can be used not only for payments, but for any arbitrary state updates on a blockchain, like changes inside a smart contract. State channels were first described in detail by Jeff Coleman et al.\cite{coleman2018counterfactual}. Since then several other frameworks for generalised state channels were elaborated (\cite{dziembowski2017perun},\cite{mccorryyou}). Recently a case study of the Battleship game was published by Patrick McCorry, Chris Buckland et al. to evaluate how state channels could contribute in scaling blockchain-based applications \cite{mccorryyou}.  
+
+Later in this paper, in Section \ref{statechannelimpl} we argue that MixEth can be made more scalable by implementing shuffling in a state channel. 
+
+\subsubsection{Ethereum account abstraction}
+Unfortunately, neither Möbius nor Miximus can be deployed on the present-day Ethereum. When users of the coin mixing contract, either Möbius or Miximus would like to withdraw their funds they can not do this from a fresh address, since it does not hold any ether. Since as of now only the sender of a transaction can pay for the gas fee, users can not withdraw their funds unless they ask someone to fund their fresh address.     
+
+Another solution for this problem is the Ethereum Improvement Proposal (EIP) 86 suggested by Nick Johnson and Vitalik Buterin \cite{buterin2017accounteip}. EIP86 permits receivers of a transaction paying the gas fee. This would certainly enable a functional Möbius and Miximus as well, since the tumbling contract could pay for the withdrawal transactions' gas fee, eliminating the previous workaround to unlinkably fund freshly mixed addresses. Additionally, EIP86 also allows contracts and accounts to define their own digital signature algorithms. This means that users are no longer required to sign transactions with Elliptic Curve Digital Signature Algorithm (ECDSA). Moreover if EIP86 or something similar is implemented, which is expected in 2019, MixEth is also made viable. 
+
+\section{Threat model}
+\subsection{Participants and interactions}
+In a decentralized tumbler, we have $3$ distinct entities: the tumbling smart contract, a set of senders and a set of receivers. A sender, whom we will call Alice, sends funds to the receiver, Bob, through the mixer contract in order to break direct links between their public keys. In all the following interactions and algorithms we assume that the public state of the tumbler is implicitly given as input. Interactions of these entities can be summarized as follows: 
+
+$tx\stackrel{\$}{\leftarrow}Deposit(sk_A,pk_B)$: The sender runs this algorithm to deposit a predefined amount of ether to the receiver's public key.
+
+$0/1\leftarrow VerifyDeposit(tx)$: The tumbler contract checks the validity of senders' deposits.
+
+$ProcessDeposit(tx)$: upon receiving a valid deposit transaction, the mixing contract updates its internal state accordingly.
+
+Let $PK_{0}$ denote the set of public keys after the depositing period to be mixed. Furthermore let us set $C^{*}_{0}=G$, the standard generator point of the secp256k1 curve. Anyone is allowed to shuffle the public keys at most once by paying some deposit to the tumbler contract: 
+
+$PK_{i+1},C_{i+1}^{*}\stackrel{\$}{\leftarrow}Shuffle(PK_{i},C^{*}_{i},c_{i},\pi_{i})$. Let us call $C^{*}_{i}$ as the shuffling accumulated constant, which can be obtained by $C^{*}_{i+1}=c_{i}C^{*}_{i}$. The shuffling accumulated constant is needed for receivers to audit shuffling and to collect their funds at the end of the final shuffling period. The permutation $\pi$ and the secret multiplier $c_{i}$ from the new shuffling accumulated constant should be kept private after shuffling, otherwise it is trivial to track how public keys are shuffled. All the outputs of the $Shuffle$ algorithm are public and written into the tumbling contract.  
+
+$0\lor1\leftarrow 
+ChallengeShuffle(PK_{i},C^{*}_{i},PK_{i-1},C^{*}_{i-1},pk_{B})$: receiver $B$ with public key $pk_{B}=s_{B}G$ can challenge an incorrect shuffle at the $i$th round by giving a Chaum-Pedersen zero-knowledge proof that the following tuple is DDH-tuples: $(C^{*}_{i-1}, s_{B}C^{*}_{i-1}, C^{*}_{i}, s_{B}C^{*}_{i})$. If the proof verifies and $s_{B}C^{*}_{i} \notin PK_{i}$, while $s_{B}C^{*}_{i-1} \in PK_{i-1}$, then the challenge is accepted, otherwise rejected. This proof and checks allow one to be certain that indeed the $i$th round is the first round in which the corresponding public key to $s_{B}$ is shuffled incorrectly.  
+
+$tx\stackrel{\$}{\leftarrow}WithdrawShufflingDeposit(sk_B)$: after a challenging period a shuffler can withdraw their shuffling deposit from the tumbler contract.
+
+$0\lor1\leftarrow VerifyWitdhrawShufflingDeposit(pk_B)$: if there was no successful challenges against the shuffler, i.e. their deposit is not slashed, they can withdraw their shuffling deposit. 
+
+$tx\stackrel{\$}{\leftarrow}Withdraw(sk_B, C^{*}_{final})$: after the end of the shuffling period users are allowed to withdraw their funds. Note that here withdraw transactions will be signed with a modified version of ECDSA, where not the original generator element $G$ is used as generator rather $C^{*}_{final}$, the final shuffling accumulated constant.
+
+$0/1\leftarrow VerifyWithdraw(tx)$: tumbler checks the validity of a recipient's withdrawal transaction.
+
+$ProcessWithdraw(tx)$: upon receiving a valid withdrawal transaction, mixing contract updates its internal state accordingly.
+
+\subsection{Security goals} \label{securitygoals}
+We are aiming to achieve and prove the same notions of security as the ones defined in \cite{meiklejohn2018mobius}, namely anonymity, availability and theft prevention. These notions of anonymity, availability and theft prevention were introduced in \cite{meiklejohn2018mobius}, which are included in this section for sake of self-containedness.
+
+We are going to assume that at most $n-2$ recipients are malicious ($n$ is the number of recipients). Otherwise, no meaningful notion of security can be achieved. Furthermore we presume that participants are on-line during the entire course of mixing in order to be able to monitor and potentially challenge any incorrect shuffle. Finally we assume that honest recipients will always exercise their rights to shuffle and they do not disclose any private information used in their shuffles.
+
+In the security definitions and games introduced by \cite{meiklejohn2018mobius} adversary $\adv$ might have access to the following oracles. CORR enables $\adv$ to corrupt a sender or receiver by learning the secret key of any party $l$ of their choice. Oracle access to AD or AW allow $\adv$ to deposit or withdraw respectively from tumbler session $j$. Furthermore $\adv$ might instruct honest senders or receivers to deposit or withdraw from tumbler session $j$ by using oracles HD and HW. In the following $C$ denotes the set of corrupted parties, while the list of honest deposits and withdrawals are denotes as $H_{d}$ and $H_{w}$ respectively The list of contract identifiers associated with distinct sessions is denoted as $tumblers$.     
+
+These oracles are formally defined as follows: 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cccc}    
+		\begin{minipage}{6cm}
+			\procedure{AD(tx,$j$)}{%
+				b \leftarrow VerifyDeposit(tumblers[j],tx) \\
+				if\ (b) \ ProcessDeposit(tumblers[j],tx) \\
+				\pcreturn b  }
+		\end{minipage}
+		&
+		\begin{minipage}{6cm}
+			\procedure{AW(tx,$j$)}{%
+				b \leftarrow VerifyWithdraw(tumblers[j],tx) \\
+				if\ (b) \  ProcessWithdraw(tumblers[j],tx) \\
+				\pcreturn b  }
+		\end{minipage}
+		&
+		\begin{minipage}{4cm}
+			\procedure{CORR($l$)}{%
+				C=C.push(pk_{B_{l}}) \\
+				\pcreturn sk_{B_l}}
+		\end{minipage}
+	\end{tabular}
+\end{table}	
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cc}   
+		\begin{minipage}{5cm}
+			\procedure{HD($i$,$j$,$l$)}{%
+				tx\stackrel{\$}{\leftarrow}Deposit(sk_{A_{i}},pk_{B_{l}})\\
+				H_{d}=H_{d}.push(tx) \\
+				ProcessDeposit(tumblers[j],tx)\\
+				\pcreturn tx }
+		\end{minipage}
+		&
+		\begin{minipage}{5cm}
+			\procedure{HW($j$,$l$)}{%
+				if\ (pk_{B_{l}} \notin tumblers[j].keys_{B})\ return \ \bot \\
+				tx\stackrel{\$}{\leftarrow}Deposit(sk_{A_{i}},pk_{B_{l}}) \\
+				H_{w}=H_{w}.push(j,l,tx) \\
+				ProcessWithdraw(tumblers[j],tx)\\
+				\pcreturn tx }
+		\end{minipage}
+	\end{tabular}
 \end{table}
 
-\begin{figure}[htbp]
-\centerline{\includegraphics{fig1.png}}
-\caption{Example of a figure caption.}
-\label{fig}
-\end{figure}
+From now on, we will denote a specific key in a given session as as $tumbler.keys_{B}$.
 
-Figure Labels: Use 8 point Times New Roman for Figure labels. Use words 
-rather than symbols or abbreviations when writing Figure axis labels to 
-avoid confusing the reader. As an example, write the quantity 
-``Magnetization'', or ``Magnetization, M'', not just ``M''. If including 
-units in the label, present them within parentheses. Do not label axes only 
-with units. In the example, write ``Magnetization (A/m)'' or ``Magnetization 
-\{A[m(1)]\}'', not just ``A/m''. Do not label axes with a ratio of 
-quantities and units. For example, write ``Temperature (K)'', not 
-``Temperature/K''.
+\subsubsection{Anonymity} \label{sec:defanonymity}
+\textit{Sender} anonymity is achieved if an adversary can not determine to whom honest senders are sending funds, assuming that honest senders' deposits are indistinguishable.
 
-\section*{Acknowledgment}
+\textit{Recipient} anonymity is achieved if honest recipients withdrawal transactions are indistinguishable. 
 
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
+\begin{definition}
+	Define $\textbf{Adv}^{d-anon}_{mix,\adv}(\lambda) = 2\Pr[\textsf{G}^{d-anon}_{mix,\adv}(\lambda)]-1\ for\ d \in \{dep, with\}$, where these games are defined as follows:
+	
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{cc}    
+			\begin{minipage}{7cm}
+				\procedure{MAIN $\textsf{G}^{dep-anon}_{mix,\adv}(\lambda)$}{%
+					(pk_{i},sk_{i})\stackrel{\$}{\leftarrow}\kgen(1^{\lambda}) \ \forall i \in [n]\\
+					\textsf{PK}_A\leftarrow\{pk_i\}^{n}_{i=1};C,H_{d}, tumblers \leftarrow \emptyset\\
+					b \stackrel{\$}{\leftarrow} \bin \\
+					(state,j,pk, i_{0},i_{1}) \stackrel{\$}{\leftarrow} \adv^{CORR,AD,HD,AW} (1^\lambda, \textsf{PK}_{A}) \\
+					tx \stackrel{\$}{\leftarrow} Deposit(tumblers[j], sk_{A_{{l}_{b}}}, pk) \\
+					b^{’}\stackrel{\$}{\leftarrow} \adv^{CORR,AD,HD,AW}(state, tx) \\
+					\pcreturn b = b^{’} }
+			\end{minipage}
+			&
+			\begin{minipage}{7cm}
+				\procedure{MAIN $\textsf{G}^{with-anon}_{mix,\adv}(\lambda)$}{%
+					(pk_{i},sk_{i})\stackrel{\$}{\leftarrow}\kgen(1^{\lambda}) \ \forall i \in [n]\\
+					\textsf{PK}_B\leftarrow\{pk_i\}^{n}_{i=1};C,H_{d}, tumblers \leftarrow \emptyset\\
+					b \stackrel{\$}{\leftarrow} \bin \\
+					(state,j,pk, l_{0},l_{1}) \stackrel{\$}{\leftarrow} \adv^{CORR,AD,HD,AW} (1^\lambda, \textsf{PK}_{B}) \\
+					\textsf{PK}\leftarrow tumblers[j].keys_{B}\\
+					if(pk_{B_{l_{0}}}\notin \textsf{PK})\lor(pk_{B_{l_{1}}}\notin \textsf{PK})\ return\ 0\\
+					tx \stackrel{\$}{\leftarrow} Withdraw(tumblers[j], sk_{B_{{l}_{b}}}) \\
+					b^{’}\stackrel{\$}{\leftarrow} \adv^{CORR,AD,HD,AW}(state, tx) \\
+					if(pk_{l_{b}}\in C \ for\ b \in \bin)\ return\ 0 \\
+					if((j,l_{b},\cdot))\in H_{w} \ for\ b \in \bin)\ return\ 0\\
+					\pcreturn b = b^{’} }		
+			\end{minipage}
+		\end{tabular}
+	\end{table}	
+	Then the tumbler satisfies sender or recipient anonymity if for all PT adversaries $\adv$ there exists a negligible function $\nu(\cdot)$ such that $\textbf{Adv}^{dep-anon}_{mix,\adv}(\lambda) < \nu(\lambda)$ or $\textbf{Adv}^{with-anon}_{mix,\adv}(\lambda) < \nu(\lambda)$ respectively.	
+\end{definition}
 
-\section*{References}
+\subsubsection{Availability}
+It is essential for a coin mixer to provide availability, meaning that honest recipients can always withdraw their money from the mixer, even if senders and one but all recipients are compromised. 
 
-Please number citations consecutively within brackets \cite{b1}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
+Adversary $\adv$ wins the availability security game if they manage to get the tumbler into a state where honest recipient can not withdraw their funds.
 
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
-abstract or reference list. Use letters for table footnotes.
+\begin{definition}
+	Define $\textbf{Adv}^{avail}_{mix,\adv}(\lambda) = \Pr[\textsf{G}^{avail}_{mix,\adv}(\lambda)]$, where the game is defined as follows:
+	
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c}    
+			\begin{minipage}{7cm}
+				\procedure{MAIN $\textsf{G}^{avail}_{mix,\adv}(\lambda)$}{%
+					(pk_{i},sk_{i})\stackrel{\$}{\leftarrow}\kgen(1^{\lambda}) \ \forall i \in [n]\\
+					\textsf{PK}_B\leftarrow\{pk_i\}^{n}_{i=1};C,H_{w} \leftarrow \emptyset\\
+					(l,j)\stackrel{\$}{\leftarrow} \adv^{CORR,AD,HW,AW}(1^{\lambda},\textsf{PK}_{B}) \\
+					b \leftarrow  \textsf{VerifyWithdraw}(\textsf{tumblers}[j], \textsf{Withdraw}(sk_{l})) \\
+					if ((pk_{l}\in C)\ \lor\ ((j,l,\cdot)\in H_{w}))\ return \ 0 \\
+					\pcreturn (b=0)\land(pk_{l}\in tumblers[j].keys_{B})}
+			\end{minipage}
+		\end{tabular}
+	\end{table}	
+	Then the tumbler satisfies availability if for all PT adversaries $\adv$ there exists a negligible function $\nu(\cdot)$ such that $\textbf{Adv}^{avail}_{mix,\adv}(\lambda) < \nu(\lambda)$.
+\end{definition}
 
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
-element symbols.
+\subsubsection{Theft prevention} \label{sec:theftprevention}
+We would like to ensure that neither coins can be withdrawn twice, nor withdrawn by anyone other but the intended recipient. Theft prevention is defined formally as follows: 
 
-For papers published in translation journals, please give the English 
-citation first, followed by the original foreign-language citation \cite{b6}.
+\begin{definition}
+	Define $\textbf{Adv}^{theft}_{mix,\adv}(\lambda) = \Pr[\textsf{G}^{theft}_{mix,\adv}(\lambda)]$, where the game is defined as follows:
+	
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c}    
+			\begin{minipage}{7cm}
+				\procedure{MAIN $\textsf{G}^{theft}_{mix,\adv}(\lambda)$}{%
+					(pk_{i},sk_{i})\stackrel{\$}{\leftarrow}\kgen(1^{\lambda}) \ \forall i \in [n]\\
+					\textsf{PK}_B\leftarrow\{pk_i\}^{n}_{i=1};C,H_{w}, \textsf{contract} \leftarrow \emptyset\\
+					(\textsf{tx},j)\stackrel{\$}{\leftarrow} \adv^{CORR,AD,AW,HW}(1^{\lambda},\textsf{PK}_{B}) \\
+					if(\textsf{tumblers}[j].\textsf{keys}_{B}\not\subset \textsf{PK}_{B}\setminus C)\ return \ 0 \\
+					\pcreturn \textsf{VerifyWithdraw}(\textsf{tumblers}[j], \textsf{tx})}
+			\end{minipage}
+		\end{tabular}
+	\end{table}	
+	Then the tumbler satisfies theft prevention if for all PT adversaries $\adv$ there exists a negligible function $\nu(\cdot)$ such that $\textbf{Adv}^{theft}_{mix,\adv}(\lambda) < \nu(\lambda)$.
+\end{definition} 
 
-\begin{thebibliography}{00}
-\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
-\end{thebibliography}
-\vspace{12pt}
-\color{red}
-IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
+\section{MixEth}
+
+\subsection{Overview}
+MixEth is a coin mixing smart contract allowing parties to efficiently tumble coins in a trustless manner on Ethereum.
+\subsection{Initializing the tumbler}
+
+A MixEth contract living on the Ethereum blockchain at $id_{contract}$ address must be initialized with the $amt$ parameter, which denotes the denomination of ether to be mixed.
+
+\subsection{Depositing period}
+Every sender must deposit exactly $amt$ ether to a specific public key. Deposits with incorrect ether value or invalid public key are rejected. Public keys in subsequent deposit transactions are written into the $initPubKeys[]$ array.   
+
+\subsection{Shuffling period}
+After the depositing round, shuffling and challenging rounds are coming after in turns. Each shuffling round is followed by a challenging round when the correctness of the preceding shuffle can be challenged by anyone. If a challenge is accepted, then shuffler's deposit is lost, their shuffle is discarded and shuffling continues from the set of public keys prior to the discarded shuffle. In the course of a shuffle an honest shuffler should multiply all the public keys with a secret exponent $c$ and then permute all the transformed public keys. Honest shuffler commits to $c$ by sending back to MixEth the new shuffling accumulated constant and the shuffled public keys.
+
+Shuffle is done off-chain, however the result and the updated shuffling accumulated constant is loaded into the MixEth contract enabling anyone to verify the shuffle's correctness and to continue public key shuffling after the corresponding challenging round.
+
+\begin{algorithm}
+	\caption{Off-chain public key shuffling algorithm for the $i$th shuffling round}\label{shufflingoffchain}
+	\begin{algorithmic}[1]
+		\State $PK_{i} \gets []$
+		\State $c\stackrel{\$}{\leftarrow}\mathbb{Z}_n$
+		\State $C^{*}_{i-1}\leftarrow read\ from\ MixEth\ contract$
+		\State $PK_{i-1}\leftarrow read\ from\ MixEth\ contract\ the\ current\ sequence\ of\ shuffled\ public\ keys$
+		\State $\pi\stackrel{\$}{\leftarrow}S_{|PK_{i-1}|}$ 
+		\For{$j=0;j<|PK_{i-1}|;j++$}
+		\State $PK_{i}[\pi(j)]=c*PK_{i-1}[j]$ 
+		\EndFor
+		\State $C^{*}_{i}=cC^{*}_{i-1}$
+		
+		\hspace*{\algorithmicindent} \textbf{Output:} $(PK_{i},C^{*}_{i})$ 
+	\end{algorithmic}   
+\end{algorithm}
+\subsection{Challenging period}
+Every participant should check the correctness of incoming shuffles, therefore sufficient time should be provided for each challenging round. These are the actions Bob as a receiver needs to perform to check the correctness of the shuffle at $i$th round if Bob has secret key $s_{B}$. In this case Bob should check whether $s_{B}C^{*}_{i} \in PK_{i}$ or not. If not, Bob should prove to MixEth that the $i$th round is indeed the first round, where the shuffled public key corresponding to $s_{B}$ is compromised. The Chaum-Pedersen proof in the challenge transaction ensures that the integrity of the shuffled public key in round $i-1$st is intact, while shuffled public key is compromised in the $i$th round.   
+
+\begin{algorithm}
+	\caption{On-chain verification algorithm of incoming shuffle challenges}\label{verifyingshufflingoffchain}
+	\hspace*{\algorithmicindent} \textbf{Input}$(PK_{i}, PK_{i-1}, proof_{DDH}(C^{*}_{i-1},s_{B}C^{*}_{i-1},C^{*}_{i},s_{B}C^{*}_{i})$ \\
+	\begin{algorithmic}[1]
+		\State $b\leftarrow verifyChaumPedersen(proof_{DDH}(C^{*}_{i-1},s_{B}C^{*}_{i-1}, C^{*}_{i},s_{B}C^{*}_{i})$ 
+		\State $b^*\leftarrow0$
+		\If {$b \land s_{B}C^{*}_{i-1}\in PK_{i-1}\land s_{B}C^{*}_{i} \notin PK_{i}$}
+		\State $b^*\gets 1$
+		\Else
+		\State $b^*\gets 0$
+		\EndIf
+		\hspace*{\algorithmicindent} \textbf{Output:} $b^{*}$ 
+	\end{algorithmic}   
+\end{algorithm}
+Note that every recipient should perform this check after each shuffling. Noone can check the inclusion and correctness of shuffled public keys for recipients other than themselves. This task is non-outsourcable unless one reveals her own private key, which would obviously lead to loss of funds at the end of the MixEth protocol, since anyone can claim the funds knowing the corresponding secret key.  
+
+\subsection{Withdrawing}
+Let $C^*_{final}$ be the final shuffling accumulated constant. For a recipient $B$, whose public key $s_{B}G \in initPubKeys[]$, in the final shuffle there will be $s_{B}C^*_{final}$. The recipient can prove to MixEth that she knows secret key $s_{B}$ by signing their public key using a modified ECDSA, which uses $C^*_{final}$ as the generator element instead of the standardized $G$.
+
+\section{Security}
+This section provides informal ideas to the security proofs for the notions of security introduced in Section \ref{securitygoals}. Formal reductions are enclosed in the Appendices.
+
+\subsection{Recipient anonymity}
+The withdrawing transaction for recipient $B$ sends funds to the public key $s_{B}C^{*}$. This public key does not reveal any links to the original $s_{B}G$ in case if at least one honest sender shuffled and the DDH assumption holds. Adversary can only distinguish between honest recipients public keys with negligible probability. See reduction proof in Appendix \ref*{appendanon}.
+\subsection{Availability}
+If an adversary is able to destroy an honest recipient's funds' availability, it implies that adversary $\adv$ either breaks the completeness of the Chaum-Pedersen protocol or successfully launched an eclipse attack against the honest recipient, who can not send any transactions to honest Ethereum peers.
+\subsection{Theft prevention} 
+If an adversary is able to steal funds from other users than it would imply that they managed to create a valid message/signature, $(m,\sigma)$ pair for the final shuffled public key of an honest recipient without having access to the secret key of the honest recipient. This contradicts to the assumption that ECDSA is existentially unforgeable. Reduction proof is enclosed in Appendix \ref*{appendtheft}. 
+\begin{table}[H] 
+	\caption{Security properties achieved by each coin mixing protocol.}
+	\centering 
+	\begin{tabular}{@{\extracolsep{6pt}}lcccccc@{}} 
+		
+		\toprule
+		\hline
+		&\multicolumn{3}{c}{Anonimity against}& \multicolumn{2}{c}{Availability}&Theft prevention\\
+		\cline{2-4}\cline{5-6}&outsiders&senders&recipients&sender&tumbler\\
+		\hline
+		\midrule
+		\textbf{Centralized} & & \\
+		\midrule
+		Mixcoin \cite{bonneau2014mixcoin} & TTP       & \xmark  &\cmark&\cmark&\xmark&TTP      \\
+		Blindcoin \cite{valenta2015blindcoin} & \cmark &\xmark&\cmark&\cmark&\xmark&TTP        \\
+		TumbleBit \cite{heilman2017tumblebit} & \cmark &\cmark&\cmark&\cmark&\xmark&\cmark       \\
+		\midrule
+		\textbf{Decentralized}      &    &      \\
+		\midrule
+		Coinjoin \cite{maxwell2013coinjoin} & \cmark   &\xmark&\cmark&\xmark&n.a.&\cmark       \\
+		Coinshuffle \cite{ruffing2014coinshuffle} & \cmark&\xmark&\cmark&\xmark&n.a.&\cmark       \\
+		XIM \cite{bissias2014sybil} & \cmark      &\xmark&\cmark&\cmark&n.a.&\cmark       \\
+		Möbius \cite{meiklejohn2018mobius}     &\cmark&\cmark&\xmark&\cmark&\cmark&\xmark        \\
+		Miximus \cite{miximus2018}&\cmark&\xmark&\xmark&\cmark&\cmark&\cmark  \\
+		MixEth&\cmark&\cmark&\xmark&\cmark&\cmark&\cmark  \\
+		\bottomrule
+	\end{tabular}
+	\label{table:securityproperties}
+\end{table}
+
+\section{Implementation} 
+
+We implemented MixEth with two different approaches. The first implementation of MixEth does not apply state channels, all the transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources, storage and gas, as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain.
+Both of the implementations allow users to mix Ether or other ERC20-compatible, a popular Ethereum token standard, tokens.
+
+One of the main bottlenecks of coin mixing protocols is the withdrawal transactions' gas costs. A Miximus withdrawal transaction burns $\num[group-separator={,}]{1903305}$ gas, regardless of the number of participating parties. Since the block gas limit is $\num[group-separator={,}]{8000266}$ as of 2018, October 24 only 4 Miximus withdrawal transactions could fit in one Ethereum block. This is even worse for Möbius, since the gas cost for withdrawing coins from a Möbius mixer contract linearly increases with the numbers of participants.
+
+All MixEth smart contracts were written in the Solidity language, which is currently the dominant language for developing Ethereum smart contracts. MixEth contracts are compiled using the latest version of the Solidity compiler in order to take advantage of the latest language features such as the possibility to return dynamic-sized arrays from contract functions. Note that these implementations are only proof-of-concept implementations, expect further improvements. All MixEth contracts are available online\footnote{https://github.com/seresistvanandras/MixEth}.  
+
+\subsection{Fully on-chain implementation} \label{fullyonchainimpl}
+
+Conceivably mixers would like to minimize off-chain coordination, therefore in our first implementation of the MixEth protocol, we assumed that all transactions will take place on-chain. There is only a single off-chain message from receiver to sender, where receiver delivers their public key to the sender. The rest of the protocol happens entirely on-chain.
+
+On-chain storage is extremely expensive: it requires $\num[group-separator={,}]{20000}$ gas to store a $256$-bit number, however if a particular storage slot is already taken and one wants to overwrite it with a non-zero element than storing only consumes $\num[group-separator={,}]{5000}$ gas. To minimize on-chain storage costs, only the last two list of shuffled public keys are stored in the MixEth contract's permanent storage. Note that storing only the latest list of shuffled public keys would not be enough, since honest receivers could not prove to the contract that their shuffled public key is compromised unless also the last but first list of shuffled keys is also available for the contract to check the Chaum-Pedersen proof against. Such a storage structure implies that after uploading the new list of shuffled public keys, a challenging period should proceed in order to let receivers check the correctness of the shuffle and whether their shuffled public key is stored in the smart contract, see Figure \ref{fig:shuffleandchallenge}. Furthermore we also allow senders to shuffle and deposit new public keys at the same time, meaning that only $3$ on-chain transactions (shuffle, withdraw mixed coins and withdraw shuffling deposit) are sufficient to complete the protocol. We left it as a future work to determine the optimal ratio of mixed coins and shuffling deposits in order to incentivise correct shuffling.
+
+A great advantage of the fully on-chain version of MixEth is that it allows dynamic anonymity sets. One could potentially deposit funds to the contract and shuffle public keys and leave funds in the mixing contract for indefinite amount of time. As soon as the anonymity set is large enough a receiver could withdraw their assets. The whole process is represented as a finite automata as shown in Figure \ref{fig:shuffleandchallenge}. A receiver in a MixEth contract with $N$ senders could withdraw their funds after $N^{'}$ shuffling rounds, where $N^{'}$ is arbitrary.  This dynamic nature of the contract could even lead to a single monolithic MixEth contract instead of having multiple MixEth contracts with significantly fragmented anonymity sets. A single MixEth contract is able to support the mixing of ether and ERC-20 compatible tokens as well. However note that the gas complexity of shuffling transactions grow linearly in the number of participants, therefore the fully on-chain implementation is not capable to support extremely large anonymity sets with participants more than cca. $\num[group-separator={,}]{800}$. 
+
+Also note that the on-chain cost of a shuffle transaction could be amortized among participants. Specifically if there is a group of senders and/or receivers who trust each other they could collectively charge any of them to shuffle once. Since they trust their peer, all the rest of the group does not need to shuffle anymore. Later non-shufflers could reimburse the only shuffler for their services either on-chain or off-chain. 
+
+\subsection{State channel implementation} \label{statechannelimpl}
+
+We have also adapted MixEth to operate within a state channel. We wrote the implementation within the guidelines of the Counterfactual framework \cite{coleman2018counterfactual}. This allowed us to delegate the processes of setup, liveness disputes and finalisation to the framework so that we could focus on adapting the application logic. Unlike the on-chain implementation the state channel implementation requires that the set of participants be agreed upon upfront. In state channels each update to the state needs to be signed by all other participants, this means that state channel applications are inherently at least $\mathcal{O}(n)$. To co-ordinate these off-chain updates the Counterfactual framework enforces that all applications be turn based, introducing a turn taker for each turn who may propose a new state. The original MixEth implementation was not turn based so we have adapted the application to this constraint, an example of this adaptation is the challenge round. In the on-chain implementation a time period is allowed during which any participant may challenge, we have adapted this by proceeding turn-based through the participants offering each the chance to either challenge or pass. In the case of a breakdown in cooperation in the channel, a liveness fault, it has been shown that all operations succeeding the cooperation breakdown must proceed on chain\cite{mccorryyou} or be abandoned at some financial cost specified by the application, meaning that if every shuffle were to be succeeded by a challenge round each participant would be forced, by threat this lost deposit, to make an on-chain transaction after each shuffle, incurring $\mathcal{O}(n)$ on chain operations. To mitigate this we removed the challenge after each round and instead introduced a challenge round that takes place after all shuffles have completed, during this round any of the preceding shuffles may be challenged.
+
+Given these adaptations the application proceeds as follows, all participants including senders, shufflers and receivers, deposit funds in a mutli-signature wallet compatible with the Counterfactual framework, they then follow the installation protocols specified by the framework to install the adapted MixEth logic. Afterwards each participant signs a transaction that transfers an equal amount to each withdrawer from the multi-sig, dependent on correct execution of the channelised MixEth application logic. This application logic proceeds as follows: each sender names a public key of a shuffler as in the deposit stage of the on-chain application, then each shuffler takes it in turn to shuffle. After all shuffles have taken place each withdrawer is given a turn to either declare fraud or no-fraud on any shuffle round. Finally each withdrawer then provides proof of ownership by submitting a valid signature on the modified ECDSA scheme. If any of these steps does not occur, or does not occur correctly, the protocol aborts and the conditional transfer does not occur. In this case the perpetrator loses a deposit, either through fraud proof or through failure to take their turn when state is published on-chain. A further modification would be to distribute the slashed deposit to each of the other participants, compensating them for their lost time and the gas costs associated with proving the fault of the other party. Following this protocol the on-chain transactions are now reduced to: one transaction from each participant to deposit funds into the multi-sig, and a set of transactions that send funds from the multi-sig to each of the withdrawers and deposits back to each of the other participants. The modified procedure of the MixEth protocol is illustrated as a finite automate in Figure \ref{fig:shufflethenchallenge}. Note that all three $N$s are the same. In a channelised MixEth contract there are exactly $N$ depositors, $N$ shufflers and $N$ receivers. 
+
+\begin{table}[H] 
+	\caption{Proof-of-concept implementation gas cost results. Expect further improvements. MixEthChannel refers to the implementation which leverages state channels for shuffling and challenging periods}
+	\centering 
+	\begin{tabular}{@{\extracolsep{6pt}}lccccc@{}} 	
+		\toprule
+		\hline
+		&Deployment&Deposit&\multicolumn{2}{c}{Shuffle}& Withdraw\\
+		\cline{4-5}&&&Shuffle upload&Challenge\\
+		\hline
+		\midrule
+		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{1046027}$&$\num[group-separator={,}]{76123}$&0&0&$\num[group-separator={,}]{335714}$n   \\
+		Miximus \cite{miximus2018}&$\num[group-separator={,}]{1751378}$&$\num[group-separator={,}]{732815}$&0&0 &$\num[group-separator={,}]{1903305}$  \\
+		MixEth&$\num[group-separator={,}]{5395945}$&$\num[group-separator={,}]{99254}$&$\num[group-separator={,}]{138653}+\num[group-separator={,}]{10000}n$&$\num[group-separator={,}]{227563}$&$\num[group-separator={,}]{113265}$  \\
+		MixEthChannel&$\num[group-separator={,}]{672276}$&$\num[group-separator={,}]{21000}$&0&0&TBD\\
+		\bottomrule
+	\end{tabular}
+	\label{table:gasproperties}
+\end{table} 
+
+\section{Related work}
+Möbius was the very first trustless coin mixer designed for Ethereum\cite{meiklejohn2018mobius}. Authors of Möbius provided formal definitions of various notions of security such as anonymity, theft prevention and mixer availability. These properties could be used to evaluate and compare existing and future proposals from a security perspective. Möbius is a ring-signature-based trustless coin mixer with minimal on-chain transaction complexity: users of Möbius just need to create a deposit and a withdraw transaction. However the gas cost of the withdrawal transaction increases linearly in the number of receivers, which limits the size of possible anonymity sets. No more than 24 reciever could use Möbius with current cca.$\num[group-separator={,}]{8000000}$  block gas limit. If more people tries to use the mixer funds would be stucked in the mixer contract, since the gas costs of withdrawal transactions would be greater than the block gas limit. Another, maybe even more severe problem with Möbius' implementation is that withdrawal transactions can be frontrunned by anyone in the network, meaning that anyone could steal receivers' funds from the Möbius smart contract. When an honest receiver broadcasts a Möbius withdrawal transaction, other peers in the network might just create another withdrawal transaction with the very same valid linkable ring signature but with a considerably larger gas price and with their own address as recipient. Miners will act rationally and pick the transaction with the higher gas price, therefore theft-prevention in Möbius' implementation is not guaranteed.     
+
+Miximus is a trustless zkSNARK-based mixer for Ethereum\cite{miximus2018}. It uses zkSNARKs to conceal the mapping between depositors and recipients. A depositor creates a leaf in a Merkle-tree. A depositor needs to exchange the preimage of the leaf with the recipient. Later, a recipient could prove to the Miximus contract that they know one of the preimages of a certain, undisclosed leaf. So called nullifiers enable recipients to withdraw funds once and only once. The gas costs of depositing and withdrawing funds from a Miximus mixer is independent of the number of participants. However there are disadvantages of this approach; Miximus only provides anonymity against outsiders, since if Alice funds to Bob via Miximus, Alice will know when Bob made the withdrawal transaction. Another, more severe limitation of Miximus is the trusted setup required for generating the proving key for the zkSNARK. If this trusted setup is compromised, the deployer of the contract, who generated the proving key could potentially steal funds from the mixer. Although, this issue could be amended somehow via a multi-party computation (MPC) further increasing the off-chain communication complexitiy of Miximus.
+
+As Table \ref{table:communicationcomplexity} demonstrates, both Möbius and Miximus require $2$ on-chain transactions, while MixEth requires $3$. In spite of this seemingly added complexity, the 3 on-chain transactions to complete the MixEth protocol (deposit, shuffle, withdraw) consume significantly less gas than those (deposit, verify linkable ring signature/zkSNARK) of Möbius and Miximus, see Table~\ref{table:gasproperties}. 
+\begin{table}[H] 
+	\caption{Number of on-chain transactions and off-chain messages per a single participant required to run a certain coin mixer protocol. Note that in case of Miximus if one wants to avoid the trusted setup for the zkSNARK, then they need to perform a secure multi-party computation protocol to trust-minimize the proving key generation.}
+	\centering 
+	\begin{tabular}{lcc} 
+		
+		\toprule
+		&\#Off-chain messages& \#Transactions \\
+		\midrule
+		\textbf{Centralized} & & \\
+		\midrule
+		Mixcoin \cite{bonneau2014mixcoin} & 2      & 2       \\
+		Blindcoin \cite{valenta2015blindcoin} & 4      & 2       \\
+		TumbleBit \cite{heilman2017tumblebit} & 12      & 4      \\
+		\midrule
+		\textbf{Decentralized}      &    &      \\
+		\midrule
+		Coinjoin \cite{maxwell2013coinjoin} &  $\mathcal{O}(n^2)$     & 1       \\
+		Coinshuffle \cite{ruffing2014coinshuffle} &$\mathcal{O}(n)$       & 1       \\
+		XIM \cite{bissias2014sybil} & 0      & 7       \\
+		Möbius \cite{meiklejohn2018mobius} & 2    & 2       \\
+		Miximus \cite{miximus2018} & 1+MPC & 2 \\
+		MixEth & 1 & 3 \\
+		MixEthChannel  & $\mathcal{O}(n)$ &2 \\
+		\bottomrule
+	\end{tabular}
+	\label{table:communicationcomplexity}
+\end{table}
+
+\subsection{Additional related work}
+Recently, in November 26, 2018 a new privacy-enhancing protocol and tool was released, called Aztec protocol \cite{aztecprotocol2018}. Aztec allows its users to convert any type of existing digital asset on top Ethereum into Aztec notes. Later on Aztec notes can be traded in a join-split style confidential transaction, namely the value of the traded Aztec notes are encrypted and not visible to outsiders. A join-split style transaction can have multiple inputs and outputs. Aztec applies zero-knowledge proofs and range proofs in order to achieve that the sum of inputs traded in a confidential transaction is greater or equal than the sum of outputs. The gas cost of a confidential Aztec transaction is $\num[group-separator={,}]{219000}$+$\num[group-separator={,}]{121000}n$+$\num[group-separator={,}]{41000}m$, where $n$ and $m$ are the numbers of inputs and outputs respectively.  Although Aztec is not a coin mixer, it can be used not only to provide confidential transaction, but also to increase anonymity. On the downside Aztec uses a trusted setup and considerably more expensive than MixEth to provide the same level of k-anonymity, however it is able to conceal transaction volumes. Most likely a combination of MixEth and Aztec would yield the most gas-efficient solution to achieve k-anonym and confidential transactions. For instance on top Aztec one could use MixEth to shuffle Aztec notes.      
+
+\section{Extensions and improvements}
+MixEth is not fully compatible with the current EVM, however it could be deployed with a workaround. A recipient could ask another party or service to send a signed transaction including a signature which uses the modified version of ECDSA, where the generator element is the shuffling accumulated constant. MixEth could check this signature and send out funds to a fresh Ethereum address given in the withdraw transaction.
+
+In the current design of MixEth if sender, Alice and receiver, Bob would like to use the mixer several times, Bob needs to share his receiver address in a secure communication channel with Alice as many times as he would like to receive payments. This communication overhead could be overcome by applying stealth addresses, where Bob needs to share once his public master key with Alice in order to receive arbirtary number of payments from her.
+
+\section{Conclusion and Future Work} \label{conclusion}
+We are going to conduct external code audits, deploy MixEth on the Ethereum main net and evaluate its performance. An important and crucial research question is whether it is possible to design and implement an efficient and trustless Ethereum-based coin mixer with strong security guarantees which do not rely on any workaround or upcoming EIP implementation and is ready to be deployed on present-day Ethereum. 
+
+\section{Acknowledgements}
+Chris Buckland is supported by an Ethereum Foundation
+scaling grant and an Ethereum Community Fund grant.
+We would like to thank Liam Horne for helping with the state channel implementation, Patrick McCorry for proofreading, barryWhiteHat, Dmitry Khovratovich and Sina Mahmoodi for the insightful comments and discussions. 
+
+\bibliographystyle{IEEEtran}
+\bibliography{sample}
+
+\begin{appendices}
+	
+	\section{Proof of Anonymity} \label{appendanon}
+	Hereby we show that if there exists an adversary $\adv$ who is able to break withdrawal anonymity defined in~\ref{sec:defanonymity}, then there exists another adversary $\bdv$ who is able to break the DDH assumption.
+	
+	Towards contradiction let us assume that the recipient anonymity does not hold. Let us assume that the challenge to the DDH-adversary $\bdv$ is of the form $(sG,cG,c_{0}G)$. Adversary $\bdv$ generates uniformly random public key $c_{1}G$ and invokes $\adv$ with the set $\textsf{PK}_{B}=(c_{0}C^{*}, c_{1}C^{*})$, then $\bdv$ forwards $\textsf{PK}_{B}$ to $\adv$. Then a withdrawal transaction occurs from $c_{b}G$. After polynomial-time $\adv$ outputs $b^{'}$ and $\bdv$ will output $\lnot b^{'}$. If $\adv$ outputs $0$ and $b=b^{'}$, this signals to $\bdv$ that $c_{0}G$ might potentially be of the form $scG=c_{0}G$  i.e. it is a DDH tuple, therefore $\bdv$ outputs $1$. In all the other cases $\bdv$ outputs a random bit. Therefore we have that $\bdv$ has an adventage in their DDH-game if and only if $\adv$ wins their $\textsf{G}^{with, anon}_{mix, \adv}$ security game. Since we assumed that recipient anonymity does not hold we have that $$\Pr[\textsf{DDH}_{\bdv}]=\frac{1}{2}+\frac{1}{2}*\Pr[\textsf{G}^{with, anon}_{mix, \adv}]=\frac{1}{2}+\frac{1}{2}*\textsf{non-negl}(\lambda),$$ which contradicts to the DDH assumption.
+	
+	\section{Proof of Availability}  \label{appendavail}
+	
+	The only possibility for an adversary to threaten the availability of funds for an honest receiver if they create an incorrect shuffle, where honest receiver's shuffled public key is compromised. Since the Chaum-Pedersen zero-knowledge protocol is complete, an honest receiver is alway able to create a Chaum-Pedersen proof, which demonstrates to the contract that their shuffled public key is compromised. Therefore we have for any PPT $\adv$ and $\forall \lambda \in \mathbb{N}$ that, $$\Pr[\textsf{G}^{avail}_{mix, \adv}]=0<negl(\lambda).$$
+	
+	\section{Proof of Theft Prevention} \label{appendtheft}
+	
+	Towards contradiction we assume that there exists an adversary $\adv$, who is able to break the theft prevention property introduced in Section \ref{sec:theftprevention} with non-negligible probability. Using such an adversary as a subroutine we could create another efficient adversary $\bdv$ who is able to break the existential unforgeability of ECDSA. The input of the forgeability game is the security parameter which is forwarded to $\adv$ along with $n$ randomly generated public keys. By assumption $\adv$ outputs with non-negligible probability valid withdraw transaction belonging to one of the public keys in the mixer. $\bdv$ outputs the withdraw transaction and the ECDSA signature on it. $\bdv$ wins the forgeability game if and only if $\adv$ wins their $\textsf{G}^{theft}_{mix,\adv}$ game:
+	$$\Pr[\textsf{Forge}_{ECDSA,\bdv}]=\Pr[\textsf{G}^{theft}_{mix, \adv}]=\frac{1}{\lambda^\alpha}, $$ for some fixed $\alpha$. This contradicts to the assumption that ECDSA is existentially unforgeable.
+		
+\end{appendices}
+
 
 \end{document}

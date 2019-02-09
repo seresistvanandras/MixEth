@@ -1,12 +1,38 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Ease of Use}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Maintaining the Integrity of the Specifications}{section.2}% 3
-\BOOKMARK [1][-]{section.3}{Prepare Your Paper Before Styling}{}% 4
-\BOOKMARK [2][-]{subsection.3.1}{Abbreviations and Acronyms}{section.3}% 5
-\BOOKMARK [2][-]{subsection.3.2}{Units}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.3}{Equations}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.4}{LaTeX-Specific Advice}{section.3}% 8
-\BOOKMARK [2][-]{subsection.3.5}{Some Common Mistakes}{section.3}% 9
-\BOOKMARK [2][-]{subsection.3.6}{Authors and Affiliations}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.7}{Identify the Headings}{section.3}% 11
-\BOOKMARK [2][-]{subsection.3.8}{Figures and Tables}{section.3}% 12
+\BOOKMARK [1][-]{section.2}{Background}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Notations}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Cryptographic keys in Ethereum}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Verifiable shuffle}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Decision Diffie-Hellman Problem and Chaum-Pedersen Protocol}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{ECDSA with arbitrary generator element}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.6}{Ethereum}{section.2}% 8
+\BOOKMARK [3][-]{subsubsection.2.6.1}{State channels}{subsection.2.6}% 9
+\BOOKMARK [3][-]{subsubsection.2.6.2}{Ethereum account abstraction}{subsection.2.6}% 10
+\BOOKMARK [1][-]{section.3}{Threat model}{}% 11
+\BOOKMARK [2][-]{subsection.3.1}{Participants and interactions}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.2}{Security goals}{section.3}% 13
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Anonymity}{subsection.3.2}% 14
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Availability}{subsection.3.2}% 15
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Theft prevention}{subsection.3.2}% 16
+\BOOKMARK [1][-]{section.4}{MixEth}{}% 17
+\BOOKMARK [2][-]{subsection.4.1}{Overview}{section.4}% 18
+\BOOKMARK [2][-]{subsection.4.2}{Initializing the tumbler}{section.4}% 19
+\BOOKMARK [2][-]{subsection.4.3}{Depositing period}{section.4}% 20
+\BOOKMARK [2][-]{subsection.4.4}{Shuffling period}{section.4}% 21
+\BOOKMARK [2][-]{subsection.4.5}{Challenging period}{section.4}% 22
+\BOOKMARK [2][-]{subsection.4.6}{Withdrawing}{section.4}% 23
+\BOOKMARK [1][-]{section.5}{Security}{}% 24
+\BOOKMARK [2][-]{subsection.5.1}{Recipient anonymity}{section.5}% 25
+\BOOKMARK [2][-]{subsection.5.2}{Availability}{section.5}% 26
+\BOOKMARK [2][-]{subsection.5.3}{Theft prevention}{section.5}% 27
+\BOOKMARK [1][-]{section.6}{Implementation}{}% 28
+\BOOKMARK [2][-]{subsection.6.1}{Fully on-chain implementation}{section.6}% 29
+\BOOKMARK [2][-]{subsection.6.2}{State channel implementation}{section.6}% 30
+\BOOKMARK [1][-]{section.7}{Related work}{}% 31
+\BOOKMARK [2][-]{subsection.7.1}{Additional related work}{section.7}% 32
+\BOOKMARK [1][-]{section.8}{Extensions and improvements}{}% 33
+\BOOKMARK [1][-]{section.9}{Conclusion and Future Work}{}% 34
+\BOOKMARK [1][-]{section.10}{Acknowledgements}{}% 35
+\BOOKMARK [1][-]{section*.10}{Appendix A: Proof of Anonymity}{}% 36
+\BOOKMARK [1][-]{section*.11}{Appendix B: Proof of Availability}{}% 37
+\BOOKMARK [1][-]{section*.12}{Appendix C: Proof of Theft Prevention}{}% 38
