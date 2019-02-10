@@ -42,12 +42,6 @@ Joseph Bonneau, Arvind Narayanan, Andrew Miller, Jeremy Clark, Joshua~A Kroll,
 \newblock In {\em International Conference on Financial Cryptography and Data
   Security}, pages 486--504. Springer, 2014.
 
-\bibitem{buterin2017accounteip}
-Vitalik Buterin and Nick Johnson.
-\newblock Eip86: Account abstraction.
-\newblock \url{https://github.com/ethereum/EIPs/blob/master/EIPS/eip-86.md},
-  2017.
-
 \bibitem{catalano2013vector}
 Dario Catalano and Dario Fiore.
 \newblock Vector commitments and their applications.
