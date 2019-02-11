@@ -3,7 +3,7 @@
 \BOOKMARK [2][-]{subsection.2.1}{Notations}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Cryptographic keys in Ethereum}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{Verifiable shuffle}{section.2}% 5
-\BOOKMARK [2][-]{subsection.2.4}{Decision Diffie-Hellman Problem and Pedersen Protocol}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.4}{Decision Diffie-Hellman Problem and Chaum-Pedersen Protocol}{section.2}% 6
 \BOOKMARK [2][-]{subsection.2.5}{ECDSA with arbitrary generator element}{section.2}% 7
 \BOOKMARK [2][-]{subsection.2.6}{Ethereum}{section.2}% 8
 \BOOKMARK [3][-]{subsubsection.2.6.1}{State channels}{subsection.2.6}% 9
