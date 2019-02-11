@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  11 FEB 2019 00:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  11 FEB 2019 11:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2376,69 +2376,27 @@ LaTeX Warning: Reference `fig:shuffleandchallenge' on page 7 undefined on input
  line 463.
 
 [7] [8] (./MixEthIEEESP.bbl
-Underfull \hbox (badness 10000) in paragraph at lines 14--19
-[]\T1/aer/m/n/10.03749 barryWhiteHat.  Mix-imus gas costs.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 14--19
-[][]$\T1/aer/m/n/10.03749 https : / / www . reddit . com / r / ethereum / comme
-nts /
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 14--19
-\T1/aer/m/n/10.03749 8ss53z / miximus _ zksnark _ based _ anonymous _
- []
-
-
-Underfull \hbox (badness 5756) in paragraph at lines 39--44
+Underfull \hbox (badness 5756) in paragraph at lines 27--32
 []\T1/aer/m/n/10.03749 Joseph Bon-neau, Arvind Narayanan, An-drew
  []
 
 
-Underfull \hbox (badness 2478) in paragraph at lines 52--56
+Underfull \hbox (badness 2478) in paragraph at lines 34--38
 []\T1/aer/m/n/10.03749 Wren Chan and As-pen Olm-sted.  Ethereum
  []
 
 
-Underfull \hbox (badness 1590) in paragraph at lines 58--62
+Underfull \hbox (badness 1590) in paragraph at lines 40--44
 \T1/aer/m/it/10.03749 Cryp-tol-ogy Con-fer-ence\T1/aer/m/n/10.03749 , pages 89-
 -105. Springer,
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 96--100
+Underfull \hbox (badness 10000) in paragraph at lines 78--82
 \T1/aer/m/n/10.03749 Trust-less tum-bling for trans-ac-tion pri-vacy.
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 128--133
-[]\T1/aer/m/n/10.03749 Nchinda Nchinda.  Ex-plor-ing pseudonim-ity
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 128--133
-\T1/aer/m/n/10.03749 on ethereum.  [][]$https : / / media . consensys . net /
- []
-
-
-Overfull \hbox (6.41313pt too wide) in paragraph at lines 128--133
-\T1/aer/m/n/10.03749 exploring-[]pseudonimity-[]on-[]ethereum-[]dda257019eb4$[]
-[],
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 135--139
-[]\T1/aer/m/n/10.03749 Serge Nedashkovsky.  Huge ethereum
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 135--139
-\T1/aer/m/n/10.03749 mixer.  [][]$https : / / blog . cyber . fund /
- []
-
-) [10]
+)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -2450,12 +2408,15 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
+[10]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 551.
-[11
-
-]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 551.
- (./MixEthIEEESP.aux)
+ (./MixEthIEEESP.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 551.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 551.
 Package rerunfilecheck Info: File `MixEthIEEESP.out' has not changed.
@@ -2466,13 +2427,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 45879 strings out of 494953
- 1022781 string characters out of 6180976
- 1148584 words of memory out of 5000000
- 48264 multiletter control sequences out of 15000+600000
+ 45861 strings out of 494953
+ 1022347 string characters out of 6180976
+ 1149522 words of memory out of 5000000
+ 48250 multiletter control sequences out of 15000+600000
  142105 words of font info for 237 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,22n,83p,10383b,871s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,22n,83p,10383b,867s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texli
@@ -2502,10 +2463,10 @@ texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive
 onts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/font
 s/type1/urw/zapfding/uzdr.pfb>
-Output written on MixEthIEEESP.pdf (11 pages, 409487 bytes).
+Output written on MixEthIEEESP.pdf (10 pages, 408221 bytes).
 PDF statistics:
- 490 PDF objects out of 1000 (max. 8388607)
- 441 compressed objects within 5 object streams
- 114 named destinations out of 1000 (max. 500000)
+ 474 PDF objects out of 1000 (max. 8388607)
+ 426 compressed objects within 5 object streams
+ 110 named destinations out of 1000 (max. 500000)
  277 words of extra memory for PDF output out of 10000 (max. 10000000)
 

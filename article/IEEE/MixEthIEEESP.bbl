@@ -1,21 +1,9 @@
 \begin{thebibliography}{10}
 
-\bibitem{aztecprotocol2018}
-Aztec.
-\newblock The aztec protocol.
-\newblock \url{ https://github.com/AztecProtocol/AZTEC}, 2018.
-
 \bibitem{miximus2018}
 barryWhiteHat.
 \newblock Miximus.
 \newblock \url{https://github.com/barryWhiteHat/miximus}, 2018.
-
-\bibitem{miximus2018gascost}
-barryWhiteHat.
-\newblock Miximus gas costs.
-\newblock
-  \url{https://www.reddit.com/r/ethereum/comments/8ss53z/miximus_zksnark_based_anonymous_transactions_is/},
-  2018.
 
 \bibitem{bayer2012efficient}
 Stephanie Bayer and Jens Groth.
@@ -41,12 +29,6 @@ Joseph Bonneau, Arvind Narayanan, Andrew Miller, Jeremy Clark, Joshua~A Kroll,
 \newblock Mixcoin: Anonymity for bitcoin with accountable mixes.
 \newblock In {\em International Conference on Financial Cryptography and Data
   Security}, pages 486--504. Springer, 2014.
-
-\bibitem{catalano2013vector}
-Dario Catalano and Dario Fiore.
-\newblock Vector commitments and their applications.
-\newblock In {\em Public-Key Cryptography--PKC 2013}, pages 55--72. Springer,
-  2013.
 
 \bibitem{chan2017ethereum}
 Wren Chan and Aspen Olmsted.
@@ -124,18 +106,6 @@ Satoshi Nakamoto.
 \newblock Bitcoin: A peer-to-peer electronic cash system.
 \newblock 2008.
 
-\bibitem{ethmacrofag2016}
-Nchinda Nchinda.
-\newblock Exploring pseudonimity on ethereum.
-\newblock \url{
-  https://media.consensys.net/exploring-pseudonimity-on-ethereum-dda257019eb4},
-  2016.
-
-\bibitem{hugemixer2017}
-Serge Nedashkovsky.
-\newblock Huge ethereum mixer.
-\newblock \url{ https://blog.cyber.fund/huge-ethereum-mixer-6cf98680ee6c},
-  2017.
 
 \bibitem{neff2001verifiable}
 C~Andrew Neff.
