@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  11 FEB 2019 12:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  17 FEB 2019 21:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2212,9 +2212,15 @@ LaTeX Font Info:    Try loading font information for T1+aess on input line 160.
 (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aess.fd
 File: t1aess.fd 1997/11/16 Font definitions for T1/aess.
 )
-LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 16
-0.
-LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 160.
+
+LaTeX Warning: No \author given.
+
+
+LaTeX Warning: No \author given.
+
+
+LaTeX Warning: No \author given.
+
 
 Underfull \hbox (badness 5954) in paragraph at lines 161--164
 \T1/aer/bx/it/9.03374 Abstract\T1/aer/bx/n/9.03374 ---Coin mix-ing is a preva-l
@@ -2305,6 +2311,7 @@ Underfull \hbox (badness 1888) in paragraph at lines 298--299
 it/10 dep; with\OMS/cmsy/m/n/10 g$\T1/aer/m/n/10.03749 , where
  []
 
+LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 303.
 LaTeX Font Info:    Calculating math sizes for size <9.03374> on input line 312
 .
 
@@ -2360,13 +2367,6 @@ Underfull \hbox (badness 8000) in paragraph at lines 372--373
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 383.
 
-Overfull \hbox (16.38774pt too wide) in paragraph at lines 403--404
-[]|  \T1/aer/bx/n/10.03749 In-put$\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 PK[]; PK[];
- proof[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 C[]; s[]C[]; C[]; s[]C[]\OT1/cmr/m/n/
-10 )$ 
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 403--404
 
  []
@@ -2409,22 +2409,22 @@ Before submitting the final camera ready copy, remember to:
  process uses the appropriate paper size.
 
 [10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 551.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 551.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 554.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 554.
  (./MixEthIEEESP.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 551.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 551.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 554.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 554.
 Package rerunfilecheck Info: File `MixEthIEEESP.out' has not changed.
-(rerunfilecheck)             Checksum: 84EFAF8ABCE5C47D45EA7ABD23299E19;2208.
+(rerunfilecheck)             Checksum: DAF1CCD4CE8CC1B88CAC0EE320E1C680;2271.
  ) 
 Here is how much of TeX's memory you used:
- 45859 strings out of 494953
- 1022302 string characters out of 6180976
- 1148506 words of memory out of 5000000
- 48248 multiletter control sequences out of 15000+600000
- 142105 words of font info for 237 fonts, out of 8000000 for 9000
+ 45818 strings out of 494953
+ 1021657 string characters out of 6180976
+ 1147523 words of memory out of 5000000
+ 48217 multiletter control sequences out of 15000+600000
+ 133235 words of font info for 214 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,22n,83p,10383b,885s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,22n,83p,10383b,883s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texli
@@ -2450,14 +2450,13 @@ b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-dist/font
-s/type1/urw/zapfding/uzdr.pfb>
-Output written on MixEthIEEESP.pdf (10 pages, 407001 bytes).
+-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on MixEthIEEESP.pdf (10 pages, 391484 bytes).
 PDF statistics:
- 474 PDF objects out of 1000 (max. 8388607)
- 426 compressed objects within 5 object streams
+ 472 PDF objects out of 1000 (max. 8388607)
+ 425 compressed objects within 5 object streams
  110 named destinations out of 1000 (max. 500000)
- 277 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 285 words of extra memory for PDF output out of 10000 (max. 10000000)
 

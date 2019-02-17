@@ -139,28 +139,28 @@ keys]{cryptocode}
 
 \title{MixEth: efficient, trustless coin mixing service for Ethereum}
 
-\author{\IEEEauthorblockN{István András Seres\IEEEauthorrefmark{1},
-		Dániel A. Nagy\IEEEauthorrefmark{2}, Péter Burcsi\IEEEauthorrefmark{3}}
-	\IEEEauthorblockA{Department of Computer Algebra,
-		Eötvös Loránd University\\
-		Budapest, Hungary\\
-		Email: \IEEEauthorrefmark{1}istvanseres@caesar.elte.hu,
-		\IEEEauthorrefmark{2}daniel@ethereum.org,
-		\IEEEauthorrefmark{3}bupe@inf.elte.hu}
-\and
-\IEEEauthorblockN{Chris Buckland \thanks{Chris Buckland is supported by an Ethereum Foundation
-		scaling grant and an Ethereum Community Fund grant.}}
-\IEEEauthorblockA{\textit{Department of Computer Science} \\
-	\textit{King's College London}\\
-	London, United Kingdom \\
-	cpbuckland88@gmail.com }
-}
+%\author{\IEEEauthorblockN{István András Seres\IEEEauthorrefmark{1},
+%		Dániel A. Nagy\IEEEauthorrefmark{2}, Péter Burcsi\IEEEauthorrefmark{3}}
+%	\IEEEauthorblockA{Department of Computer Algebra,
+%		Eötvös Loránd University\\
+%		Budapest, Hungary\\
+%		Email: \IEEEauthorrefmark{1}istvanseres@caesar.elte.hu,
+%		\IEEEauthorrefmark{2}daniel@ethereum.org,
+%		\IEEEauthorrefmark{3}bupe@inf.elte.hu}
+%\and
+%\IEEEauthorblockN{Chris Buckland \thanks{Chris Buckland is supported by an Ethereum Foundation
+%		scaling grant and an Ethereum Community Fund grant.}}
+%\IEEEauthorblockA{\textit{Department of Computer Science} \\
+%	\textit{King's College London}\\
+%	London, United Kingdom \\
+%	cpbuckland88@gmail.com }
+%}
 
 \maketitle
 
 \begin{abstract}
 Coin mixing is a prevalent privacy-enhancing technology for cryptocurrency users.	
-In this paper, we present MixEth, which is a trustless coin mixing service for Turing-complete blockchains. MixEth does not rely on trusted setup and is more efficient than any proposed trustless coin tumbler. It requires only 3 on-chain transactions at most per user and 1 off-chain message. It achieves strong notions of anonymity and is able to resist denial-of-service attacks. Furthermore the underlying protocol can also be used to efficiently shuffle ballots, cyphertexts in a trustless and decentralized manner.
+In this paper, we present MixEth, which is a trustless coin mixing service for Turing-complete blockchains. MixEth does not rely on a trusted setup and is more efficient than any proposed trustless coin tumbler. It requires only 3 on-chain transactions at most per user and 1 off-chain message. It achieves strong notions of anonymity and is able to resist denial-of-service attacks. Furthermore the underlying protocol can also be used to efficiently shuffle ballots, cyphertexts in a trustless and decentralized manner.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -170,17 +170,17 @@ Cryptography, Verifiable shuffle, Cryptocurrency, Ethereum, Coin mixer, State Ch
 \section{Introduction}
 Bitcoin~\cite{nakamoto2008bitcoin} and other cryptocurrencies are pseudonymous. Users' public keys are used as pseudonyms. Transactions essentially record a flow of cryptocurrency from one (or more) public keys to another public key (or more). Flow of cryptocurrency can be easily tracked due to the open and transparent nature of cryptocurrencies' transaction ledger. Moreover, coherent public keys, which are used by the same user, can be clustered merely by analyzing the ledger. Recently several tools and algorithms were proposed to diminish users' privacy (\cite{meiklejohn2013fistful},\cite{moser2013inquiry},\cite{moreno2016listening}). Deanonimization attacks are extremely harmful to user privacy, especially in the case when any of the users' pseudonyms, public keys, are linked to their real world identity.
 
-A prevalent method to increase users' privacy is coin mixing or tumbling. This technique provides \textit{k-anonymity} or \textit{plausible deniability}. The idea is that $k$ users deposit $1$ coin each and then in the course of a coin shuffling protocol either a centralized trusted third party or a smart contract mixes the coins and redistributes them to designated fresh public keys. This powerful technique gives users superior privacy and anonimity since their new received coins can not be linked to them.
+A prevalent method to increase users' privacy is coin mixing or tumbling. This technique provides \textit{k-anonymity} or \textit{plausible deniability}. The idea is that $k$ users deposit $1$ coin each and then in the course of a coin shuffling protocol either a centralized trusted third party or a smart contract mixes the coins and redistributes them to designated fresh public keys. This powerful technique gives users superior privacy and anonymity since their new received coins can not be linked to them.
 
 Several coin mixing protocols were proposed in the literature both centralized (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}, \cite{heilman2017tumblebit}) and decentralized (\cite{maxwell2013coinjoin}, \cite{ruffing2014coinshuffle}, \cite{miximus2018}, \cite{meiklejohn2018mobius}, \cite{bissias2014sybil}). A major drawback of centralized coin mixing is that the availability of the tumbler is entirely dependent on the trusted party and in most cases theft prevention can not be guaranteed (\cite{bonneau2014mixcoin}, \cite{valenta2015blindcoin}). On the other hand decentralized tumblers achieve availability, theft prevention and satisfy strong notions of anonymity although they are considerably heavier computationally. In the following we will solely focus on the problem of coin mixing on Ethereum \cite{wood2014ethereum}. 
 
 There exists a tremendous need for privacy overlays for Ethereum as new tools for transaction deanonymization are getting developed and used \cite{chan2017ethereum}. This need of the Ethereum community for privacy was spectacularly embodied in September, 2017 when for several days $68\%$ of all the transaction volume was controlled by a centralized coin mixing service \footnote{https://blog.cyber.fund/huge-ethereum-mixer-6cf98680ee6c}.
 
-The two major techniques to provide decentralized mixing services for Ethereum are Möbius, a ring-signature-based solution \cite{meiklejohn2018mobius} and Miximus, a zkSNARK-based proposal \cite{miximus2018}. Both of them burn tremendous amounts of gas to withdraw funds, which could be prohibitive for many use cases. As the Ethereum network is congested, ie. blocks were full during 2018\footnote{https://etherscan.io/chart/gasused}, we argue that it is essential for the network scalability to aim to create protocols and applications that burn as few gas as possible. 
+The two major techniques to provide decentralized mixing services for Ethereum are Möbius, a ring-signature-based solution \cite{meiklejohn2018mobius} and Miximus, a zkSNARK-based proposal \cite{miximus2018}. Both of them burn tremendous amounts of gas to withdraw funds, i.e., they do not support large anonymity sets, which could be prohibitive for many use cases. Efficiency is also crucial from a scalibility point of view. As the Ethereum network is congested, i.e., blocks were full during 2018\footnote{https://etherscan.io/chart/gasused}, we argue that it is essential for the network scalability to aim to create protocols and applications that burn as few gas as possible. Moreover Miximus relies on a trusted setup to generate the proving and verification keys for the zkSNARK. 
 
 \textbf{Our contributions.} In this paper, we present a trustless and efficient mixing protocol for Turing-complete blockchains. This protocol can be used to shuffle cyphertexts, ballots or public keys. The protocol have many use cases: shuffling ElGamal-cyphertexts, decentralized mixnets, e-voting.
 
-To show the practicality of the protocol, we introduce MixEth, a privacy-enhancing protocol and a practical tool for Ethereum, to overcome the above mentioned efficiency issues of Ethereum-based coin-mixers while retaining strong notions of anonymity, mixer availability and theft prevention already achieved by previous proposals (\cite{meiklejohn2018mobius},\cite{miximus2018}). MixEth requires as few off-chain messages and on-chain transactions as Möbius and Miximus, meanwhile it burns significantly less gas. We implement MixEth in a state channel to leverage the scalability and instant finality of off-chain scaling solutions. Furthermore, the MixEth protocol could be used in any state channel application to mix funds before going back to on-chain.
+To show the practicality of the protocol, we introduce MixEth, a privacy-enhancing protocol and a practical tool for Ethereum, to overcome the above mentioned efficiency and trusted setup issues of Ethereum-based coin-mixers while retaining strong notions of anonymity, mixer availability and theft prevention already achieved by previous proposals (\cite{meiklejohn2018mobius},\cite{miximus2018}). MixEth requires as few off-chain messages and on-chain transactions as Möbius and Miximus, meanwhile it burns significantly less gas. We implement MixEth in a state channel to leverage the scalability and instant finality of off-chain scaling solutions. Furthermore, the MixEth protocol could be used in any state channel application to mix funds before going back to on-chain.
 
 \section{Background}
 \subsection{Notations}
@@ -233,7 +233,7 @@ Elliptic Curve Digital Signature Algorithm (ECDSA) is a key component of MixEth.
 
 However, in MixEth, we deploy a somewhat loosened version of ECDSA, where we allow arbitrary generator elements to be used. Such an extension is indeed needed for withdrawing funds from the mixer, because shuffled public keys remain public keys with respect to non-standardized generator elements. Therefore the usual $\sig$ and $\verify$ algorithms for signing and verifying messages gets an additional parameter $G^{'}$, which is not necessarily the standardized generator element. Key generation algorithm works as usual $(pk,sk)\stackrel{\$}{\leftarrow}\kgen(1^{\lambda})$, on the other hand $\sigma\stackrel{\$}{\leftarrow}\sig(G^{'},sk,m)$ and  $0/1\leftarrow \verify(G^{'},pk,\sigma, m)$ accept new generators.
 
-In our security proofs we will be relying on the fact that ECDSA is \textit{existentially unforgeable} \cite{{fersch2016provable}}, i.e. no efficient adversary could forge a signature on any given message with non-negligible probability. 
+In our security proofs we will be relying on the fact that ECDSA is \textit{existentially unforgeable} \cite{{fersch2016provable}}, i.e., no efficient adversary could forge a signature on any given message with non-negligible probability. 
 
 \subsection{Ethereum}
 
@@ -400,7 +400,7 @@ Every participant should check the correctness of incoming shuffles. If a challe
 
 \begin{algorithm}
 	\caption{On-chain verification algorithm of incoming shuffle challenges}\label{verifyingshufflingoffchain}
-	\hspace*{\algorithmicindent} \textbf{Input}$(PK_{i}, PK_{i-1}, proof_{ChP}(C^{*}_{i-1},s_{B}C^{*}_{i-1},C^{*}_{i},s_{B}C^{*}_{i})$ \\
+	\textbf{Input}$(PK_{i}, PK_{i-1}, proof_{ChP}(C^{*}_{i-1},s_{B}C^{*}_{i-1},C^{*}_{i},s_{B}C^{*}_{i})$ \\
 	\begin{algorithmic}[1]
 		\State $b\leftarrow verifyChP(proof_{ChP}(C^{*}_{i-1},s_{B}C^{*}_{i-1}, C^{*}_{i},s_{B}C^{*}_{i})$ 
 		\State $b^*\leftarrow0$
@@ -451,7 +451,7 @@ Notions of security introduced in Section \ref{securitygoals} are formally prove
 
 \section{Implementation} 
 
-We implemented MixEth with two different approaches\footnote{https://github.com/seresistvanandras/MixEth}. The first implementation of MixEth does not apply state channels, all transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources, storage and gas, as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain.
+We implemented MixEth with two different approaches. The first implementation of MixEth does not apply state channels, all transactions are made on-chain. This could lead to unwanted gas costs as the number of corrupted shuffles increases. One of our main motivation with MixEth is to provide an efficient and scalable coin mixing protocol which uses as little blockchain resources, storage and gas, as possible. Therefore we also implement and evaluate MixEth applying state channels, namely shuffling and challenging a shuffle occurs off-chain and only deposit and withdrawal transactions happen on-chain.
 Both of the implementations allow users to mix Ether or other ERC20-compatible, a popular Ethereum token standard, tokens.
 
 One of the main bottlenecks of coin mixing protocols is the withdrawal transactions' gas costs. A Miximus withdrawal transaction burns $\num[group-separator={,}]{1903305}$ gas, regardless of the number of participating parties. Since the block gas limit is $\num[group-separator={,}]{8000266}$ as of 2018, October 24 only 4 Miximus withdrawal transactions could fit in one Ethereum block. This is even worse for Möbius, since the gas cost for withdrawing coins from a Möbius mixer contract linearly increases with the numbers of participants.  
@@ -473,7 +473,7 @@ We have also adapted MixEth to operate within a state channel. We wrote the impl
 Given these adaptations the application proceeds as follows, all participants including senders, shufflers and receivers, deposit funds in a mutli-signature wallet compatible with the Counterfactual framework, they then follow the installation protocols specified by the framework to install the adapted MixEth logic. Afterwards each participant signs a transaction that transfers an equal amount to each withdrawer from the multi-sig, dependent on correct execution of the channelised MixEth application logic. This application logic proceeds as follows: each sender names a public key of a shuffler as in the deposit stage of the on-chain application, then each shuffler takes it in turn to shuffle. After all shuffles have taken place each withdrawer is given a turn to either declare fraud or no-fraud on any shuffle round. Finally each withdrawer then provides proof of ownership by submitting a valid signature on the modified ECDSA scheme. If any of these steps does not occur, or does not occur correctly, the protocol aborts and the conditional transfer does not occur. In this case the perpetrator loses a deposit, either through fraud proof or through failure to take their turn when state is published on-chain. A further modification would be to distribute the slashed deposit to each of the other participants, compensating them for their lost time and the gas costs associated with proving the fault of the other party. Following this protocol the on-chain transactions are now reduced to: one transaction from each participant to deposit funds into the multi-sig, and a set of transactions that send funds from the multi-sig to each of the withdrawers and deposits back to each of the other participants. In a channelised MixEth contract there are exactly $N$ depositors, $N$ shufflers and $N$ receivers. 
 
 \begin{table}
-	\caption{Implementation gas cost results. MixEthChannel refers to the implementation which leverages state channels for shuffling and challenging periods. A shuffling transaction for an anomity set of $n$ burns $\num[group-separator={,}]{138653}+\num[group-separator={,}]{10000}n$ gas, while challenging any shuffle consumes $\num[group-separator={,}]{227563}$ gas.}
+	\caption{Implementation gas cost results per participants. MixEthChannel refers to the implementation which leverages state channels for shuffling and challenging periods. A shuffling transaction for an anomity set of $n$ burns $\num[group-separator={,}]{138653}+\num[group-separator={,}]{10000}n$ gas, while challenging any shuffle consumes $\num[group-separator={,}]{227563}$ gas.}
 	\centering 
 	\begin{tabular}{@{\extracolsep{6pt}}lcccc@{}} 	
 		\toprule
@@ -484,7 +484,7 @@ Given these adaptations the application proceeds as follows, all participants in
 		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{1046027}$&$\num[group-separator={,}]{76123}$&$\num[group-separator={,}]{335714}$n   \\
 		Miximus \cite{miximus2018}&$\num[group-separator={,}]{1751378}$&$\num[group-separator={,}]{732815}$ &$\num[group-separator={,}]{1903305}$  \\
 		MixEth&$\num[group-separator={,}]{5395945}$&$\num[group-separator={,}]{99254}$&$\num[group-separator={,}]{113265}$  \\
-		MixEthChannel&$\num[group-separator={,}]{672276}$&$\num[group-separator={,}]{21000}$&TBD\\
+		MixEthChannel&$\num[group-separator={,}]{672276}$&$\num[group-separator={,}]{21000}$&$\num[group-separator={,}]{26749}$\\
 		\bottomrule
 	\end{tabular}
 	\label{table:gasproperties}
@@ -493,7 +493,7 @@ Given these adaptations the application proceeds as follows, all participants in
 \section{Related work}
 Möbius was the very first trustless coin mixer designed for Ethereum\cite{meiklejohn2018mobius}. Authors of Möbius provided formal definitions of various notions of security such as anonymity, theft prevention and mixer availability. These properties could be used to evaluate and compare existing and future proposals from a security perspective. Möbius is a ring-signature-based trustless coin mixer with minimal on-chain transaction complexity: users of Möbius just need to create a deposit and a withdraw transaction. However the gas cost of the withdrawal transaction increases linearly in the number of receivers ($\num[group-separator={,}]{335714}n$ gas), which limits the size of possible anonymity sets. No more than 24 reciever could use Möbius with current cca. $\num[group-separator={,}]{8000000}$  block gas limit. If more people tries to use the mixer funds would be stucked in the mixer contract, since the gas costs of withdrawal transactions would be greater than the block gas limit.     
 
-Miximus is a trustless zkSNARK-based mixer for Ethereum\cite{miximus2018}. It uses zkSNARKs to conceal the mapping between depositors and recipients. A depositor creates a leaf in a Merkle-tree. A depositor needs to exchange the preimage of the leaf with the recipient. Later, a recipient could prove to the Miximus contract that they know one of the preimages of a certain, undisclosed leaf. So called nullifiers enable recipients to withdraw funds once and only once. The gas costs of depositing and withdrawing funds from a Miximus mixer is independent of the number of participants. However there are disadvantages of this approach; A severe limitation of Miximus is the trusted setup required for generating the proving key for the zkSNARK. If this trusted setup is compromised, the deployer of the contract, who generated the proving key could potentially steal funds from the mixer. Although, this issue could be amended via a multi-party computation (MPC) further increasing the off-chain communication complexitiy of Miximus.
+Miximus is a trustless zkSNARK-based mixer for Ethereum\cite{miximus2018}. It uses zkSNARKs to conceal the mapping between depositors and recipients. A depositor creates a leaf in a Merkle-tree. A depositor needs to exchange the preimage of the leaf with the recipient. Later, a recipient could prove to the Miximus contract that they know one of the preimages of a certain, undisclosed leaf. So called nullifiers enable recipients to withdraw funds once and only once. The gas costs of depositing and withdrawing funds from a Miximus mixer is independent of the number of participants. However there are disadvantages of this approach; A severe limitation of Miximus is the trusted setup required for generating the proving and verification keys for the zkSNARK. If this trusted setup is compromised, the deployer of the contract, who generated the proving key could potentially steal funds from the mixer. Although, this issue could be amended via a multi-party computation (MPC) further increasing the off-chain communication complexitiy of Miximus.
 
 As Table \ref{table:communicationcomplexity} demonstrates, both Möbius and Miximus require $2$ on-chain transactions, while MixEth requires $3$. In spite of this seemingly added complexity, the 3 on-chain transactions to complete the MixEth protocol (deposit, shuffle, withdraw) consume significantly less gas than those (deposit, verify linkable ring signature/zkSNARK) of Möbius and Miximus, see Table~\ref{table:gasproperties}. 
 \begin{table}
@@ -525,10 +525,13 @@ As Table \ref{table:communicationcomplexity} demonstrates, both Möbius and Mixi
 \end{table}
 
 \subsection{Additional related work}
-Recently, in November 26, 2018 a new privacy-enhancing protocol and tool was released, called Aztec protocol\footnote{https://github.com/AztecProtocol/AZTEC}. Aztec allows its users to convert any type of existing digital asset on top Ethereum into Aztec notes. Later on Aztec notes can be traded in a join-split style confidential transaction, namely the value of the traded Aztec notes are encrypted and not visible to outsiders. A join-split style transaction can have multiple inputs and outputs. Aztec applies zero-knowledge proofs and range proofs in order to achieve that the sum of inputs traded in a confidential transaction is greater or equal than the sum of outputs. The gas cost of a confidential Aztec transaction is $\num[group-separator={,}]{219000}$+$\num[group-separator={,}]{121000}n$+$\num[group-separator={,}]{41000}m$, where $n$ and $m$ are the numbers of inputs and outputs respectively.  Although Aztec is not a coin mixer, it can be used not only to provide confidential transaction, but also to increase anonymity. On the downside Aztec uses a trusted setup and considerably more expensive than MixEth to provide the same level of k-anonymity, however it is able to conceal transaction volumes. Most likely a combination of MixEth and Aztec would yield the most gas-efficient solution to achieve k-anonym and confidential transactions. For instance on top Aztec one could use MixEth to shuffle Aztec notes.      
+Recently, in November 26, 2018 a new privacy-enhancing protocol and tool was released, called Aztec protocol\footnote{https://github.com/AztecProtocol/AZTEC}. Aztec allows its users to convert any type of existing digital asset on top Ethereum into Aztec notes. Later on Aztec notes can be traded in a join-split style confidential transaction, namely the value of the traded Aztec notes are encrypted and not visible to outsiders. A join-split style transaction can have multiple inputs and outputs. Aztec applies zero-knowledge proofs and range proofs in order to achieve that the sum of inputs traded in a confidential transaction is greater or equal than the sum of outputs. The gas cost of a confidential Aztec transaction is $\num[group-separator={,}]{219000}$+$\num[group-separator={,}]{121000}n$+$\num[group-separator={,}]{41000}m$, where $n$ and $m$ are the numbers of inputs and outputs respectively.  Although Aztec is not a coin mixer, it can be used not only to provide confidential transaction, but also to increase anonymity. On the downside Aztec uses a trusted setup and considerably more expensive than MixEth to provide the same level of k-anonymity, however it is able to conceal transaction volumes. Most likely a combination of MixEth and Aztec would yield the most gas-efficient solution to achieve k-anonymity and confidential transactions. For instance on top of Aztec one could use MixEth to shuffle Aztec notes.
+
+\section{Extensions and improvements}
+One might effectively minimize the number of necessary shuffling rounds to $1$. If a Trusted Execution Environment (TEE), e.g., Intel SGX is used to generate the shuffling transaction, then even a single shuffling transaction would suffice to provide the same level of anonymity as if every participant shuffles the public keys. Any of the participants could upload the TEE-generated shuffling transaction, while the MixEth contract could check that indeed the shuffling transaction was generated by a TEE. Such a shortcut would make our scheme even more practical and efficient, however it would subsume trust in Intel regarding the security and confidentiality of the TEE.      
 
 \section{Acknowledgements}
-We would like to thank Liam Horne for helping with the state channel implementation, Patrick McCorry for proofreading, barryWhiteHat, Dmitry Khovratovich and Sina Mahmoodi for the insightful comments and discussions. 
+We would like to thank Liam Horne for helping with the state channel implementation, barryWhiteHat, Dmitry Khovratovich and Sina Mahmoodi for the insightful comments and discussions. 
 
 \bibliographystyle{IEEEtran}
 \bibliography{sample}

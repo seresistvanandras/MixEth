@@ -36,12 +36,12 @@
 \citation{miximus2018}
 \citation{meiklejohn2018mobius}
 \citation{miximus2018}
+\citation{meiklejohn2018mobius}
 \select@language{english}
 \@writefile{toc}{\select@language{english}}
 \@writefile{lof}{\select@language{english}}
 \@writefile{lot}{\select@language{english}}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}}
-\citation{meiklejohn2018mobius}
 \citation{wood2014ethereum}
 \citation{neff2001verifiable}
 \citation{bayer2012efficient}
@@ -62,13 +62,13 @@
 \citation{dziembowski2017perun}
 \citation{mccorryyou}
 \citation{mccorryyou}
+\citation{meiklejohn2018mobius}
+\citation{meiklejohn2018mobius}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.6.2}Ethereum account abstraction}{4}{subsubsection.2.6.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Threat model}{4}{section.3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Participants and interactions}{4}{subsection.3.1}}
-\citation{meiklejohn2018mobius}
-\citation{meiklejohn2018mobius}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Security goals}{5}{subsection.3.2}}
-\newlabel{securitygoals}{{3.2}{5}{Security goals}{subsection.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Security goals}{4}{subsection.3.2}}
+\newlabel{securitygoals}{{3.2}{4}{Security goals}{subsection.3.2}{}}
 \newlabel{sec:defanonymity}{{3.2.1}{5}{Anonymity}{subsubsection.3.2.1}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Anonymity}{5}{subsubsection.3.2.1}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Availability}{5}{subsubsection.3.2.2}}
@@ -76,6 +76,8 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Theft prevention}{5}{subsubsection.3.2.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}MixEth}{5}{section.4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Initializing the tumbler}{5}{subsection.4.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Depositing period}{5}{subsection.4.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Shuffling period}{5}{subsection.4.3}}
 \citation{bonneau2014mixcoin}
 \citation{valenta2015blindcoin}
 \citation{heilman2017tumblebit}
@@ -84,8 +86,6 @@
 \citation{bissias2014sybil}
 \citation{meiklejohn2018mobius}
 \citation{miximus2018}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Depositing period}{6}{subsection.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Shuffling period}{6}{subsection.4.3}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Off-chain public key shuffling algorithm for the $i$th shuffling round\relax }}{6}{algorithm.1}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{shufflingoffchain}{{1}{6}{Off-chain public key shuffling algorithm for the $i$th shuffling round\relax }{algorithm.1}{}}
@@ -95,12 +95,12 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Withdrawing}{6}{subsection.4.5}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Security}{6}{section.5}}
 \@writefile{toc}{\contentsline {section}{\numberline {6}Implementation}{6}{section.6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Fully on-chain implementation}{6}{subsection.6.1}}
+\newlabel{fullyonchainimpl}{{6.1}{6}{Fully on-chain implementation}{subsection.6.1}{}}
 \citation{coleman2018counterfactual}
 \citation{mccorryyou}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Security properties achieved by each coin mixing protocol.\relax }}{7}{table.caption.4}}
 \newlabel{table:securityproperties}{{1}{7}{Security properties achieved by each coin mixing protocol.\relax }{table.caption.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Fully on-chain implementation}{7}{subsection.6.1}}
-\newlabel{fullyonchainimpl}{{6.1}{7}{Fully on-chain implementation}{subsection.6.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}State channel implementation}{7}{subsection.6.2}}
 \newlabel{statechannelimpl}{{6.2}{7}{State channel implementation}{subsection.6.2}{}}
 \citation{meiklejohn2018mobius}
@@ -115,10 +115,11 @@
 \citation{bissias2014sybil}
 \citation{meiklejohn2018mobius}
 \citation{miximus2018}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Implementation gas cost results. MixEthChannel refers to the implementation which leverages state channels for shuffling and challenging periods. A shuffling transaction for an anomity set of $n$ burns $\num [group-separator={,}]{138653}+\num [group-separator={,}]{10000}n$ gas, while challenging any shuffle consumes $\num [group-separator={,}]{227563}$ gas.\relax }}{8}{table.caption.5}}
-\newlabel{table:gasproperties}{{2}{8}{Implementation gas cost results. MixEthChannel refers to the implementation which leverages state channels for shuffling and challenging periods. A shuffling transaction for an anomity set of $n$ burns $\num [group-separator={,}]{138653}+\num [group-separator={,}]{10000}n$ gas, while challenging any shuffle consumes $\num [group-separator={,}]{227563}$ gas.\relax }{table.caption.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Implementation gas cost results per participants. MixEthChannel refers to the implementation which leverages state channels for shuffling and challenging periods. A shuffling transaction for an anomity set of $n$ burns $\num [group-separator={,}]{138653}+\num [group-separator={,}]{10000}n$ gas, while challenging any shuffle consumes $\num [group-separator={,}]{227563}$ gas.\relax }}{8}{table.caption.5}}
+\newlabel{table:gasproperties}{{2}{8}{Implementation gas cost results per participants. MixEthChannel refers to the implementation which leverages state channels for shuffling and challenging periods. A shuffling transaction for an anomity set of $n$ burns $\num [group-separator={,}]{138653}+\num [group-separator={,}]{10000}n$ gas, while challenging any shuffle consumes $\num [group-separator={,}]{227563}$ gas.\relax }{table.caption.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {7}Related work}{8}{section.7}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Additional related work}{8}{subsection.7.1}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Number of on-chain transactions and off-chain messages per a single participant required to run a certain coin mixer protocol. Note that in case of Miximus if one wants to avoid the trusted setup for the zkSNARK, then they need to perform a secure multi-party computation protocol to trust-minimize the proving and verification keys generation.\relax }}{8}{table.caption.6}}
+\newlabel{table:communicationcomplexity}{{3}{8}{Number of on-chain transactions and off-chain messages per a single participant required to run a certain coin mixer protocol. Note that in case of Miximus if one wants to avoid the trusted setup for the zkSNARK, then they need to perform a secure multi-party computation protocol to trust-minimize the proving and verification keys generation.\relax }{table.caption.6}{}}
 \bibstyle{IEEEtran}
 \bibdata{sample}
 \bibcite{miximus2018}{{1}{}{{}}{{}}}
@@ -136,10 +137,10 @@
 \bibcite{mccorryyou}{{13}{}{{}}{{}}}
 \bibcite{meiklejohn2018mobius}{{14}{}{{}}{{}}}
 \bibcite{meiklejohn2013fistful}{{15}{}{{}}{{}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Additional related work}{9}{subsection.7.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Extensions and improvements}{9}{section.8}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Acknowledgements}{9}{section.9}}
 \bibcite{moreno2016listening}{{16}{}{{}}{{}}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Number of on-chain transactions and off-chain messages per a single participant required to run a certain coin mixer protocol. Note that in case of Miximus if one wants to avoid the trusted setup for the zkSNARK, then they need to perform a secure multi-party computation protocol to trust-minimize the proving and verification keys generation.\relax }}{9}{table.caption.6}}
-\newlabel{table:communicationcomplexity}{{3}{9}{Number of on-chain transactions and off-chain messages per a single participant required to run a certain coin mixer protocol. Note that in case of Miximus if one wants to avoid the trusted setup for the zkSNARK, then they need to perform a secure multi-party computation protocol to trust-minimize the proving and verification keys generation.\relax }{table.caption.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Acknowledgements}{9}{section.8}}
 \bibcite{moser2013inquiry}{{17}{}{{}}{{}}}
 \bibcite{nakamoto2008bitcoin}{{18}{}{{}}{{}}}
 \bibcite{neff2001verifiable}{{19}{}{{}}{{}}}
