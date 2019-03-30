@@ -15,26 +15,23 @@
 \BOOKMARK [3][-]{subsubsection.3.2.2}{Availability}{subsection.3.2}% 15
 \BOOKMARK [3][-]{subsubsection.3.2.3}{Theft prevention}{subsection.3.2}% 16
 \BOOKMARK [1][-]{section.4}{MixEth}{}% 17
-\BOOKMARK [2][-]{subsection.4.1}{Overview}{section.4}% 18
-\BOOKMARK [2][-]{subsection.4.2}{Initializing the tumbler}{section.4}% 19
-\BOOKMARK [2][-]{subsection.4.3}{Depositing period}{section.4}% 20
-\BOOKMARK [2][-]{subsection.4.4}{Shuffling period}{section.4}% 21
-\BOOKMARK [2][-]{subsection.4.5}{Challenging period}{section.4}% 22
-\BOOKMARK [2][-]{subsection.4.6}{Withdrawing}{section.4}% 23
-\BOOKMARK [2][-]{subsection.4.7}{MixEth formal specification}{section.4}% 24
-\BOOKMARK [1][-]{section.5}{Security}{}% 25
-\BOOKMARK [2][-]{subsection.5.1}{Recipient anonymity}{section.5}% 26
-\BOOKMARK [2][-]{subsection.5.2}{Availability}{section.5}% 27
-\BOOKMARK [2][-]{subsection.5.3}{Theft prevention}{section.5}% 28
-\BOOKMARK [1][-]{section.6}{Implementation}{}% 29
-\BOOKMARK [2][-]{subsection.6.1}{Fully on-chain implementation}{section.6}% 30
-\BOOKMARK [2][-]{subsection.6.2}{State channel implementation}{section.6}% 31
-\BOOKMARK [1][-]{section.7}{Related work}{}% 32
-\BOOKMARK [2][-]{subsection.7.1}{Additional related work}{section.7}% 33
-\BOOKMARK [1][-]{section.8}{Extensions and improvements}{}% 34
-\BOOKMARK [1][-]{section.9}{Conclusion and Future Work}{}% 35
-\BOOKMARK [1][-]{section.10}{Acknowledgements}{}% 36
-\BOOKMARK [1][-]{section*.17}{Appendices}{}% 37
-\BOOKMARK [1][-]{Appendix.a.A}{Proof of Anonymity}{}% 38
-\BOOKMARK [1][-]{Appendix.a.B}{Proof of Availability}{}% 39
-\BOOKMARK [1][-]{Appendix.a.C}{Proof of Theft Prevention}{}% 40
+\BOOKMARK [2][-]{subsection.4.1}{Initializing the tumbler and depositing period}{section.4}% 18
+\BOOKMARK [2][-]{subsection.4.2}{Shuffling period}{section.4}% 19
+\BOOKMARK [2][-]{subsection.4.3}{Challenging period}{section.4}% 20
+\BOOKMARK [2][-]{subsection.4.4}{Withdrawing}{section.4}% 21
+\BOOKMARK [2][-]{subsection.4.5}{MixEth formal specification}{section.4}% 22
+\BOOKMARK [1][-]{section.5}{Security}{}% 23
+\BOOKMARK [2][-]{subsection.5.1}{Recipient anonymity}{section.5}% 24
+\BOOKMARK [2][-]{subsection.5.2}{Availability}{section.5}% 25
+\BOOKMARK [2][-]{subsection.5.3}{Theft prevention}{section.5}% 26
+\BOOKMARK [1][-]{section.6}{Implementation}{}% 27
+\BOOKMARK [2][-]{subsection.6.1}{Fully on-chain implementation}{section.6}% 28
+\BOOKMARK [2][-]{subsection.6.2}{State channel implementation}{section.6}% 29
+\BOOKMARK [1][-]{section.7}{Related work}{}% 30
+\BOOKMARK [2][-]{subsection.7.1}{Additional related work}{section.7}% 31
+\BOOKMARK [1][-]{section.8}{Extensions and improvements}{}% 32
+\BOOKMARK [1][-]{section.9}{Acknowledgements}{}% 33
+\BOOKMARK [1][-]{section*.17}{Appendices}{}% 34
+\BOOKMARK [1][-]{Appendix.a.A}{Proof of Anonymity}{}% 35
+\BOOKMARK [1][-]{Appendix.a.B}{Proof of Availability}{}% 36
+\BOOKMARK [1][-]{Appendix.a.C}{Proof of Theft Prevention}{}% 37

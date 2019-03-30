@@ -48,12 +48,6 @@ Vitalik Buterin and Nick Johnson.
 \newblock \url{https://github.com/ethereum/EIPs/blob/master/EIPS/eip-86.md},
   2017.
 
-\bibitem{catalano2013vector}
-Dario Catalano and Dario Fiore.
-\newblock Vector commitments and their applications.
-\newblock In {\em Public-Key Cryptography--PKC 2013}, pages 55--72. Springer,
-  2013.
-
 \bibitem{chan2017ethereum}
 Wren Chan and Aspen Olmsted.
 \newblock Ethereum transaction graph analysis.

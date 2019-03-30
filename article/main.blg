@@ -7,45 +7,45 @@ Warning--empty journal in mccorryyou
 Warning--empty year in mccorryyou
 Warning--empty journal in nakamoto2008bitcoin
 Warning--empty journal in poon2016bitcoin
-You've used 29 entries,
+You've used 28 entries,
             2118 wiz_defined-function locations,
-            646 strings with 8846 characters,
-and the built_in function-call counts, 10483 in all, are:
-= -- 1070
-> -- 437
-< -- 13
-+ -- 179
-- -- 144
-* -- 606
-:= -- 1630
-add.period$ -- 98
-call.type$ -- 29
-change.case$ -- 160
+            641 strings with 8716 characters,
+and the built_in function-call counts, 10055 in all, are:
+= -- 1023
+> -- 424
+< -- 12
++ -- 174
+- -- 140
+* -- 583
+:= -- 1568
+add.period$ -- 94
+call.type$ -- 28
+change.case$ -- 155
 chr.to.int$ -- 0
-cite$ -- 33
-duplicate$ -- 440
-empty$ -- 877
-format.name$ -- 144
-if$ -- 2326
+cite$ -- 32
+duplicate$ -- 418
+empty$ -- 839
+format.name$ -- 140
+if$ -- 2225
 int.to.chr$ -- 0
-int.to.str$ -- 29
-missing$ -- 21
-newline$ -- 146
-num.names$ -- 58
-pop$ -- 236
+int.to.str$ -- 28
+missing$ -- 20
+newline$ -- 141
+num.names$ -- 56
+pop$ -- 228
 preamble$ -- 1
-purify$ -- 130
+purify$ -- 126
 quote$ -- 0
-skip$ -- 339
+skip$ -- 323
 stack$ -- 0
-substring$ -- 607
-swap$ -- 148
-text.length$ -- 13
+substring$ -- 578
+swap$ -- 140
+text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 116
+type$ -- 112
 warning$ -- 4
-while$ -- 103
-width$ -- 31
-write$ -- 315
+while$ -- 98
+width$ -- 30
+write$ -- 303
 (There were 4 warnings)
