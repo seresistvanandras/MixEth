@@ -115,6 +115,7 @@ keys]{cryptocode}
 
 \newcommand{\smallsim}{\smallsym{\mathrel}{\sim}}
 
+\date{}
 \makeatletter
 \newcommand{\smallsym}[2]{#1{\mathpalette\make@small@sym{#2}}}
 \newcommand{\make@small@sym}[2]{%
@@ -142,7 +143,7 @@ keys]{cryptocode}
 \begin{abstract}
 Coin mixing is a prevalent privacy-enhancing technology for cryptocurrency users. In this paper, we present MixEth, which is a trustless coin mixing service for Turing-complete blockchains. MixEth does not rely on a trusted setup and is more efficient than any proposed trustless coin tumbler. It requires only 3 on-chain transactions at most per user and 1 off-chain message. It achieves strong notions of anonymity and is able to resist denial-of-service attacks. Furthermore the underlying protocol can also be used to efficiently shuffle ballots, ciphertexts in a trustless and decentralized manner.     
 \end{abstract}
-\keywords{Cryptography, Verifiable shuffle, Cryptocurrency, Ethereum, Coin mixer, State Channel}
+\keywords{Cryptography, Verifiable shuffle, Anonymity, Cryptocurrency, Ethereum, Coin mixer, State Channel}
 
 \section{Introduction}
 Bitcoin \cite{nakamoto2008bitcoin} and other cryptocurrencies are pseudonymous. Users' public keys are used as pseudonyms in these systems. Transactions essentially record a flow of cryptocurrency from one (or more) public keys to another public key (or more). Flow of cryptocurrency can be easily tracked due to the open and transparent nature of cryptocurrencies' transaction ledger. Moreover, coherent public keys, which are used by the same user, can be clustered merely by analyzing the ledger. Recently several tools and algorithms were proposed to diminish users' privacy \cite{meiklejohn2013fistful,moser2013inquiry,moreno2016listening}. Such deanomyzation attacks are extremely harmful to user privacy, especially in the case when any of the users' pseudonyms, public keys, are linked to their real world identity. 
@@ -254,9 +255,13 @@ $0/1\leftarrow VerifyDeposit(tx)$: The tumbler contract checks the validity of s
 
 $ProcessDeposit(tx)$: upon receiving a valid deposit transaction, the mixing contract updates its internal state accordingly.
 
-Let $PK_{0}$ denote the set of public keys after the depositing period to be mixed. Furthermore let us set $C^{*}_{0}=G$, the standard generator point of the secp256k1 curve. Anyone is allowed to shuffle the public keys at most once by paying some deposit to the tumbler contract: 
+Let $PK_{0}$ denote the set of public keys to be mixed after the depositing period. Generally $PK_{i}$ will denote the set of shuffled public keys after $i$ shuffling round. Furthermore let us set $C^{*}_{0}=G$, the standard generator point of the secp256k1 curve. Similarly $C^{*}_{i}$ denotes the shuffling accumulated constant after the $i$th shuffling round. Shuffles are computed off-chain, the outputs of the algorithm are written into the on-chain mixer contract. Anyone is allowed to shuffle the public keys by paying some deposit to the tumbler contract.
 
-$PK_{i+1},C_{i+1}^{*}\stackrel{\$}{\leftarrow}Shuffle(PK_{i},C^{*}_{i},c_{i},\pi_{i})$. Let us call $C^{*}_{i}$ as the shuffling accumulated constant, which can be obtained by $C^{*}_{i+1}=c_{i}C^{*}_{i}$. The shuffling accumulated constant is needed for receivers to audit shuffling and to collect their funds at the end of the final shuffling period. The permutation $\pi$ and the secret multiplier $c_{i}$ from the new shuffling accumulated constant should be kept private after shuffling, otherwise it is trivial to track how public keys are shuffled. All the outputs of the $Shuffle$ algorithm are public and written into the tumbling contract.  
+$PK_{i+1},C_{i+1}^{*},proof_{DDH}(G,c_{i}G,C^{*}_{i},C^{*}_{i+1})\stackrel{\$}{\leftarrow}Shuffle(PK_{i},C^{*}_{i},c_{i},\pi_{i})$. The new shuffling accumulated constant $C^{*}_{i+1}$ can be obtained by $C^{*}_{i+1}=c_{i}C^{*}_{i}$. The shuffling accumulated constant is needed for receivers to audit shuffling and to collect their funds at the end of the final shuffling period. The permutation $\pi_{i}$ and the secret multiplier $c_{i}$ from the new shuffling accumulated constant should be kept private after shuffling, otherwise it is trivial to track how public keys are shuffled. All the outputs of the $Shuffle$ algorithm are public and written into the tumbling contract.
+
+Note that we need an additional Chaum-Pedersen proof from the shuffler in order to prove that the shuffler knows a secret multiplier between the new and the previous shuffling accumulated constants. If we did not require such proof, a malicious shuffler could break anonymity just by uploading a random shuffle of the original public keys, the set $PK_{0}$.
+
+ $0\lor1\leftarrow ProcessShuffle(PK_{i+1},C_{i+1}^{*},proof_{DDH}(G,c_{i}G,C^{*}_{i},C^{*}_{i+1}))$. If the mixing contract is in a shuffling period and the Chaum-Pedersen proof is verified, then $(PK_{i+1},C_{i+1})$ is written into the contract state, otherwise shuffling transactions is reverted.  
 
 $0\lor1\leftarrow 
 ChallengeShuffle(PK_{i},C^{*}_{i},PK_{i-1},C^{*}_{i-1},pk_{B})$: receiver $B$ with public key $pk_{B}=s_{B}G$ can challenge an incorrect shuffle at the $i$th round by giving a Chaum-Pedersen zero-knowledge proof that the following tuple is DDH-tuples: $(C^{*}_{i-1}, s_{B}C^{*}_{i-1}, C^{*}_{i}, s_{B}C^{*}_{i})$. If the proof verifies and $s_{B}C^{*}_{i} \notin PK_{i}$, while $s_{B}C^{*}_{i-1} \in PK_{i-1}$, then the challenge is accepted, otherwise rejected. This proof and checks allow one to be certain that indeed the $i$th round is the first round in which the corresponding public key to $s_{B}$ is shuffled incorrectly.  
@@ -430,9 +435,9 @@ A MixEth contract living on the Ethereum blockchain at $id_{contract}$ address m
 Every sender must deposit exactly $amt$ ether to a specific public key. Deposits with incorrect ether value or invalid public key are rejected. Public keys in subsequent deposit transactions are written into the $initPubKeys[]$ array.   
 
 \subsection{Shuffling period}
-After the depositing round, shuffling and challenging rounds are coming after in turns. Each shuffling round is followed by a challenging round when the correctness of the preceding shuffle can be challenged by anyone. If a challenge is accepted, then shuffler's deposit is lost and given to the challenger, their shuffle is discarded and shuffling continues from the set of public keys prior to the discarded shuffle. In the course of a shuffle an honest shuffler should multiply all the public keys with a secret multiplier $c$ and then permute all the transformed public keys. Honest shuffler commits to $c$ by sending back to MixEth the new shuffling accumulated constant and the shuffled public keys.
+After the depositing round, shuffling and challenging rounds are coming after in turns. Each shuffling round is followed by a challenging round when the correctness of the preceding shuffle can be challenged by anyone. If a challenge is accepted, then shuffler's deposit is lost and given to the challenger, the incorrect shuffle is discarded and shuffling continues from the set of public keys prior to the discarded shuffle. In the course of a shuffle an honest shuffler should multiply all the public keys with a secret multiplier $c$ and then permute all the transformed public keys. Honest shuffler commits to $c$ by sending back to MixEth the new shuffling accumulated constant and the shuffled public keys along with a Chaum-Pedersen proof, proving the correctness of the new shuffling accumulated constant.
 
-Computing the shuffle is done off-chain, however the result and the updated shuffling accumulated constant is loaded into the MixEth contract enabling anyone to verify the shuffle's correctness and to continue public key shuffling after the corresponding challenging round.
+Computing the shuffle is done off-chain, see Procedure \ref{shufflingoffchain}, however the new set of shuffled public keys, the updated shuffling accumulated constant and the Chaum-Pedersen proof are loaded into the MixEth contract enabling anyone to verify the shuffle's correctness and to continue public key shuffling after the corresponding challenging round. In Procedure \ref{shufflingoffchain} the function $generateChaumPedersen(G,A,B,C)$ denotes a PPT algorithm, which generates a Chaum-Pedersen proof, proving that $\log_{G}(A)=\log_{B}(C)$.  The mixing contract accepts a shuffling transaction if and only if the contract is in a shuffling period and the Chaum-Pedersen proof is verified, otherwise rejects.
 
 \begin{algorithm}
 \caption{Off-chain public key shuffling algorithm for the $i$th shuffling round}\label{shufflingoffchain}
@@ -446,8 +451,9 @@ Computing the shuffle is done off-chain, however the result and the updated shuf
 	\State $PK_{i}[\pi(j)]=c*PK_{i-1}[j]$ 
 	\EndFor
 	\State $C^{*}_{i}=cC^{*}_{i-1}$
+	\State $proof_{DDH}=generateChaumPedersen(G,cG,C^{*}_{i-1},C^{*}_{i})$
 	
-\hspace*{\algorithmicindent} \textbf{Output:} $(PK_{i},C^{*}_{i})$ 
+\hspace*{\algorithmicindent} \textbf{Output:} $(PK_{i},C^{*}_{i},proof_{DDH})$ 
 \end{algorithmic}   
 \end{algorithm}
 \subsection{Challenging period}
@@ -602,7 +608,7 @@ If an adversary is able to steal funds from other users than it would imply that
 	\end{tabular}
 	\label{table:securityproperties}
 \end{table}
-\newpage
+
 \section{Implementation}
 
 \begin{wrapfigure}{r}{0.7\textwidth}
@@ -620,7 +626,7 @@ One of the main bottlenecks of coin mixing protocols is the withdrawal transacti
 Although MixEth is more gas-efficient than Möbius or Miximus, it incurs a higher time-complexity, ie. recipients need to expect longer delays for funds to arrive since each challenging period lasts a few blocks of time. Furthermore MixEth requires users to be online during the course of mixing, in some scenarios this might be a demanding requirement.
 
 All MixEth smart contracts were written in the Solidity language, which is currently the dominant language for developing Ethereum smart contracts. MixEth contracts are compiled using the latest version of the Solidity compiler in order to take advantage of the latest language features such as the possibility to return dynamic-sized arrays from contract functions. Note that these implementations are only proof-of-concept implementations, expect further improvements. All MixEth contracts are available online\footnote{https://github.com/seresistvanandras/MixEth}.  
-\newpage
+
 \subsection{Fully on-chain implementation} \label{fullyonchainimpl}
 
 \begin{wrapfigure}{r}{0.3\textwidth}
@@ -648,7 +654,7 @@ Conceivably mixers would like to minimize off-chain coordination, therefore in o
 
 On-chain storage is extremely expensive: it requires $\num[group-separator={,}]{20000}$ gas to store a $256$-bit number, however if a particular storage slot is already taken and one wants to overwrite it with a non-zero element then storing only consumes $\num[group-separator={,}]{5000}$ gas. To minimize on-chain storage costs, only the last two list of shuffled public keys are stored in the MixEth contract's permanent storage. Note that storing only the latest list of shuffled public keys would not be enough, since honest receivers could not prove to the contract that their shuffled public key is compromised unless also the last but first list of shuffled keys is also available for the contract to check the Chaum-Pedersen proof against. Such a storage structure implies that after uploading the new list of shuffled public keys, a challenging period should proceed in order to let receivers check the correctness of the shuffle and whether their shuffled public key is stored in the smart contract, see Figure \ref{fig:shuffleandchallenge}. Furthermore we also allow senders to shuffle and deposit new public keys at the same time, meaning that only $3$ on-chain transactions (shuffle, withdraw mixed coins and withdraw shuffling deposit) are sufficient to complete the protocol. We left it as a future work to determine the optimal ratio of mixed coins and shuffling deposits in order to incentivise correct shuffling.
 
-A great advantage of the fully on-chain version of MixEth is that it allows dynamic anonymity sets. One could potentially deposit funds to the contract and shuffle public keys and leave funds in the mixing contract for indefinite amount of time. As soon as the anonymity set is large enough a receiver could withdraw their assets. The whole process is represented as a finite automata as shown in Figure \ref{fig:shuffleandchallenge}. A receiver in a MixEth contract with $N$ senders could withdraw their funds after $N^{'}$ shuffling rounds, where $N^{'}$ is arbitrary.  This dynamic nature of the contract could even lead to a single monolithic MixEth contract instead of having multiple MixEth contracts with significantly fragmented anonymity sets. A single MixEth contract is able to support the mixing of ether and ERC-20 compatible tokens as well. However note that the gas complexity of shuffling transactions grows linearly in the number of participants, therefore the fully on-chain implementation is not capable to support extremely large anonymity sets with participants more than cca. $\num[group-separator={,}]{800}$. 
+A great advantage of the fully on-chain version of MixEth is that it allows dynamic anonymity sets. One could potentially deposit funds to the contract and shuffle public keys and leave funds in the mixing contract for indefinite amount of time. As soon as the anonymity set is large enough a receiver could withdraw their assets. The whole process is represented as a finite automata as shown in Figure \ref{fig:shuffleandchallenge}. A receiver in a MixEth contract with $N$ senders could withdraw their funds after $N^{'}$ shuffling rounds, where $N^{'}$ is arbitrary.  This dynamic nature of the contract could even lead to a single monolithic MixEth contract instead of having multiple MixEth contracts with significantly fragmented anonymity sets. A single MixEth contract is able to support the mixing of ether and ERC-20 compatible tokens as well. However note that the gas complexity of shuffling transactions grows linearly in the number of participants, therefore the fully on-chain implementation is not capable to support extremely large anonymity sets with participants more than a few hundreds. 
 
 Also note that the on-chain cost of a shuffle transaction could be amortized among participants. Specifically if there is a group of senders and/or receivers who trust each other they could collectively charge any of them to shuffle once. Since they trust their peer, all the rest of the group does not need to shuffle anymore. Later non-shufflers could reimburse the only shuffler for their services either on-chain or off-chain. 
 
@@ -674,7 +680,6 @@ Also note that the on-chain cost of a shuffle transaction could be amortized amo
 	\label{fig:shufflethenchallenge}
 \end{wrapfigure}         
 
-\newpage
 \subsection{State channel implementation} \label{statechannelimpl}
 
 We have also adapted MixEth to operate within a state channel. We wrote the implementation within the guidelines of the Counterfactual framework \cite{coleman2018counterfactual}. This allowed us to delegate the processes of setup, liveness disputes and finalisation to the framework so that we could focus on adapting the application logic. Unlike the on-chain implementation the state channel implementation requires that the set of participants be agreed upon upfront. In state channels each update to the state needs to be signed by all other participants, this means that state channel applications are inherently at least $\mathcal{O}(n)$. To co-ordinate these off-chain updates the Counterfactual framework enforces that all applications be turn based, introducing a turn taker for each turn who may propose a new state. The original MixEth implementation was not turn based so we have adapted the application to this constraint, an example of this adaptation is the challenge round. In the on-chain implementation a time period is allowed during which any participant may challenge, we have adapted this by proceeding turn-based through the participants offering each the chance to either challenge or pass. In the case of a breakdown in cooperation in the channel, a liveness fault, it has been shown that all operations succeeding the cooperation breakdown must proceed on chain\cite{mccorryyou} or be abandoned at some financial cost specified by the application, meaning that if every shuffle were to be succeeded by a challenge round each participant would be forced, by threat this lost deposit, to make an on-chain transaction after each shuffle, incurring $\mathcal{O}(n)$ on chain operations. To mitigate this we removed the challenge after each round and instead introduced a challenge round that takes place after all shuffles have completed, during this round any of the preceding shuffles may be challenged.
@@ -693,7 +698,7 @@ Given these adaptations the application proceeds as follows, all participants in
 		\midrule
 		Möbius \cite{meiklejohn2018mobius}     &$\num[group-separator={,}]{1046027}$&$\num[group-separator={,}]{76123}$&0&0&$\num[group-separator={,}]{335714}$n   \\
 		Miximus \cite{miximus2018}&$\num[group-separator={,}]{1751378}$&$\num[group-separator={,}]{732815}$&0&0 &$\num[group-separator={,}]{1903305}$  \\
-		MixEth&$\num[group-separator={,}]{5395945}$&$\num[group-separator={,}]{99254}$&$\num[group-separator={,}]{138653}+\num[group-separator={,}]{10000}n$&$\num[group-separator={,}]{227563}$&$\num[group-separator={,}]{113265}$  \\
+		MixEth&$\num[group-separator={,}]{5395945}$&$\num[group-separator={,}]{99254}$&$\num[group-separator={,}]{366216}+\num[group-separator={,}]{10000}n$&$\num[group-separator={,}]{227563}$&$\num[group-separator={,}]{113265}$  \\
 		MixEthChannel&$\num[group-separator={,}]{672276}$&$\num[group-separator={,}]{21000}$&0&0&$\num[group-separator={,}]{26749}$\\
 		\bottomrule
 	\end{tabular}
