@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  1 APR 2019 15:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.19)  8 APR 2019 14:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2222,255 +2222,255 @@ Overfull \hbox (33.15451pt too wide) in paragraph at lines 487--505
  []
 
 
-Overfull \hbox (4.41281pt too wide) in paragraph at lines 515--515
+Overfull \hbox (1.9132pt too wide) in paragraph at lines 516--516
 [] 
  []
 
 
-Overfull \hbox (6.41281pt too wide) in paragraph at lines 515--516
+Overfull \hbox (3.9132pt too wide) in paragraph at lines 516--517
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 515--516
+Underfull \hbox (badness 10000) in paragraph at lines 516--517
 
  []
 
 
-Overfull \hbox (6.5512pt too wide) in paragraph at lines 520--520
+Overfull \hbox (49.40494pt too wide) in paragraph at lines 521--521
 [] 
  []
 
 
-Overfull \hbox (8.5512pt too wide) in paragraph at lines 520--521
+Overfull \hbox (51.40494pt too wide) in paragraph at lines 521--522
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 520--521
+Underfull \hbox (badness 10000) in paragraph at lines 521--522
 
  []
 
 [9]
-Overfull \hbox (43.94048pt too wide) in paragraph at lines 534--535
+Overfull \hbox (43.94048pt too wide) in paragraph at lines 535--536
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 534--535
+Underfull \hbox (badness 10000) in paragraph at lines 535--536
 
  []
 
 
-Overfull \hbox (4.4295pt too wide) in paragraph at lines 539--539
+Overfull \hbox (4.4295pt too wide) in paragraph at lines 540--540
 [] 
  []
 
 
-Overfull \hbox (6.4295pt too wide) in paragraph at lines 539--540
+Overfull \hbox (6.4295pt too wide) in paragraph at lines 540--541
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 539--540
+Underfull \hbox (badness 10000) in paragraph at lines 540--541
 
  []
 
 
-Overfull \hbox (31.65305pt too wide) in paragraph at lines 544--544
+Overfull \hbox (31.65305pt too wide) in paragraph at lines 545--545
 [] 
  []
 
 
-Overfull \hbox (33.65305pt too wide) in paragraph at lines 544--545
+Overfull \hbox (33.65305pt too wide) in paragraph at lines 545--546
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 544--545
+Underfull \hbox (badness 10000) in paragraph at lines 545--546
 
  []
 
 
-Overfull \hbox (50.22678pt too wide) in paragraph at lines 527--547
+Overfull \hbox (50.22678pt too wide) in paragraph at lines 528--548
  [][] 
  []
 
 
-Overfull \hbox (6.86066pt too wide) in paragraph at lines 555--555
+Overfull \hbox (6.86066pt too wide) in paragraph at lines 556--556
 [] 
  []
 
 
-Overfull \hbox (8.86066pt too wide) in paragraph at lines 555--556
+Overfull \hbox (8.86066pt too wide) in paragraph at lines 556--557
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 555--556
+Underfull \hbox (badness 10000) in paragraph at lines 556--557
 
  []
 
 
-Overfull \hbox (5.63138pt too wide) in paragraph at lines 562--562
+Overfull \hbox (5.63138pt too wide) in paragraph at lines 563--563
 [] 
  []
 
 
-Overfull \hbox (7.63138pt too wide) in paragraph at lines 562--563
+Overfull \hbox (7.63138pt too wide) in paragraph at lines 563--564
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 562--563
+Underfull \hbox (badness 10000) in paragraph at lines 563--564
 
  []
 
 
-Overfull \hbox (49.91245pt too wide) in paragraph at lines 568--568
+Overfull \hbox (49.91245pt too wide) in paragraph at lines 569--569
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 568--569
+Underfull \hbox (badness 10000) in paragraph at lines 569--570
 []
  []
 
 
-Overfull \hbox (51.91245pt too wide) in paragraph at lines 568--569
+Overfull \hbox (51.91245pt too wide) in paragraph at lines 569--570
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 568--569
+Underfull \hbox (badness 10000) in paragraph at lines 569--570
 
  []
 
 
-Overfull \hbox (35.99997pt too wide) in paragraph at lines 551--571
+Overfull \hbox (35.99997pt too wide) in paragraph at lines 552--572
  [][] 
  []
 
-[10] <./withdrawalComplexity.jpg, id=401, 562.1pt x 421.575pt>
+[10] <./withdrawalComplexity.jpg, id=406, 562.1pt x 421.575pt>
 File: ./withdrawalComplexity.jpg Graphic file (type jpg)
 
 <use ./withdrawalComplexity.jpg>
-Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 616.
+Package pdftex.def Info: ./withdrawalComplexity.jpg used on input line 617.
 (pdftex.def)             Requested size: 393.46732pt x 295.10048pt.
 
-Overfull \hbox (94.71468pt too wide) in paragraph at lines 616--618
+Overfull \hbox (94.71468pt too wide) in paragraph at lines 617--619
  [][] 
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 621--623
+Underfull \hbox (badness 1552) in paragraph at lines 622--624
 []\T1/aer/m/n/10 We im-ple-mented Mix-Eth
  []
 
 
-Overfull \hbox (10.57983pt too wide) in paragraph at lines 621--623
+Overfull \hbox (10.57983pt too wide) in paragraph at lines 622--624
 \T1/aer/m/n/10 with two dif-fer-ent ap-proaches.
  []
 
 
-Underfull \hbox (badness 1924) in paragraph at lines 621--623
+Underfull \hbox (badness 1924) in paragraph at lines 622--624
 \T1/aer/m/n/10 The first im-ple-men-ta-tion
  []
 
 
-Underfull \hbox (badness 1325) in paragraph at lines 621--623
+Underfull \hbox (badness 1325) in paragraph at lines 622--624
 \T1/aer/m/n/10 of Mix-Eth does not ap-
  []
 
 
-Underfull \hbox (badness 1521) in paragraph at lines 621--623
+Underfull \hbox (badness 1521) in paragraph at lines 622--624
 \T1/aer/m/n/10 chain. This could lead
  []
 
 
-Underfull \hbox (badness 1028) in paragraph at lines 621--623
+Underfull \hbox (badness 1028) in paragraph at lines 622--624
 \T1/aer/m/n/10 the num-ber of cor-rupted
  []
 
 
-Underfull \hbox (badness 2662) in paragraph at lines 621--623
+Underfull \hbox (badness 2662) in paragraph at lines 622--624
 \T1/aer/m/n/10 shuf-fles in-creases. One
  []
 
 
-Underfull \hbox (badness 3965) in paragraph at lines 621--623
+Underfull \hbox (badness 3965) in paragraph at lines 622--624
 \T1/aer/m/n/10 of our main mo-ti-va-tion
  []
 
 
-Underfull \hbox (badness 2173) in paragraph at lines 621--623
+Underfull \hbox (badness 2173) in paragraph at lines 622--624
 \T1/aer/m/n/10 an ef-fi-cient and scal-able
  []
 
 
-Underfull \hbox (badness 4132) in paragraph at lines 621--623
+Underfull \hbox (badness 4132) in paragraph at lines 622--624
 \T1/aer/m/n/10 and chal-leng-ing a shuf-
  []
 
 
-Underfull \hbox (badness 4120) in paragraph at lines 621--623
+Underfull \hbox (badness 4120) in paragraph at lines 622--624
 \T1/aer/m/n/10 fle oc-curs off-chain and
  []
 
 
-Underfull \hbox (badness 5726) in paragraph at lines 621--623
+Underfull \hbox (badness 5726) in paragraph at lines 622--624
 \T1/aer/m/n/10 only de-posit and with-
  []
 
 
-Underfull \hbox (badness 2875) in paragraph at lines 621--623
+Underfull \hbox (badness 2875) in paragraph at lines 622--624
 \T1/aer/m/n/10 drawal trans-ac-tions hap-
  []
 
 
-Underfull \hbox (badness 1824) in paragraph at lines 621--623
+Underfull \hbox (badness 1824) in paragraph at lines 622--624
 \T1/aer/m/n/10 pen on-chain. Both of
  []
 
 [11 <./withdrawalComplexity.jpg>]
-Overfull \hbox (41.80173pt too wide) in paragraph at lines 647--649
+Overfull \hbox (41.80173pt too wide) in paragraph at lines 648--650
  [][] 
  []
 
 
-Overfull \hbox (47.93443pt too wide) in paragraph at lines 677--679
+Overfull \hbox (47.93443pt too wide) in paragraph at lines 678--680
  [][] 
  []
 
 
 Package wrapfig Warning: Stationary wrapfigure forced to float on input line 68
-3.
+4.
 
-[12] [13] [14] (./main.bbl
+[12] [13] [14] [15] (./main.bbl
 LaTeX Font Info:    Try loading font information for T1+aett on input line 6.
 
 (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-) [15] [16]
+) [16]
 Underfull \hbox (badness 10000) in paragraph at lines 135--139
 []\T1/aer/m/n/10 Serge Nedashkovsky.  Huge ethereum mixer.  [][]$\T1/aett/m/n/1
 0 https : / / blog . cyber . fund /
  []
 
-) [17] [18]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 836.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 836.
+) [17] [18] [19]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 842.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 842.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 836.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 836.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 842.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 842.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 2A1DA93BCCD8508BCD2F62E01A816951;2440.
+(rerunfilecheck)             Checksum: B83CF34ECD3D14BAD109B9682527B022;2559.
  ) 
 Here is how much of TeX's memory you used:
- 44842 strings out of 494953
- 1004007 string characters out of 6180976
- 1142478 words of memory out of 5000000
- 47161 multiletter control sequences out of 15000+600000
+ 44846 strings out of 494953
+ 1004061 string characters out of 6180976
+ 1142472 words of memory out of 5000000
+ 47162 multiletter control sequences out of 15000+600000
  62532 words of font info for 136 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  62i,31n,83p,10375b,3056s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2502,10 +2502,10 @@ e/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on main.pdf (18 pages, 461207 bytes).
+Output written on main.pdf (19 pages, 462499 bytes).
 PDF statistics:
- 630 PDF objects out of 1000 (max. 8388607)
- 573 compressed objects within 6 object streams
- 197 named destinations out of 1000 (max. 500000)
- 314 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 641 PDF objects out of 1000 (max. 8388607)
+ 583 compressed objects within 6 object streams
+ 200 named destinations out of 1000 (max. 500000)
+ 322 words of extra memory for PDF output out of 10000 (max. 10000000)
 

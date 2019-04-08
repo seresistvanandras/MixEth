@@ -30,8 +30,9 @@
 \BOOKMARK [1][-]{section.7}{Related work}{}% 30
 \BOOKMARK [2][-]{subsection.7.1}{Additional related work}{section.7}% 31
 \BOOKMARK [1][-]{section.8}{Extensions and improvements}{}% 32
-\BOOKMARK [1][-]{section.9}{Acknowledgements}{}% 33
-\BOOKMARK [1][-]{section*.17}{Appendices}{}% 34
-\BOOKMARK [1][-]{Appendix.a.A}{Proof of Anonymity}{}% 35
-\BOOKMARK [1][-]{Appendix.a.B}{Proof of Availability}{}% 36
-\BOOKMARK [1][-]{Appendix.a.C}{Proof of Theft Prevention}{}% 37
+\BOOKMARK [2][-]{subsection.8.1}{Minimizing shuffling transactions with trusted execution environments}{section.8}% 33
+\BOOKMARK [1][-]{section.9}{Acknowledgements}{}% 34
+\BOOKMARK [1][-]{section*.17}{Appendices}{}% 35
+\BOOKMARK [1][-]{Appendix.a.A}{Proof of Anonymity}{}% 36
+\BOOKMARK [1][-]{Appendix.a.B}{Proof of Availability}{}% 37
+\BOOKMARK [1][-]{Appendix.a.C}{Proof of Theft Prevention}{}% 38

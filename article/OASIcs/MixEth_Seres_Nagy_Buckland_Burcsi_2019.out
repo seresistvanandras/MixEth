@@ -1,0 +1,40 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Background}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Notations}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Cryptographic keys in Ethereum}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Verifiable shuffle}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Decision Diffie-Hellman Problem and Chaum-Pedersen Protocol}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{ECDSA with arbitrary generator element}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.6}{Ethereum}{section.2}% 8
+\BOOKMARK [3][-]{subsubsection.2.6.1}{State channels}{subsection.2.6}% 9
+\BOOKMARK [1][-]{section.3}{Threat model}{}% 10
+\BOOKMARK [2][-]{subsection.3.1}{Participants and interactions}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.2}{Security goals}{section.3}% 12
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Anonymity}{subsection.3.2}% 13
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Availability}{subsection.3.2}% 14
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Theft prevention}{subsection.3.2}% 15
+\BOOKMARK [1][-]{section.4}{MixEth}{}% 16
+\BOOKMARK [2][-]{subsection.4.1}{Initializing the tumbler and depositing period}{section.4}% 17
+\BOOKMARK [2][-]{subsection.4.2}{Shuffling period}{section.4}% 18
+\BOOKMARK [2][-]{subsection.4.3}{Challenging period}{section.4}% 19
+\BOOKMARK [2][-]{subsection.4.4}{Withdrawing}{section.4}% 20
+\BOOKMARK [1][-]{section.5}{Security}{}% 21
+\BOOKMARK [1][-]{section.6}{Implementation}{}% 22
+\BOOKMARK [2][-]{subsection.6.1}{Fully on-chain implementation}{section.6}% 23
+\BOOKMARK [2][-]{subsection.6.2}{State channel implementation}{section.6}% 24
+\BOOKMARK [1][-]{section.7}{Related work}{}% 25
+\BOOKMARK [1][-]{section*.3}{Appendices}{}% 26
+\BOOKMARK [1][-]{Appendix.1.A}{Formal definitions of security}{}% 27
+\BOOKMARK [2][-]{subsection.1.A.1}{Anonymity}{Appendix.1.A}% 28
+\BOOKMARK [2][-]{subsection.1.A.2}{Availability}{Appendix.1.A}% 29
+\BOOKMARK [2][-]{subsection.1.A.3}{Theft prevention}{Appendix.1.A}% 30
+\BOOKMARK [1][-]{Appendix.1.B}{Proofs of security}{}% 31
+\BOOKMARK [2][-]{subsection.1.B.1}{Recipient anonymity}{Appendix.1.B}% 32
+\BOOKMARK [2][-]{subsection.1.B.2}{Availability}{Appendix.1.B}% 33
+\BOOKMARK [2][-]{subsection.1.B.3}{Theft prevention}{Appendix.1.B}% 34
+\BOOKMARK [1][-]{Appendix.1.C}{Proof of Anonymity}{}% 35
+\BOOKMARK [1][-]{Appendix.1.D}{Proof of Availability}{}% 36
+\BOOKMARK [1][-]{Appendix.1.E}{Proof of Theft Prevention}{}% 37
+\BOOKMARK [1][-]{Appendix.1.F}{Extensions and improvements}{}% 38
+\BOOKMARK [2][-]{subsubsection.1.F.0.1}{Ethereum account abstraction}{Appendix.1.F}% 39
+\BOOKMARK [2][-]{subsection.1.F.1}{Minimizing shuffle transactions with trusted execution environments}{Appendix.1.F}% 40
